@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract final class SerManosColors {
+abstract final class SerManosColor {
   static const Color error100 = Color(0xFFB3261E);
 
   static const Color neutral0 = Color(0xFFFFFFFF);
