@@ -21,4 +21,6 @@ abstract final class SerManosColors {
   static const Color secondary90 = Color(0xFF4AA9F5);
   static const Color secondary100 = Color(0xFF2C98F0);
   static const Color secondary200 = Color(0xFF0D47A1);
+
+  static const Color black = Color(0x00000000);
 }
