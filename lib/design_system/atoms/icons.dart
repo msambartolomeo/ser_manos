@@ -54,3 +54,27 @@ class SerManosIcons{
 
   static const IconData map = Icons.map;
 }
+
+
+class ProfilePicture extends StatelessWidget{
+  const ProfilePicture({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset('assets/foto de perfil.png');
+  }
+
+}
+
+
+class LocationPoint extends StatelessWidget{
+  const LocationPoint({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset('assets/ubicación.png');
+  }
+
+}
+
