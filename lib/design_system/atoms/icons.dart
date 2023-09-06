@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ser_manos/design_system/tokens/colors.dart';
 
-class SerManosIcons{
-
-   SerManosIcons._();
+class SerManosIconData {
+  SerManosIconData._();
 
   static const IconData favorite = Icons.favorite;
 
@@ -19,7 +19,7 @@ class SerManosIcons{
   static const IconData locationOutlined = Icons.location_on_outlined;
 
   static const IconData locationSharp = Icons.location_on_sharp;
-  
+
   static const IconData visibility = Icons.visibility;
 
   static const IconData visibilityOutlined = Icons.visibility_outlined;
@@ -55,26 +55,71 @@ class SerManosIcons{
   static const IconData map = Icons.map;
 }
 
+class _BaseIcon extends Icon {
+  const _BaseIcon(
+    super.icon, {
+    super.key,
+    bool disabled = false,
+    Color disabledColor = SerManosColor.neutral25,
+    bool active = false,
+    Color activeColor = SerManosColor.primary100,
+  }) : super(
+          size: 24,
+          color: disabled
+              ? disabledColor
+              : active
+                  ? activeColor
+                  : SerManosColor.neutral75,
+        );
+}
 
-class ProfilePicture extends StatelessWidget{
+class SerManosIcon extends _BaseIcon {
+  const SerManosIcon.error(
+    super.icon, {
+    super.key,
+    super.disabled,
+    super.active,
+  }) : super(activeColor: SerManosColor.error100);
+
+  const SerManosIcon.white(
+    super.icon, {
+    super.key,
+    super.disabled,
+    super.active,
+  }) : super(activeColor: SerManosColor.neutral0);
+
+  const SerManosIcon.primary(
+    super.icon, {
+    super.key,
+    super.disabled,
+    super.active,
+  }) : super();
+
+  const SerManosIcon.secondary(
+    super.icon, {
+    super.key,
+    super.disabled,
+    super.active,
+  }) : super(
+          activeColor: SerManosColor.secondary200,
+          disabledColor: SerManosColor.secondary80,
+        );
+}
+
+class ProfilePicture extends StatelessWidget {
   const ProfilePicture({super.key});
-
 
   @override
   Widget build(BuildContext context) {
     return Image.asset('assets/foto de perfil.png');
   }
-
 }
 
-
-class LocationPoint extends StatelessWidget{
+class LocationPoint extends StatelessWidget {
   const LocationPoint({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Image.asset('assets/ubicación.png');
   }
-
 }
-
