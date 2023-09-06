@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/shadows.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
@@ -63,7 +64,11 @@ class SerManosButton extends Container {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon),
+                SerManosIcon.white(
+                  icon,
+                  disabled: disabled,
+                  active: true,
+                ),
                 SerManosTypography.button(
                   text,
                   color: SerManosColor.neutral0,
@@ -74,7 +79,7 @@ class SerManosButton extends Container {
         );
 
   SerManosButton.floating(IconData icon,
-      {super.key, required onPressed, bool disabled = true})
+      {super.key, required onPressed, bool disabled = false})
       : super(
           decoration: BoxDecoration(boxShadow: SerManosShadows.shadow3),
           child: IconButton(
@@ -85,9 +90,10 @@ class SerManosButton extends Container {
               padding: paddingBig,
               shape: roundedBorder,
             ),
-            icon: Icon(
+            icon: SerManosIcon.primary(
               icon,
-              color: SerManosColor.primary100,
+              disabled: disabled,
+              active: true,
             ),
           ),
         );
