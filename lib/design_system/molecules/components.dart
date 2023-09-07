@@ -11,22 +11,16 @@ class _BaseVacantComponent extends Card{
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text("Vacantes:"),
           const SizedBox(width: 8.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              icon,
-              Text('$vacantes', style: TextStyle(color: textVacantColor))
-              ]
-            )
-          ]
-        )
+          icon,
+          Text('$vacantes', style: TextStyle(color: textVacantColor))
+        ]
       )
-    );
+    )
+  );
 }
 
 
