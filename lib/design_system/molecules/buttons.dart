@@ -15,6 +15,7 @@ class SerManosButton extends Container {
       {super.key, required onPressed, bool disabled = false})
       : super(
           width: 328,
+          height: 44,
           child: FilledButton(
             onPressed: disabled ? null : onPressed,
             style: FilledButton.styleFrom(
@@ -33,6 +34,7 @@ class SerManosButton extends Container {
       {super.key, required onPressed, bool disabled = false})
       : super(
           width: 328,
+          height: 44,
           child: TextButton(
             onPressed: disabled ? null : onPressed,
             style: TextButton.styleFrom(
@@ -54,6 +56,7 @@ class SerManosButton extends Container {
     bool disabled = false,
     bool small = false,
   }) : super(
+          height: small ? 40 : 48,
           child: FilledButton(
             onPressed: disabled ? null : onPressed,
             style: FilledButton.styleFrom(
@@ -81,6 +84,8 @@ class SerManosButton extends Container {
   SerManosButton.floating(IconData icon,
       {super.key, required onPressed, bool disabled = false})
       : super(
+          width: 48,
+          height: 48,
           decoration: BoxDecoration(boxShadow: SerManosShadows.shadow3),
           child: IconButton(
             onPressed: onPressed,
