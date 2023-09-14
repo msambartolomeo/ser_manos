@@ -8,10 +8,13 @@ class SerManosHeader extends AppBar {
   SerManosHeader.tabs({super.key})
       : super(
           systemOverlayStyle: const SerManosStatusBar.secondary(),
-          title: const RectangularLogo(),
+          title: const Padding(
+            padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+            child: RectangularLogo(),
+          ),
           backgroundColor: SerManosColor.secondary90,
           bottom: PreferredSize(
-            preferredSize: const TabBar(tabs: []).preferredSize,
+            preferredSize: const Size.fromHeight(52),
             child: ColoredBox(
               color: SerManosColor.secondary100,
               child: TabBar(
@@ -19,19 +22,21 @@ class SerManosHeader extends AppBar {
                 labelColor: SerManosColor.neutral0,
                 labelStyle: SerManosTypography.button("pepe").style,
                 indicatorSize: TabBarIndicatorSize.tab,
-                indicator:
-                    const BoxDecoration(color: SerManosColor.secondary200),
+                indicator: const BoxDecoration(
+                  color: SerManosColor.secondary200,
+                  border: Border(
+                    bottom: BorderSide(color: SerManosColor.neutral0, width: 3),
+                  ),
+                ),
                 tabs: const [
                   Tab(
                     height: 52,
                     text: "Postularse",
                   ),
                   Tab(
-                    height: 52,
                     text: "Mi perfil",
                   ),
                   Tab(
-                    height: 52,
                     text: "Novedades",
                   ),
                 ],
