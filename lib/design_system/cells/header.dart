@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
-import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/status_bar.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
