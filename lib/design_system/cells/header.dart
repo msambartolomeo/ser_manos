@@ -15,7 +15,7 @@ class SerManosHeader extends AppBar {
           backgroundColor: SerManosColor.secondary90,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(52),
-            child: ColoredBox(
+            child: Material(
               color: SerManosColor.secondary100,
               child: TabBar(
                 unselectedLabelColor: SerManosColor.neutral25,
