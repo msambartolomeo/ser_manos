@@ -13,8 +13,11 @@ class SerManosInput extends TextFormField {
       OutlineInputBorder(borderSide: BorderSide(color: SerManosColor.error100));
   static const _secondary100Border = OutlineInputBorder(
       borderSide: BorderSide(color: SerManosColor.secondary200));
+      static const _neutral50Border = OutlineInputBorder(
+      borderSide: BorderSide(color: SerManosColor.neutral50));
 
   static const _baseInputDecoration = InputDecoration(
+    disabledBorder: _neutral50Border,
     border: _neutral75Border,
     focusedBorder: _secondary100Border,
     labelStyle: SerManosTextStyle.subtitle1(color: SerManosColor.neutral75),
@@ -29,13 +32,11 @@ class SerManosInput extends TextFormField {
       {super.key,
       required this.label,
       this.hintText = "",
-      controller,
-      onSaved,
-      validator})
+      super.controller,
+      super.onSaved,
+      super.validator,
+      super.enabled})
       : super(
-          onSaved: onSaved,
-          validator: validator,
-          controller: controller,
           decoration: _baseInputDecoration.copyWith(
               hintText: hintText,
               labelText: label,
@@ -50,13 +51,11 @@ class SerManosInput extends TextFormField {
       {super.key,
       required this.label,
       this.hintText = "",
-      controller,
-      onSaved,
-      validator})
+      super.controller,
+      super.onSaved,
+      super.validator,
+      super.enabled})
       : super(
-          onSaved: onSaved,
-          validator: validator,
-          controller: controller,
           decoration: _baseInputDecoration.copyWith(
             hintText: hintText,
             floatingLabelBehavior: hintText != ""
