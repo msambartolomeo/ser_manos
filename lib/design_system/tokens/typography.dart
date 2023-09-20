@@ -7,58 +7,59 @@ class _BaseTypography extends Text {
     String text, {
     super.key,
     Color color = SerManosColor.neutral100,
-    TextStyle textStyle = const SerManosTextStyle.heading1()
+    TextStyle textStyle = const SerManosTextStyle.heading1(),
   }) : super(
           text,
-          style: textStyle);
+          style: textStyle,
+        );
 }
 
 class SerManosTypography extends _BaseTypography {
   SerManosTypography.heading1(String text, {super.key, super.color})
       : super(
           text,
-          textStyle: SerManosTextStyle.heading1(color: color)
+          textStyle: SerManosTextStyle.heading1(color: color),
         );
 
   SerManosTypography.heading2(String text, {super.key, super.color})
       : super(
           text,
-          textStyle: SerManosTextStyle.heading2(color: color)
+          textStyle: SerManosTextStyle.heading2(color: color),
         );
 
   SerManosTypography.subtitle1(String text, {super.key, super.color})
       : super(
           text,
-          textStyle: SerManosTextStyle.subtitle1(color: color)
+          textStyle: SerManosTextStyle.subtitle1(color: color),
         );
 
   SerManosTypography.body1(String text, {super.key, super.color})
       : super(
           text,
-          textStyle: SerManosTextStyle.body1(color: color)
+          textStyle: SerManosTextStyle.body1(color: color),
         );
 
   SerManosTypography.body2(String text, {super.key, super.color})
       : super(
           text,
-          textStyle: SerManosTextStyle.body2(color: color)
+          textStyle: SerManosTextStyle.body2(color: color),
         );
 
   SerManosTypography.button(String text, {super.key, super.color})
       : super(
           text,
-          textStyle: SerManosTextStyle.button(color: color)
+          textStyle: SerManosTextStyle.button(color: color),
         );
 
   SerManosTypography.caption(String text, {super.key, super.color})
       : super(
           text,
-          textStyle: SerManosTextStyle.caption(color: color)
+          textStyle: SerManosTextStyle.caption(color: color),
         );
 
   SerManosTypography.overline(String text, {super.key, super.color})
       : super(
           text.toUpperCase(),
-          textStyle: SerManosTextStyle.overline(color: color)
+          textStyle: SerManosTextStyle.overline(color: color),
         );
 }

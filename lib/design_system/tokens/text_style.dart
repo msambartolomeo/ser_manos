@@ -2,27 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 
 class _BaseTextStyle extends TextStyle {
-  const _BaseTextStyle(
-    {
+  const _BaseTextStyle({
     Color color = SerManosColor.neutral100,
     FontWeight weight = FontWeight.w400,
     required double size,
     required double height,
     required double spacing,
   }) : super(
-            color: color,
-            fontFamily: "Roboto",
-            fontSize: size,
-            fontStyle: FontStyle.normal,
-            fontWeight: weight,
-            height: size / height,
-            letterSpacing: spacing
-                      );
+          color: color,
+          fontFamily: "Roboto",
+          fontSize: size,
+          fontStyle: FontStyle.normal,
+          fontWeight: weight,
+          height: height / size,
+          letterSpacing: spacing,
+        );
 }
 
 class SerManosTextStyle extends _BaseTextStyle {
   const SerManosTextStyle.heading1({super.color})
-      : super(        
+      : super(
           size: 24,
           height: 24,
           spacing: 0.18,
@@ -72,8 +71,6 @@ class SerManosTextStyle extends _BaseTextStyle {
           spacing: 0.4,
         );
 
-
-  // TODO: Missing upperCase?
   const SerManosTextStyle.overline({super.color})
       : super(
           size: 10,
