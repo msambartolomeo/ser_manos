@@ -12,9 +12,9 @@ OutlinedBorder roundedBorder =
 
 class SerManosButton extends Container {
   SerManosButton.cta(String text,
-      {super.key, required onPressed, bool disabled = false})
+      {super.key, required onPressed, bool disabled = false, bool fill = false})
       : super(
-          width: 328,
+          width: fill ? double.infinity : null,
           height: 44,
           child: FilledButton(
             onPressed: disabled ? null : onPressed,
@@ -31,9 +31,9 @@ class SerManosButton extends Container {
         );
 
   SerManosButton.ctaText(String text,
-      {super.key, required onPressed, bool disabled = false})
+      {super.key, required onPressed, bool disabled = false, bool fill = false})
       : super(
-          // width: 328,
+          width: fill ? double.infinity : null,
           height: 44,
           child: TextButton(
             onPressed: disabled ? null : onPressed,
