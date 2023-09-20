@@ -1,26 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
+import 'package:ser_manos/design_system/tokens/text_style.dart';
 
 class _BaseTypography extends Text {
-  _BaseTypography(
+  const _BaseTypography(
     String text, {
     super.key,
     Color color = SerManosColor.neutral100,
-    FontWeight weight = FontWeight.w400,
-    required double size,
-    required double height,
-    required double spacing,
+    TextStyle textStyle = const SerManosTextStyle.heading1(),
   }) : super(
           text,
-          style: TextStyle(
-            color: color,
-            fontFamily: "Roboto",
-            fontSize: size,
-            fontStyle: FontStyle.normal,
-            fontWeight: weight,
-            height: height / size,
-            letterSpacing: spacing,
-          ),
+          style: textStyle,
         );
 }
 
@@ -28,67 +18,48 @@ class SerManosTypography extends _BaseTypography {
   SerManosTypography.heading1(String text, {super.key, super.color})
       : super(
           text,
-          size: 24,
-          height: 24,
-          spacing: 0.18,
+          textStyle: SerManosTextStyle.heading1(color: color),
         );
 
   SerManosTypography.heading2(String text, {super.key, super.color})
       : super(
           text,
-          size: 20,
-          height: 24,
-          spacing: 0.15,
-          weight: FontWeight.w500,
+          textStyle: SerManosTextStyle.heading2(color: color),
         );
 
   SerManosTypography.subtitle1(String text, {super.key, super.color})
       : super(
           text,
-          size: 16,
-          height: 24,
-          spacing: 0.15,
+          textStyle: SerManosTextStyle.subtitle1(color: color),
         );
 
   SerManosTypography.body1(String text, {super.key, super.color})
       : super(
           text,
-          size: 14,
-          height: 20,
-          spacing: 0.25,
+          textStyle: SerManosTextStyle.body1(color: color),
         );
 
   SerManosTypography.body2(String text, {super.key, super.color})
       : super(
           text,
-          size: 12,
-          height: 16,
-          spacing: 0.4,
+          textStyle: SerManosTextStyle.body2(color: color),
         );
 
   SerManosTypography.button(String text, {super.key, super.color})
       : super(
           text,
-          size: 14,
-          height: 20,
-          spacing: 0.1,
-          weight: FontWeight.w500,
+          textStyle: SerManosTextStyle.button(color: color),
         );
 
   SerManosTypography.caption(String text, {super.key, super.color})
       : super(
           text,
-          size: 12,
-          height: 16,
-          spacing: 0.4,
+          textStyle: SerManosTextStyle.caption(color: color),
         );
 
   SerManosTypography.overline(String text, {super.key, super.color})
       : super(
           text.toUpperCase(),
-          size: 10,
-          height: 16,
-          spacing: 1.5,
-          weight: FontWeight.w500,
+          textStyle: SerManosTextStyle.overline(color: color),
         );
 }
