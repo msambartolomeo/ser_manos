@@ -18,7 +18,7 @@ class _BaseTypography extends Text {
             fontSize: size,
             fontStyle: FontStyle.normal,
             fontWeight: weight,
-            height: size / height,
+            height: 1 + size / height,
             letterSpacing: spacing,
           ),
         );
