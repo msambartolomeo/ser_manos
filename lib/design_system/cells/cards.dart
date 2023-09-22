@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
+import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/shadows.dart';
@@ -34,7 +35,8 @@ class VolunteerCard extends Container {
                                 color: SerManosColor.neutral75),
                             SerManosTypography.subtitle1(name),
                             const SizedBox(height: 4),
-                            vacantes == 0 //habria que ver si se deshabilita con 0 o con otra condicion
+                            vacantes ==
+                                    0 //habria que ver si se deshabilita con 0 o con otra condicion
                                 ? SerManosVacantComponent.disabled(vacantes)
                                 : SerManosVacantComponent.enabled(vacantes),
                           ],
@@ -53,6 +55,53 @@ class VolunteerCard extends Container {
                         ])
                       ],
                     ))
+              ],
+            ));
+}
+
+class NewsCard extends Container {
+  NewsCard({super.key,
+  required ImageProvider<Object> image,
+      required String overline,
+      required String title,
+      required String body})
+      : super(
+            decoration: BoxDecoration(
+              color: SerManosColor.neutral0,
+              borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+              boxShadow: SerManosShadows.shadow2,
+            ),
+            child: Row(
+              children: [
+                Image(image: image, width: 118,
+                    fit: BoxFit.fitHeight),
+                Expanded(
+                  child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8, right: 8, top: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SerManosTypography.overline(overline,
+                              color: SerManosColor.neutral75),
+                          SerManosTypography.subtitle1(
+                              title),
+                          SerManosTypography.body2(
+                              body,
+                              color: SerManosColor.neutral75,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SerManosButton.ctaText("Leer Más",
+                                  onPressed: () => {})
+                            ],
+                          )
+                        ],
+                      )),
+                )
               ],
             ));
 }

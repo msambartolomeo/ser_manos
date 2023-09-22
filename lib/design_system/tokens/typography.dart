@@ -5,6 +5,8 @@ class _BaseTypography extends Text {
   _BaseTypography(
     String text, {
     super.key,
+    super.maxLines,
+    super.overflow,
     Color color = SerManosColor.neutral100,
     FontWeight weight = FontWeight.w400,
     required double size,
@@ -58,7 +60,7 @@ class SerManosTypography extends _BaseTypography {
           spacing: 0.25,
         );
 
-  SerManosTypography.body2(String text, {super.key, super.color})
+  SerManosTypography.body2(String text, {super.key, super.color, super.maxLines, super.overflow})
       : super(
           text,
           size: 12,

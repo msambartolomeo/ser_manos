@@ -31,9 +31,9 @@ class SerManosButton extends Container {
         );
 
   SerManosButton.ctaText(String text,
-      {super.key, required onPressed, bool disabled = false})
+      {super.key, super.width,  required onPressed, bool disabled = false})
       : super(
-          width: 328,
+          //width: 328,
           height: 44,
           child: TextButton(
             onPressed: disabled ? null : onPressed,
