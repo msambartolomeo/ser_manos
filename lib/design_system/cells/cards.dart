@@ -60,8 +60,9 @@ class VolunteerCard extends Container {
 }
 
 class NewsCard extends Container {
-  NewsCard({super.key,
-  required ImageProvider<Object> image,
+  NewsCard(
+      {super.key,
+      required ImageProvider<Object> image,
       required String overline,
       required String title,
       required String body})
@@ -73,8 +74,7 @@ class NewsCard extends Container {
             ),
             child: Row(
               children: [
-                Image(image: image, width: 118,
-                    fit: BoxFit.fitHeight),
+                Image(image: image, width: 118, fit: BoxFit.fitHeight),
                 Expanded(
                   child: Padding(
                       padding:
@@ -84,10 +84,8 @@ class NewsCard extends Container {
                         children: [
                           SerManosTypography.overline(overline,
                               color: SerManosColor.neutral75),
-                          SerManosTypography.subtitle1(
-                              title),
-                          SerManosTypography.body2(
-                              body,
+                          SerManosTypography.subtitle1(title),
+                          SerManosTypography.body2(body,
                               color: SerManosColor.neutral75,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis),
@@ -103,5 +101,37 @@ class NewsCard extends Container {
                       )),
                 )
               ],
+            ));
+}
+
+class CurrentVolunteerCard extends Container {
+  CurrentVolunteerCard({
+    super.key,
+    required String overline,
+    required String title,
+  }) : super(
+            decoration: BoxDecoration(
+                color: SerManosColor.neutral0,
+                borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                boxShadow: SerManosShadows.shadow2,
+                border: const Border.fromBorderSide(
+                    BorderSide(color: SerManosColor.primary100, width: 2))),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SerManosTypography.overline(overline,
+                          color: SerManosColor.neutral75),
+                      SerManosTypography.subtitle1(title)
+                    ],
+                  )),
+                  const SerManosIcon.primary(SerManosIconData.location,
+                      active: true)
+                ],
+              ),
             ));
 }
