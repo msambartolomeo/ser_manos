@@ -7,6 +7,8 @@ class _BaseTypography extends Text {
     String text, {
     super.key,
     TextAlign align = TextAlign.left,
+    super.maxLines,
+    super.overflow,
     Color color = SerManosColor.neutral100,
     TextStyle textStyle = const SerManosTextStyle.heading1(),
   }) : super(
@@ -57,11 +59,14 @@ class SerManosTypography extends _BaseTypography {
           textStyle: SerManosTextStyle.body1(color: color),
         );
 
+
   SerManosTypography.body2(
     String text, {
     super.key,
     super.color,
     super.align,
+    super.maxLines,
+    super.overflow,
   }) : super(
           text,
           textStyle: SerManosTextStyle.body2(color: color),
