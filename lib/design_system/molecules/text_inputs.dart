@@ -3,9 +3,7 @@ import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/text_style.dart';
 
-class SerManosInput extends TextFormField {
-  final String label;
-  final String hintText;
+class SerManosTextInput extends TextFormField {
 
   static const _neutral75Border = OutlineInputBorder(
       borderSide: BorderSide(color: SerManosColor.neutral75));
@@ -28,10 +26,10 @@ class SerManosInput extends TextFormField {
     errorStyle: SerManosTextStyle.body2(color: SerManosColor.error100),
   );
 
-  SerManosInput(
+  SerManosTextInput(
       {super.key,
-      required this.label,
-      this.hintText = "",
+      required label,
+      hintText = "",
       super.controller,
       super.onSaved,
       super.validator,
@@ -47,10 +45,10 @@ class SerManosInput extends TextFormField {
               color: SerManosColor.neutral100),
         );
 
-  SerManosInput.calendar(
+  SerManosTextInput.calendar(
       {super.key,
-      required this.label,
-      this.hintText = "",
+      required label,
+      hintText = "",
       super.controller,
       super.onSaved,
       super.validator,
