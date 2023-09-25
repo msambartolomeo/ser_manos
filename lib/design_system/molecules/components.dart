@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
+import 'package:ser_manos/design_system/tokens/typography.dart';
 
 class _BaseVacantComponent extends Card{
 
   _BaseVacantComponent(int vacantes, {super.key , required Color backgroundColor, required Color textVacantColor, required Icon icon}) 
   :super(
+    margin: const EdgeInsets.all(0),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
     color: backgroundColor,
     child: Padding(
@@ -13,10 +15,10 @@ class _BaseVacantComponent extends Card{
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text("Vacantes:"),
+          SerManosTypography.body2("Vacantes:", color: SerManosColor.neutral100,),
           const SizedBox(width: 8.0),
           icon,
-          Text('$vacantes', style: TextStyle(color: textVacantColor))
+          SerManosTypography.subtitle1('$vacantes', color: textVacantColor)
         ]
       )
     )
