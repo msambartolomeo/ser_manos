@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
 import 'package:ser_manos/design_system/molecules/status_bar.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
+import 'package:ser_manos/design_system/tokens/text_style.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 
 class SerManosHeader extends AppBar {
@@ -13,22 +14,22 @@ class SerManosHeader extends AppBar {
             child: RectangularLogo(),
           ),
           backgroundColor: SerManosColor.secondary90,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(52),
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(52),
             child: Material(
               color: SerManosColor.secondary100,
               child: TabBar(
                 unselectedLabelColor: SerManosColor.neutral25,
                 labelColor: SerManosColor.neutral0,
-                labelStyle: SerManosTypography.button("pepe").style,
+                labelStyle: SerManosTextStyle.button(),
                 indicatorSize: TabBarIndicatorSize.tab,
-                indicator: const BoxDecoration(
+                indicator: BoxDecoration(
                   color: SerManosColor.secondary200,
                   border: Border(
                     bottom: BorderSide(color: SerManosColor.neutral0, width: 3),
                   ),
                 ),
-                tabs: const [
+                tabs: [
                   Tab(
                     height: 52,
                     text: "Postularse",
@@ -50,6 +51,9 @@ class SerManosHeader extends AppBar {
           systemOverlayStyle: const SerManosStatusBar.white(),
           leading: const CloseButton(color: SerManosColor.neutral75),
         );
+
+  SerManosHeader.white({super.key})
+      : super(systemOverlayStyle: const SerManosStatusBar.white());
 
   SerManosHeader.section({super.key, required String title})
       : super(
