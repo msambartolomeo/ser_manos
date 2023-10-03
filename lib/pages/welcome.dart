@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
@@ -31,7 +32,7 @@ class WelcomePage extends StatelessWidget {
               ),
               SerManosButton.cta(
                 "Comenzar",
-                onPressed: () => {},
+                onPressed: () => context.go("/home"),
                 fill: true,
               ),
             ],

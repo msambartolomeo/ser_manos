@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
+import 'package:ser_manos/pages/news.dart';
+import 'package:ser_manos/pages/volunteering.dart';
 import 'package:ser_manos/router/router.dart';
 
 void main() {
@@ -37,38 +39,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: SerManosHeader.tabs(),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: SerManosHeader.tabs(),
+          body: const TabBarView(
+            children: [
+             VolunteeringPage(),
+              SerManosIcon.primary(SerManosIconData.person),
+              NewsPage(),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => context.go("/details"),
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
         ),
       ),
     );

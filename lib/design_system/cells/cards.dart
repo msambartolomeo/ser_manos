@@ -9,9 +9,9 @@ import 'package:ser_manos/design_system/tokens/typography.dart';
 class VolunteerCard extends Container {
   VolunteerCard(
       {super.key,
-      required ImageProvider<Object> image,
+      required String image,
       required String name,
-      required int vacantes,
+      required int vacant,
       required bool isFavorite})
       : super(
             decoration: BoxDecoration(
@@ -21,7 +21,8 @@ class VolunteerCard extends Container {
             ),
             child: Column(
               children: [
-                Image(image: image, height: 138, fit: BoxFit.cover),
+                Image.network(image, height: 138, fit: BoxFit.cover),
+                //Image(image: image, height: 138, fit: BoxFit.cover),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     child: Row(
@@ -36,10 +37,10 @@ class VolunteerCard extends Container {
                             SerManosTypography.subtitle1(name,
                                 color: SerManosColor.neutral100),
                             const SizedBox(height: 4),
-                            vacantes ==
+                            vacant ==
                                     0 //habria que ver si se deshabilita con 0 o con otra condicion
-                                ? SerManosVacantComponent.disabled(vacantes)
-                                : SerManosVacantComponent.enabled(vacantes),
+                                ? SerManosVacantComponent.disabled(vacant)
+                                : SerManosVacantComponent.enabled(vacant),
                           ],
                         )),
                         Row(children: [
@@ -50,7 +51,7 @@ class VolunteerCard extends Container {
                               : const SerManosIcon.primary(
                                   SerManosIconData.favoriteOutline,
                                   active: true),
-                          const SizedBox(width: 16),
+                                        const SizedBox(width: 16),
                           const SerManosIcon.primary(SerManosIconData.location,
                               active: true)
                         ])
@@ -58,12 +59,13 @@ class VolunteerCard extends Container {
                     ))
               ],
             ));
-}
+              }
 
 class NewsCard extends Container {
   NewsCard(
       {super.key,
-      required ImageProvider<Object> image,
+//      required ImageProvider<Object> image,
+      required String image,
       required String overline,
       required String title,
       required String body})
@@ -75,7 +77,8 @@ class NewsCard extends Container {
             ),
             child: Row(
               children: [
-                Image(image: image, width: 118, fit: BoxFit.fitHeight),
+                Image.network(image, width: 118, fit: BoxFit.fitHeight),
+                //Image(image: image, width: 118, fit: BoxFit.fitHeight),
                 Expanded(
                   child: Padding(
                       padding:
