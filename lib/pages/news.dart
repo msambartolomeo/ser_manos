@@ -4,14 +4,14 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/models/news.dart';
 
-class NewsPage extends StatefulWidget {
-  const NewsPage({super.key});
+class NewsTab extends StatefulWidget {
+  const NewsTab({super.key});
 
   @override
-  State<NewsPage> createState() => _NewsPageState();
+  State<NewsTab> createState() => _NewsTabState();
 }
 
-class _NewsPageState extends State<NewsPage> {
+class _NewsTabState extends State<NewsTab> {
   List<News> news = [
     News(
         image:

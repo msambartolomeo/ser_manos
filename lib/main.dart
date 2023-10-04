@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/pages/news.dart';
+import 'package:ser_manos/pages/profile.dart';
 import 'package:ser_manos/pages/volunteering.dart';
 import 'package:ser_manos/router/router.dart';
 
@@ -50,9 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: SerManosHeader.tabs(),
           body: const TabBarView(
             children: [
-             VolunteeringPage(),
-              SerManosIcon.primary(SerManosIconData.person),
-              NewsPage(),
+             VolunteeringTab(),
+              EmptyProfileTab(name: "Nombre"),
+              NewsTab(),
             ],
           ),
         ),

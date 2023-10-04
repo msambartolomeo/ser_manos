@@ -111,7 +111,9 @@ class ProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/foto de perfil.png');
+    return Image.asset('assets/foto de perfil.png', 
+    width: 100,
+      height: 100);
   }
 }
 

@@ -7,16 +7,16 @@ import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/volunteering.dart';
 
-class VolunteeringPage extends StatefulWidget{
-  const VolunteeringPage({super.key});
+class VolunteeringTab extends StatefulWidget{
+  const VolunteeringTab({super.key});
 
   @override
-  State<VolunteeringPage> createState() => _VolunteeringPageState();
+  State<VolunteeringTab> createState() => _VolunteeringTabState();
 
 }
 
 
-class _VolunteeringPageState extends State<VolunteeringPage> {
+class _VolunteeringTabState extends State<VolunteeringTab> {
 
   List<Volunteering> volunteering = [
     Volunteering(
