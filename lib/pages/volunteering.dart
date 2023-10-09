@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
+import 'package:ser_manos/design_system/molecules/searchbars.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
@@ -76,7 +77,7 @@ class _VolunteeringTabState extends State<VolunteeringTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            SerManosTextInput(label: "Buscar"),
+            SerManosSearchBar.map(),
             const SizedBox(height: 24),
             SerManosTypography.heading1("Voluntariados", align: TextAlign.start,),
 

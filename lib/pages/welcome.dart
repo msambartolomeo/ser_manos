@@ -16,8 +16,8 @@ class WelcomePage extends StatelessWidget {
       body: SerManosGrid(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Spacer(),
               Column(
                 children: [
                   const SquaredLogo(),
@@ -30,10 +30,14 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              SerManosButton.cta(
-                "Comenzar",
-                onPressed: () => context.go("/home"),
-                fill: true,
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.only(bottom: 92),
+                child: SerManosButton.cta(
+                  "Comenzar",
+                  onPressed: () => context.go("/home"),
+                  fill: true,
+                ),
               ),
             ],
           ),

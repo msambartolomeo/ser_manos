@@ -33,7 +33,8 @@ class SerManosTextInput extends TextFormField {
       super.controller,
       super.onSaved,
       super.validator,
-      super.enabled})
+      super.enabled,
+      super.obscureText})
       : super(
           decoration: _baseInputDecoration.copyWith(
               hintText: hintText,
