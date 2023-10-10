@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
@@ -6,64 +8,47 @@ import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatelessWidget{
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
+    return Scaffold(
       appBar: SerManosHeader.white(),
       body: SerManosGrid(
         child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints)
-            {return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          builder: (BuildContext context, BoxConstraints constraints)
+          { return  SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Column(
                     children: [
-                      Column(children: [
+                      const Spacer(),
+                      Column(
+                          children: [
                             const SquaredLogo(),
-                            const SizedBox(
-                              height: 31,
-                            ),
+                            const SizedBox(height: 32),
                             SerManosTextInput(
-                              hintText: "Ej: Facundo",
-                              label: "Nombre",
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            SerManosTextInput(
-                              hintText: "Ej: Gutierrez",
-                              label: "Apellido",
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            SerManosTextInput(
-                              hintText: "Ej: fgutierrez@mail.com",
                               label: "Email",
                             ),
                             const SizedBox(
                               height: 24,
                             ),
                             SerManosTextInput(
-                              hintText: "Ej: ABCD1234",
                               label: "Contraseña",
                               obscureText: true,
                             ),
                             const SizedBox(
                               height: 24,
                             )
-
-                      ]
+                          ],
                       ),
+                      const Spacer(),
                       Column(
                         children: [
                           SerManosButton.cta(
-                            "Registrarse",
+                            "Iniciar Sesión",
                             onPressed: () => context.go("/welcome"),
                             fill: true,
                           ),
@@ -71,8 +56,8 @@ class RegisterPage extends StatelessWidget {
                             height: 16,
                           ),
                           SerManosButton.ctaText(
-                            "Ya tengo cuenta",
-                            onPressed: () => context.go("/login"),
+                            "No tengo cuenta",
+                            onPressed: () => context.go("/register"),
                             fill: true,
                           ),
                           const SizedBox(
@@ -82,12 +67,13 @@ class RegisterPage extends StatelessWidget {
                       )
                     ],
                   ),
-                ),
               ),
-            );
-            },
-          ),
+            ),
+          );},
         ),
-      );
+        ),
+    );
   }
+
+
 }
