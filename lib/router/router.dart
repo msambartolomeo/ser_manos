@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ser_manos/main.dart';
 import 'package:ser_manos/pages/entry.dart';
 import 'package:ser_manos/pages/login.dart';
+import 'package:ser_manos/pages/new_detail.dart';
 import 'package:ser_manos/pages/register.dart';
 import 'package:ser_manos/pages/welcome.dart';
 
@@ -37,6 +38,12 @@ final GoRouter myRouter = GoRouter(
           path: 'welcome',
           builder: (BuildContext context, GoRouterState state) {
             return const WelcomePage();
+          },
+        ),
+        GoRoute(
+          path: 'new_detail',
+          builder: (BuildContext context, GoRouterState state) {
+            return const NewDetailPage();
           },
         ),
       ],

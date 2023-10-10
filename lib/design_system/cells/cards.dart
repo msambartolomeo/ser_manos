@@ -51,7 +51,7 @@ class VolunteerCard extends Container {
                               : const SerManosIcon.primary(
                                   SerManosIconData.favoriteOutline,
                                   active: true),
-                                        const SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           const SerManosIcon.primary(SerManosIconData.location,
                               active: true)
                         ])
@@ -59,7 +59,7 @@ class VolunteerCard extends Container {
                     ))
               ],
             ));
-              }
+}
 
 class NewsCard extends Container {
   NewsCard(
@@ -68,7 +68,8 @@ class NewsCard extends Container {
       required String image,
       required String overline,
       required String title,
-      required String body})
+      required String subtitle,
+      required dynamic onPressedFunction})
       : super(
             decoration: BoxDecoration(
               color: SerManosColor.neutral0,
@@ -90,7 +91,7 @@ class NewsCard extends Container {
                               color: SerManosColor.neutral75),
                           SerManosTypography.subtitle1(title,
                               color: SerManosColor.neutral100),
-                          SerManosTypography.body2(body,
+                          SerManosTypography.body2(subtitle,
                               color: SerManosColor.neutral75,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis),
@@ -99,7 +100,7 @@ class NewsCard extends Container {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               SerManosButton.ctaText("Leer Más",
-                                  onPressed: () => {})
+                                  onPressed: onPressedFunction)
                             ],
                           )
                         ],
