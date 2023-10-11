@@ -6,21 +6,21 @@ part of '../auth_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginStateHash() => r'3393f4b47365f70c8462f87290c09655c30f835d';
+String _$loggedInUserHash() => r'c8e2c92ce544dcadbf4d4c41898dbef487dd57a6';
 
-/// See also [loginState].
-@ProviderFor(loginState)
-final loginStateProvider = AutoDisposeProvider<LoginState>.internal(
-  loginState,
-  name: r'loginStateProvider',
+/// See also [loggedInUser].
+@ProviderFor(loggedInUser)
+final loggedInUserProvider = AutoDisposeProvider<User?>.internal(
+  loggedInUser,
+  name: r'loggedInUserProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$loginStateHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$loggedInUserHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef LoginStateRef = AutoDisposeProviderRef<LoginState>;
-String _$authServiceHash() => r'8f1097eef627f17971690a80906c0e5c7775dc13';
+typedef LoggedInUserRef = AutoDisposeProviderRef<User?>;
+String _$authServiceHash() => r'e330a32944b13c8e89221a112433b4394a75fd1e';
 
 /// See also [AuthService].
 @ProviderFor(AuthService)

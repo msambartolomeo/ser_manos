@@ -51,8 +51,6 @@ class LoginPage extends ConsumerWidget {
                                 email.text,
                                 password.text,
                               );
-                              // TODO: move to service
-                              context.go("/welcome");
                             },
                             fill: true,
                           ),
