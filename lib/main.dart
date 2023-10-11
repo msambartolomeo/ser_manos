@@ -7,8 +7,14 @@ import 'package:ser_manos/pages/news.dart';
 import 'package:ser_manos/pages/profile.dart';
 import 'package:ser_manos/pages/volunteering.dart';
 import 'package:ser_manos/router/router.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
