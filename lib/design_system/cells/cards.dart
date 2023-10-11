@@ -6,14 +6,17 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/shadows.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 
-class VolunteerCard extends Container {
+class VolunteerCard extends InkWell {
   VolunteerCard(
       {super.key,
       required String image,
       required String name,
       required int vacant,
-      required bool isFavorite})
+      required bool isFavorite,
+      required void Function() onTapFunction})
       : super(
+        onTap: onTapFunction,
+        child:Container(
             decoration: BoxDecoration(
               color: SerManosColor.neutral0,
               borderRadius: const BorderRadius.all(Radius.circular(2.0)),
@@ -58,7 +61,7 @@ class VolunteerCard extends Container {
                       ],
                     ))
               ],
-            ));
+            )));
 }
 
 class NewsCard extends Container {
@@ -320,7 +323,7 @@ class InputCard extends _BaseCardInformation {
 class LocationCardWithoutMap extends _BaseCardInformation {
   LocationCardWithoutMap({super.key, required String location})
       : super(
-            title: "Información de perfil",
+            title: "Ubicación",
             information: Row(
               //mainAxisAlignment: MainAxisAlignment.start,
               children: [
