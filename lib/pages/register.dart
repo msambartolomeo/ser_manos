@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
+import 'package:ser_manos/servicies/auth_service.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends ConsumerWidget {
   const RegisterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AuthService authService = ref.watch(authServiceProvider.notifier);
+
     return Scaffold(
       appBar: SerManosHeader.white(),
       body: SerManosGrid(
@@ -62,7 +66,15 @@ class RegisterPage extends StatelessWidget {
                         children: [
                           SerManosButton.cta(
                             "Registrarse",
-                            onPressed: () => context.go("/welcome"),
+                            onPressed: () async {
+                              await authService.register(
+                                "pepe",
+                                "pepe",
+                                "pepe@pepe.com",
+                                "ijqwjdoiawjdoaw",
+                              );
+                              context.go("/welcome");
+                            },
                             fill: true,
                           ),
                           const SizedBox(
