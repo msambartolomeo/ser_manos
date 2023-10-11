@@ -166,7 +166,7 @@ class EmptyProfilePictureCard extends Container {
 
 //no me convence la altura del button
 class ProfilePictureCard extends Container {
-  ProfilePictureCard({super.key, required ImageProvider<Object> image})
+  ProfilePictureCard({super.key, required String image})
       : super(
             decoration: const BoxDecoration(
                 color: SerManosColor.secondary25,
