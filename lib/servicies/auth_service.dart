@@ -33,3 +33,16 @@ class AuthService extends _$AuthService {
     });
   }
 }
+
+@riverpod
+LoginState loginState(LoginStateRef ref) {
+  final loginState = ref.watch(authStateChangeProvider);
+
+  return loginState.when(
+    data: (user) => LoginState.loggedIn,
+    error: (e, s) => LoginState.unauthenthicated,
+    loading: () => LoginState.loading,
+  );
+}
+
+enum LoginState { unauthenthicated, loggedIn, loading }
