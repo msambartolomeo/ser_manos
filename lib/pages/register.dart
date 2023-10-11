@@ -11,12 +11,12 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
+    return Scaffold(
       appBar: SerManosHeader.white(),
       body: SerManosGrid(
         child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints)
-            {return SingleChildScrollView(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: IntrinsicHeight(
@@ -24,42 +24,40 @@ class RegisterPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(children: [
-                            const SquaredLogo(),
-                            const SizedBox(
-                              height: 31,
-                            ),
-                            SerManosTextInput(
-                              hintText: "Ej: Facundo",
-                              label: "Nombre",
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            SerManosTextInput(
-                              hintText: "Ej: Gutierrez",
-                              label: "Apellido",
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            SerManosTextInput(
-                              hintText: "Ej: fgutierrez@mail.com",
-                              label: "Email",
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            SerManosTextInput(
-                              hintText: "Ej: ABCD1234",
-                              label: "Contraseña",
-                              obscureText: true,
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            )
-
-                      ]
-                      ),
+                        const SquaredLogo(),
+                        const SizedBox(
+                          height: 31,
+                        ),
+                        SerManosTextInput(
+                          hintText: "Ej: Facundo",
+                          label: "Nombre",
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SerManosTextInput(
+                          hintText: "Ej: Gutierrez",
+                          label: "Apellido",
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SerManosTextInput(
+                          hintText: "Ej: fgutierrez@mail.com",
+                          label: "Email",
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SerManosTextInput(
+                          hintText: "Ej: ABCD1234",
+                          label: "Contraseña",
+                          obscureText: true,
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        )
+                      ]),
                       Column(
                         children: [
                           SerManosButton.cta(
@@ -85,9 +83,9 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
             );
-            },
-          ),
+          },
         ),
-      );
+      ),
+    );
   }
 }

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
@@ -8,7 +6,7 @@ import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 
-class LoginPage extends StatelessWidget{
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
@@ -17,32 +15,32 @@ class LoginPage extends StatelessWidget{
       appBar: SerManosHeader.white(),
       body: SerManosGrid(
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints)
-          { return  SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: IntrinsicHeight(
-                child: Column(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
                     children: [
                       const Spacer(),
                       Column(
-                          children: [
-                            const SquaredLogo(),
-                            const SizedBox(height: 32),
-                            SerManosTextInput(
-                              label: "Email",
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            SerManosTextInput(
-                              label: "Contraseña",
-                              obscureText: true,
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            )
-                          ],
+                        children: [
+                          const SquaredLogo(),
+                          const SizedBox(height: 32),
+                          SerManosTextInput(
+                            label: "Email",
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          SerManosTextInput(
+                            label: "Contraseña",
+                            obscureText: true,
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          )
+                        ],
                       ),
                       const Spacer(),
                       Column(
@@ -67,13 +65,12 @@ class LoginPage extends StatelessWidget{
                       )
                     ],
                   ),
+                ),
               ),
-            ),
-          );},
+            );
+          },
         ),
-        ),
+      ),
     );
   }
-
-
 }
