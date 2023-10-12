@@ -71,8 +71,7 @@ class SerManosForm extends Column {
           InputCard(),
           const SizedBox(height: 24.0),
           EmptyProfilePictureCard(),
-        ]));
-
+        ]);
 
   // TODO: add controllers
   SerManosForm.contactData({super.key})
