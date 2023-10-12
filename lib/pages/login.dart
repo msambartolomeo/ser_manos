@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/auth_controllers.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
-import 'package:ser_manos/servicies/auth_service.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -15,8 +15,16 @@ class LoginPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final email = TextEditingController();
     final password = TextEditingController();
+    bool isLoading = false;
 
-    final AuthService authService = ref.watch(authServiceProvider.notifier);
+    ref.watch(loginControllerProvider).maybeWhen(
+          orElse: () => {},
+          loading: () => isLoading = true,
+          error: (e, _) => {}, // TODO: Handle error
+        );
+
+    final LoginController loginController =
+        ref.watch(loginControllerProvider.notifier);
 
     return Scaffold(
       appBar: SerManosHeader.white(),
@@ -47,11 +55,12 @@ class LoginPage extends ConsumerWidget {
                           SerManosButton.cta(
                             "Iniciar Sesión",
                             onPressed: () async {
-                              await authService.login(
+                              await loginController.login(
                                 email.text,
                                 password.text,
                               );
                             },
+                            disabled: isLoading,
                             fill: true,
                           ),
                           const SizedBox(
@@ -61,6 +70,7 @@ class LoginPage extends ConsumerWidget {
                             "No tengo cuenta",
                             onPressed: () => context.go("/register"),
                             fill: true,
+                            disabled: isLoading,
                           ),
                           const SizedBox(
                             height: 32,

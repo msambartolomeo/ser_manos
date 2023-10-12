@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/auth_controllers.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
-import 'package:ser_manos/servicies/auth_service.dart';
 
 class RegisterPage extends ConsumerWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AuthService authService = ref.watch(authServiceProvider.notifier);
     final name = TextEditingController();
     final surname = TextEditingController();
     final email = TextEditingController();
     final password = TextEditingController();
+    bool isLoading = true;
+
+    ref.watch(registerControllerProvider).maybeWhen(
+          orElse: () => {},
+          loading: () => isLoading = true,
+          error: (e, _) => {}, // TODO: Handle error
+        );
+
+    final RegisterController registerController =
+        ref.watch(registerControllerProvider.notifier);
 
     return Scaffold(
       appBar: SerManosHeader.white(),
@@ -50,13 +59,14 @@ class RegisterPage extends ConsumerWidget {
                           SerManosButton.cta(
                             "Registrarse",
                             onPressed: () async {
-                              await authService.register(
+                              await registerController.register(
                                 name.text,
                                 surname.text,
                                 email.text,
                                 password.text,
                               );
                             },
+                            disabled: isLoading,
                             fill: true,
                           ),
                           const SizedBox(
@@ -66,6 +76,7 @@ class RegisterPage extends ConsumerWidget {
                             "Ya tengo cuenta",
                             onPressed: () => context.go("/login"),
                             fill: true,
+                            disabled: isLoading,
                           ),
                           const SizedBox(
                             height: 32,

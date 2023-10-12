@@ -1,42 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:ser_manos/providers/firebase_providers.dart';
 
-part 'generated/auth_data.g.dart';
+class AuthData {
+  final FirebaseAuth firebaseAuth;
 
-@riverpod
-class AuthData extends _$AuthData {
-  @override
-  FutureOr<void> build() {}
+  AuthData({required this.firebaseAuth});
 
   Future<void> login(String email, String password) async {
-    final firebaseAuth = ref.watch(firebaseAuthProvider);
-
-    state = const AsyncLoading();
-
-    state = await AsyncValue.guard(() async {
+    try {
       await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-    });
+    } on FirebaseAuthException catch (_) {
+      // TODO: Handle error
+      rethrow;
+    }
   }
 
   Future<void> register(String email, String password) async {
-    final firebaseAuth = ref.watch(firebaseAuthProvider);
-
-    state = const AsyncLoading();
-
-    state = await AsyncValue.guard(() async {
+    try {
       await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-    });
+    } on FirebaseAuthException catch (_) {
+      // TODO: Handle error
+      rethrow;
+    }
   }
-}
-
-@riverpod
-Stream<User?> authStateChange(AuthStateChangeRef ref) async* {
-  ref.watch(firebaseAuthProvider).authStateChanges();
 }
