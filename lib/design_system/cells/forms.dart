@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 
@@ -67,7 +68,11 @@ class SerManosForm extends Column {
             hintText: "DD/MM/YYYY",
           ),
           const SizedBox(height: 24.0),
-        ]);
+          InputCard(),
+          const SizedBox(height: 24.0),
+          EmptyProfilePictureCard(),
+        ]));
+
 
   // TODO: add controllers
   SerManosForm.contactData({super.key})
@@ -82,13 +87,13 @@ class SerManosForm extends Column {
                   "Estos datos serán compartidos con la organización para ponerse en contacto contigo")),
           const SizedBox(height: 24.0),
           SerManosTextInput(
-            label: "Mail",
-            hintText: "Ej: mimail@mail.com",
+            label: "Teléfono",
+            hintText: "Ej: +541178445459",
           ),
           const SizedBox(height: 24.0),
           SerManosTextInput(
-            label: "Teléfono",
-            hintText: "Ej: +541178445459",
+            label: "Mail",
+            hintText: "Ej: mimail@mail.com",
           )
         ]);
 }

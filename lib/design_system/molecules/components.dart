@@ -46,10 +46,10 @@ class SerManosVacantComponent extends _BaseVacantComponent{
 
 class _BaseProfilePicture extends ClipOval{
 
-  _BaseProfilePicture(ImageProvider<Object> image, {required double width, required double height})
+  _BaseProfilePicture(String image, {required double width, required double height})
   :super(
-    child: Image(
-      image: image,
+    child: Image.network(
+      image,
       width: width,
       height: height,
       fit: BoxFit.cover,)

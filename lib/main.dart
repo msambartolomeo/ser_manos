@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
+import 'package:ser_manos/pages/full_profile.dart';
 import 'package:ser_manos/pages/news.dart';
-import 'package:ser_manos/pages/profile.dart';
 import 'package:ser_manos/pages/volunteering.dart';
 import 'package:ser_manos/router/router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
           body: const TabBarView(
             children: [
              VolunteeringTab(),
-              EmptyProfileTab(name: "Nombre"),
+              FullProfileTab(),
               NewsTab(),
             ],
           ),

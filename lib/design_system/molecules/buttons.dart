@@ -32,7 +32,7 @@ class SerManosButton extends Container {
         );
 
   SerManosButton.ctaText(String text,
-      {super.key, required onPressed, bool disabled = false, bool fill = false})
+      {super.key, required onPressed, bool disabled = false, bool fill = false, Color color = SerManosColor.primary100 })
       : super(
           width: fill ? double.infinity : null,
           height: 44,
@@ -45,7 +45,7 @@ class SerManosButton extends Container {
             child: SerManosTypography.button(
               text,
               color:
-                  disabled ? SerManosColor.neutral50 : SerManosColor.primary100,
+                  disabled ? SerManosColor.neutral50 : color,
             ),
           ),
         );

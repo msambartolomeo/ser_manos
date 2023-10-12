@@ -16,7 +16,7 @@ class EmptyProfileTab extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: SerManosColor.secondary10,
+      color: SerManosColor.neutral0,
       child: SerManosGrid(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

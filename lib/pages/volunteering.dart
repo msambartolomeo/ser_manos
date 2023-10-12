@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/searchbars.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -19,47 +20,53 @@ class VolunteeringTab extends StatefulWidget{
 class _VolunteeringTabState extends State<VolunteeringTab> {
 
   List<Volunteering> volunteering = [
-    Volunteering(
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 8,
-        favorite: true),
-       Volunteering(
-        image:
+    Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
+    activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
+     requirements: "Mayor de edad", disponibility: "Mayor de edad", 
+     image:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
         name: "Ser Donante Voluntario",
         vacant: 3,
         favorite: true),
-        Volunteering(
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3kMFU_iePXtCvS-8Br-V0qZP_p78wFRBh8g&usqp=CAU",
+       Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
+    activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
+     requirements: "Mayor de edad", disponibility: "Mayor de edad", 
+     image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
         name: "Ser Donante Voluntario",
-        vacant: 1,
-        favorite: false),
-        Volunteering(
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3kMFU_iePXtCvS-8Br-V0qZP_p78wFRBh8g&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 8,
+        vacant: 3,
         favorite: true),
-        Volunteering(
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3kMFU_iePXtCvS-8Br-V0qZP_p78wFRBh8g&usqp=CAU",
+        Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
+    activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
+     requirements: "Mayor de edad", disponibility: "Mayor de edad", 
+     image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
         name: "Ser Donante Voluntario",
-        vacant: 10,
+        vacant: 3,
         favorite: true),
-        Volunteering(
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3kMFU_iePXtCvS-8Br-V0qZP_p78wFRBh8g&usqp=CAU",
+        Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
+    activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
+     requirements: "Mayor de edad", disponibility: "Mayor de edad", 
+     image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
         name: "Ser Donante Voluntario",
-        vacant: 6,
-        favorite: false),
-        Volunteering(
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3kMFU_iePXtCvS-8Br-V0qZP_p78wFRBh8g&usqp=CAU",
+        vacant: 3,
+        favorite: true),
+        Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
+    activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
+     requirements: "Mayor de edad", disponibility: "Mayor de edad", 
+     image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
         name: "Ser Donante Voluntario",
-        vacant: 8,
+        vacant: 3,
+        favorite: true),
+        Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
+    activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
+     requirements: "Mayor de edad", disponibility: "Mayor de edad", 
+     image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
+        name: "Ser Donante Voluntario",
+        vacant: 3,
         favorite: true),
    
   ];
@@ -92,7 +99,8 @@ class _VolunteeringTabState extends State<VolunteeringTab> {
                       image: volunteering[index].image,
                       name: volunteering[index].name,
                       vacant: volunteering[index].vacant,
-                      isFavorite: volunteering[index].favorite);
+                      isFavorite: volunteering[index].favorite,
+                      onTapFunction: () => context.go("/volunteering_detail"),);
                 },
                 separatorBuilder: ((context, index) => const SizedBox(
                       height: 24,
