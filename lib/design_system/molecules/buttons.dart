@@ -25,7 +25,8 @@ class SerManosButton extends Container {
             ),
             child: SerManosTypography.button(
               text,
-              color: SerManosColor.neutral0,
+              color:
+                  disabled ? SerManosColor.neutral50 : SerManosColor.neutral0,
             ),
           ),
         );
@@ -43,7 +44,8 @@ class SerManosButton extends Container {
             ),
             child: SerManosTypography.button(
               text,
-              color: color,
+              color:
+                  disabled ? SerManosColor.neutral50 : color,
             ),
           ),
         );
@@ -74,7 +76,9 @@ class SerManosButton extends Container {
                 ),
                 SerManosTypography.button(
                   text,
-                  color: SerManosColor.neutral0,
+                  color: disabled
+                      ? SerManosColor.neutral50
+                      : SerManosColor.neutral0,
                 ),
               ],
             ),
