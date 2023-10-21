@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
-import 'package:ser_manos/models/news.dart';
+import 'package:ser_manos/models/models.dart';
 
 class NewsTab extends StatefulWidget {
   const NewsTab({super.key});
@@ -13,7 +13,7 @@ class NewsTab extends StatefulWidget {
 }
 
 class _NewsTabState extends State<NewsTab> {
-  List<News> news = [
+  List<News> news = const [
     News(
         image:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3kMFU_iePXtCvS-8Br-V0qZP_p78wFRBh8g&usqp=CAU",

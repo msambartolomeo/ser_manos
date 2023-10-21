@@ -4,7 +4,7 @@ import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
-import 'package:ser_manos/models/news.dart';
+import 'package:ser_manos/models/models.dart';
 
 class NewDetailPage extends StatefulWidget {
   const NewDetailPage({super.key});
@@ -14,7 +14,7 @@ class NewDetailPage extends StatefulWidget {
 }
 
 class _NewDetailState extends State<NewDetailPage> {
-  News anew = News(
+  News anew = const News(
       image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
       overline: "reporte 2820",

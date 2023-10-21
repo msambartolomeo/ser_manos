@@ -9,7 +9,7 @@ import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
-import 'package:ser_manos/models/profile.dart';
+import 'package:ser_manos/models/models.dart';
 
 class FullProfileTab extends StatefulWidget{
   const FullProfileTab({super.key});
@@ -22,7 +22,7 @@ class FullProfileTab extends StatefulWidget{
 
 class _FullProfileTabState extends State<FullProfileTab>{
 
-  Profile profile = Profile(image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBsW1R-C7zPe66dsE_smtN6VB6ojpzwn-iMA&usqp=CAU", 
+  Profile profile = const Profile(image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBsW1R-C7zPe66dsE_smtN6VB6ojpzwn-iMA&usqp=CAU", 
   name: "Lionel", email: "liomessi@mail.com", birthday: "10/10/2000", gender: "Hombre", phone: "+5491165863216");
   @override
   Widget build(BuildContext context) {

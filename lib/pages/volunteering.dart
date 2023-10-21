@@ -6,7 +6,7 @@ import 'package:ser_manos/design_system/molecules/searchbars.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
-import 'package:ser_manos/models/volunteering.dart';
+import 'package:ser_manos/models/models.dart';
 
 class VolunteeringTab extends StatefulWidget{
   const VolunteeringTab({super.key});
@@ -19,7 +19,7 @@ class VolunteeringTab extends StatefulWidget{
 
 class _VolunteeringTabState extends State<VolunteeringTab> {
 
-  List<Volunteering> volunteering = [
+  List<Volunteering> volunteering = const [
     Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
     activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
      requirements: "Mayor de edad", disponibility: "Mayor de edad", 
