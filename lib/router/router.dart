@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/pages/edit_profile.dart';
 import 'package:ser_manos/pages/entry.dart';
@@ -9,8 +8,6 @@ import 'package:ser_manos/pages/register.dart';
 import 'package:ser_manos/pages/volunteering_detail.dart';
 import 'package:ser_manos/pages/welcome.dart';
 
-final rootNavigator = GlobalKey<NavigatorState>();
-
 /// The route configuration.
 class RouterBuilder {
   final bool authState;
@@ -19,7 +16,6 @@ class RouterBuilder {
 
   GoRouter build() {
     return GoRouter(
-      navigatorKey: rootNavigator,
       routes: <RouteBase>[
         GoRoute(
           path: "/",
@@ -36,44 +32,33 @@ class RouterBuilder {
           ],
         ),
         GoRoute(
-          path: "/home",
-          builder: (context, state) => const HomePage(),
-          routes: [
-            GoRoute(
-              path: "volunteerings",
-              builder: (context, state) => const HomePage(index: 0),
-              routes: [
-                GoRoute(
-                  path: ":id",
-                  builder: (context, state) =>
-                      // TODO: pass path param state.pathParameters["id"]!
-                      const VolunteeringDetailPage(),
-                ),
-              ],
-            ),
-            GoRoute(
-              path: "profile",
-              builder: (context, state) => const HomePage(index: 1),
-              routes: [
-                GoRoute(
-                  path: 'edit',
-                  builder: (context, state) => const EditProfileModal(),
-                ),
-              ],
-            ),
-            GoRoute(
-              path: "news",
-              builder: (context, state) => const HomePage(index: 2),
-              routes: [
-                GoRoute(
-                  path: ":id",
-                  builder: (context, GoRouterState state) =>
-                      // TODO: pass path param state.pathParameters["id"]!
-                      const NewDetailPage(),
-                ),
-              ],
-            ),
-          ],
+          path: "/home/:tab",
+          builder: (context, state) {
+            final index = switch (state.pathParameters["tab"]!) {
+              "volunterings" => 0,
+              "profile" => 1,
+              "news" => 2,
+              _ => 0,
+            };
+
+            return HomePage(index: index);
+          },
+        ),
+        GoRoute(
+          path: "/home/volunteerings/:id",
+          builder: (context, state) =>
+              // TODO: pass path param state.pathParameters["id"]!
+              const VolunteeringDetailPage(),
+        ),
+        GoRoute(
+          path: '/home/profile/edit',
+          builder: (context, state) => const EditProfileModal(),
+        ),
+        GoRoute(
+          path: "/home/news/:id",
+          builder: (context, GoRouterState state) =>
+              // TODO: pass path param state.pathParameters["id"]!
+              const NewDetailPage(),
         ),
         GoRoute(
           path: "/welcome",
