@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ser_manos/main.dart';
 import 'package:ser_manos/pages/edit_profile.dart';
 import 'package:ser_manos/pages/entry.dart';
+import 'package:ser_manos/pages/home.dart';
 import 'package:ser_manos/pages/login.dart';
 import 'package:ser_manos/pages/new_detail.dart';
 import 'package:ser_manos/pages/register.dart';
 import 'package:ser_manos/pages/volunteering_detail.dart';
 import 'package:ser_manos/pages/welcome.dart';
+
+final rootNavigator = GlobalKey<NavigatorState>();
 
 /// The route configuration.
 class RouterBuilder {
@@ -17,54 +19,65 @@ class RouterBuilder {
 
   GoRouter build() {
     return GoRouter(
+      navigatorKey: rootNavigator,
       routes: <RouteBase>[
         GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const EntryPage();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'login',
-          builder: (BuildContext context, GoRouterState state) {
-            return const LoginPage();
-          },
+          path: "/",
+          builder: (context, state) => const EntryPage(),
+          routes: [
+            GoRoute(
+              path: "login",
+              builder: (context, state) => const LoginPage(),
+            ),
+            GoRoute(
+              path: "register",
+              builder: (context, state) => const RegisterPage(),
+            ),
+          ],
         ),
         GoRoute(
-          path: 'register',
-          builder: (BuildContext context, GoRouterState state) {
-            return const RegisterPage();
-          },
+          path: "/home",
+          builder: (context, state) => const HomePage(),
+          routes: [
+            GoRoute(
+              path: "volunteerings",
+              builder: (context, state) => const HomePage(index: 0),
+              routes: [
+                GoRoute(
+                  path: ":id",
+                  builder: (context, state) =>
+                      // TODO: pass path param state.pathParameters["id"]!
+                      const VolunteeringDetailPage(),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: "profile",
+              builder: (context, state) => const HomePage(index: 1),
+              routes: [
+                GoRoute(
+                  path: 'edit',
+                  builder: (context, state) => const EditProfileModal(),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: "news",
+              builder: (context, state) => const HomePage(index: 2),
+              routes: [
+                GoRoute(
+                  path: ":id",
+                  builder: (context, GoRouterState state) =>
+                      // TODO: pass path param state.pathParameters["id"]!
+                      const NewDetailPage(),
+                ),
+              ],
+            ),
+          ],
         ),
         GoRoute(
-          path: 'home',
-          builder: (BuildContext context, GoRouterState state) {
-            return const MyHomePage(title: "title");
-          },
-        ),
-        GoRoute(
-          path: 'welcome',
-          builder: (BuildContext context, GoRouterState state) {
-            return const WelcomePage();
-          },
-        ),
-        GoRoute(
-          path: 'new_detail',
-          builder: (BuildContext context, GoRouterState state) {
-            return const NewDetailPage();
-          },
-        ),
-        GoRoute(
-          path: 'volunteering_detail',
-          builder: (BuildContext context, GoRouterState state) {
-            return const VolunteeringDetailPage();
-          },
-        ),
-        GoRoute(
-          path: 'edit_profile',
-          builder: (BuildContext context, GoRouterState state) {
-            return const EditProfileModal();
-          },
+          path: "/welcome",
+          builder: (context, state) => const WelcomePage(),
         ),
       ],
     );
