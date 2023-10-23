@@ -10,9 +10,15 @@ import 'package:ser_manos/pages/volunteering_detail.dart';
 import 'package:ser_manos/pages/welcome.dart';
 
 /// The route configuration.
-final GoRouter myRouter = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
+class RouterBuilder {
+  final bool authState;
+
+  const RouterBuilder(this.authState);
+
+  GoRouter build() {
+    return GoRouter(
+      routes: <RouteBase>[
+        GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const EntryPage();
@@ -61,6 +67,6 @@ final GoRouter myRouter = GoRouter(
           },
         ),
       ],
-    ),
-  ],
-);
+    );
+  }
+}
