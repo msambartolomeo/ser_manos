@@ -51,7 +51,8 @@ final GoRouter myRouter = GoRouter(
         GoRoute(
           path: 'volunteering_detail',
           builder: (BuildContext context, GoRouterState state) {
-            return const VolunteeringDetailPage();
+            final Map map = state.extra! as Map;
+            return VolunteeringDetailPage(volunteering: map['data'], id: map['id']);
           },
         ),
         GoRoute(

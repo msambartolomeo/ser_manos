@@ -9,14 +9,14 @@ class Volunteering with _$Volunteering {
     required String image,
     required String name,
     required String purpose,
-    required String activity,
-    required String requirements,
-    required String disponibility,
-    required int vacant,
-    required bool favorite
+    required String description,
+    required List<String> requirements,
+    required List<String> disponibility,
+    required int vacants,
+    required String address
   }) = _Volunteering;
 
-  factory Volunteering.fromJson(Map<String, Object?> json)
+  factory Volunteering.fromJson(Map<String, dynamic> json)
       => _$VolunteeringFromJson(json);
 }
 

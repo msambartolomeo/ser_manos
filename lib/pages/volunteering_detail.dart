@@ -12,7 +12,9 @@ import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 
 class VolunteeringDetailPage extends StatefulWidget{
-  const VolunteeringDetailPage({super.key});
+  final Volunteering volunteering;
+  final String id;
+  const VolunteeringDetailPage({super.key, required this.volunteering, required this.id});
   
   @override
   State<StatefulWidget> createState() {
@@ -23,18 +25,9 @@ class VolunteeringDetailPage extends StatefulWidget{
 
 class _VolunteeringDetailState extends State<VolunteeringDetailPage>{
 
-  Volunteering volunteering = const Volunteering(purpose: "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.", 
-    activity: "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-     requirements: "Mayor de edad", disponibility: "Mayor de edad", 
-     image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 3,
-        favorite: true);
-
-
   @override
   Widget build(BuildContext context) {
+    final volunteering = widget.volunteering;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: SerManosHeader.opacity(
@@ -48,9 +41,9 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage>{
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
+            const Row(
               children: [
-                Expanded(child: Image.network(volunteering.image, fit: BoxFit.cover,))
+                // Expanded(child: Image.network(volunteering.image, fit: BoxFit.cover,))
               ],
             ),
             
@@ -67,9 +60,9 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage>{
                   const SizedBox(height: 24,),
                   SerManosTypography.heading2("Sobre la actividad"),
                   const SizedBox(height: 8,),
-                  SerManosTypography.body1(volunteering.activity),
+                  SerManosTypography.body1(volunteering.description),
                   const SizedBox(height: 24,),
-                  LocationCardWithoutMap(location: "Echeverría 3560, Capital Federal."),
+                  LocationCardWithoutMap(location: volunteering.address),
                   const SizedBox(height: 24,),
                   SerManosTypography.heading2("Participar del voluntariado"),
                   const SizedBox(height: 8,),
@@ -81,7 +74,7 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage>{
                   const SizedBox(height: 8,),
                   SerManosTypography.body1("• ${volunteering.disponibility}"),
                   const SizedBox(height: 8,),
-                  SerManosVacantComponent.enabled(volunteering.vacant),
+                  SerManosVacantComponent.enabled(volunteering.vacants),
                   const SizedBox(height: 24,),
                   SerManosButton.cta("Postularme", 
                   onPressed: (){
