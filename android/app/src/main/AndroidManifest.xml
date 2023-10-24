@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- TODO: Change example.com for domain name -->
-                <data android:scheme="http" android:host="example.com" />
+                <data android:scheme="http" android:host="sermanos.itba.edu.ar" />
                 <data android:scheme="https" />
             </intent-filter>
         </activity>
