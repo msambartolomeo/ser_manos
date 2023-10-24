@@ -11,9 +11,9 @@ import 'package:ser_manos/pages/welcome.dart';
 
 /// The route configuration.
 class RouterBuilder {
-  final bool authState;
+  final bool loggedIn;
 
-  const RouterBuilder(this.authState);
+  const RouterBuilder(this.loggedIn);
 
   GoRouter build() {
     return GoRouter(
@@ -79,6 +79,17 @@ class RouterBuilder {
           builder: (context, state) => const WelcomePage(),
         ),
       ],
+      redirect: (context, state) {
+        final location = state.matchedLocation;
+
+        return switch (location) {
+          "/" ||
+          "/login" ||
+          "/register" =>
+            loggedIn ? "/home/volunteerings" : null,
+          _ => loggedIn ? null : "/",
+        };
+      },
     );
   }
 }
