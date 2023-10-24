@@ -17,7 +17,7 @@ class RegisterPage extends ConsumerWidget {
     final surname = TextEditingController();
     final email = TextEditingController();
     final password = TextEditingController();
-    bool isLoading = true;
+    bool isLoading = false;
 
     ref.watch(registerControllerProvider).maybeWhen(
           orElse: () => {},
