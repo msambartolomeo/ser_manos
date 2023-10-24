@@ -100,7 +100,8 @@ class _VolunteeringTabState extends State<VolunteeringTab> {
                       name: volunteering[index].name,
                       vacant: volunteering[index].vacant,
                       isFavorite: volunteering[index].favorite,
-                      onTapFunction: () => context.go("/volunteering_detail"),);
+                      //TODO: replace id with real id
+                      onTapFunction: () => context.go("/home/volunteerings/id"),);
                 },
                 separatorBuilder: ((context, index) => const SizedBox(
                       height: 24,

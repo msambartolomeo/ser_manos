@@ -76,7 +76,8 @@ class _NewsTabState extends State<NewsTab> {
                 overline: news[index].overline,
                 title: news[index].title,
                 subtitle: news[index].subtitle,
-                onPressedFunction: () => context.go("/new_detail"),
+                //TODO: replace id with real id
+                onPressedFunction: () => context.go("/home/news/id"),
               );
             },
             separatorBuilder: ((context, index) => const SizedBox(

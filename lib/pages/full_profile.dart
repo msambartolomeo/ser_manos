@@ -45,7 +45,7 @@ class _FullProfileTabState extends State<FullProfileTab>{
               CardInformation(title: "Datos de contacto", label1: "Teléfono", content1: profile.gender,
               label2: "e-mail", content2: profile.email),
               const SizedBox(height: 32),
-              SerManosButton.cta("Editar perfil", onPressed: () => context.go("/edit_profile") , fill: true),
+              SerManosButton.cta("Editar perfil", onPressed: () => context.go("/home/profile/edit") , fill: true),
               const SizedBox(height: 8),
               SerManosButton.ctaText("Cerrar sesión", onPressed: (){}, fill: true, color: SerManosColor.error100),
             ],
