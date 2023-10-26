@@ -17,7 +17,7 @@ class WelcomePage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Spacer(),
+              const Spacer(),
               Column(
                 children: [
                   const SquaredLogo(),
@@ -30,9 +30,9 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Padding(
-                padding: EdgeInsets.only(bottom: 92),
+                padding: const EdgeInsets.only(bottom: 92),
                 child: SerManosButton.cta(
                   "Comenzar",
                   onPressed: () => context.go("/home/volunteerings"),

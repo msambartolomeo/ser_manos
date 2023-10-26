@@ -4,7 +4,7 @@ import 'package:ser_manos/design_system/tokens/text_style.dart';
 
 class _BaseTypography extends Text {
   const _BaseTypography(
-    String text, {
+    super.text, {
     super.key,
     TextAlign align = TextAlign.left,
     super.maxLines,
@@ -12,7 +12,6 @@ class _BaseTypography extends Text {
     Color color = SerManosColor.neutral100,
     TextStyle textStyle = const SerManosTextStyle.heading1(),
   }) : super(
-          text,
           style: textStyle,
           textAlign: align,
         );
@@ -20,74 +19,67 @@ class _BaseTypography extends Text {
 
 class SerManosTypography extends _BaseTypography {
   SerManosTypography.heading1(
-    String text, {
+    super.text, {
     super.key,
     super.color,
     super.align,
   }) : super(
-          text,
           textStyle: SerManosTextStyle.heading1(color: color),
         );
 
   SerManosTypography.heading2(
-    String text, {
+    super.text, {
     super.key,
     super.color,
     super.align,
   }) : super(
-          text,
           textStyle: SerManosTextStyle.heading2(color: color),
         );
 
   SerManosTypography.subtitle1(
-    String text, {
+    super.text, {
     super.key,
     super.color,
     super.align,
   }) : super(
-          text,
           textStyle: SerManosTextStyle.subtitle1(color: color),
         );
 
   SerManosTypography.body1(
-    String text, {
+    super.text, {
     super.key,
     super.color,
     super.align,
   }) : super(
-          text,
           textStyle: SerManosTextStyle.body1(color: color),
         );
 
   SerManosTypography.body2(
-    String text, {
+    super.text, {
     super.key,
     super.color,
     super.align,
     super.maxLines,
     super.overflow,
   }) : super(
-          text,
           textStyle: SerManosTextStyle.body2(color: color),
         );
 
   SerManosTypography.button(
-    String text, {
+    super.text, {
     super.key,
     super.color,
     super.align,
   }) : super(
-          text,
           textStyle: SerManosTextStyle.button(color: color),
         );
 
   SerManosTypography.caption(
-    String text, {
+    super.text, {
     super.key,
     super.color,
     super.align,
   }) : super(
-          text,
           textStyle: SerManosTextStyle.caption(color: color),
         );
 

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 part 'generated/models.freezed.dart';
 part 'generated/models.g.dart';
 
