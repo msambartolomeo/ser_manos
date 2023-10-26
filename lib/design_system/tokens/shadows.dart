@@ -17,7 +17,7 @@ abstract final class SerManosShadows {
       blurRadius: 2,
       spreadRadius: 0,
       offset: const Offset(
-        0, 
+        0,
         1,
       ),
     ),

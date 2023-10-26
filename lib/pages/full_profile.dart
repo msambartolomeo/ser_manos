@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/profile_controller.dart';
 import 'package:ser_manos/controllers/auth_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
@@ -8,17 +9,7 @@ import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
-import 'package:ser_manos/models/profile.dart';
-
-Profile profile = Profile(
-  image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBsW1R-C7zPe66dsE_smtN6VB6ojpzwn-iMA&usqp=CAU",
-  name: "Lionel",
-  email: "liomessi@mail.com",
-  birthday: "10/10/2000",
-  gender: "Hombre",
-  phone: "+5491165863216",
-);
+import 'package:ser_manos/models/models.dart';
 
 class FullProfileTab extends ConsumerWidget {
   const FullProfileTab({super.key});
@@ -35,6 +26,16 @@ class FullProfileTab extends ConsumerWidget {
 
     final LogOutController logOutController =
         ref.watch(logOutControllerProvider.notifier);
+
+    final Profile? profile = ref.watch(profileControllerProvider).when(
+          data: (profile) => profile,
+          loading: () => null,
+          error: (e, _) => null, // TODO: Handle error
+        );
+
+    if (profile == null) {
+      return const CircularProgressIndicator();
+    }
 
     return SingleChildScrollView(
       child: Container(
@@ -70,7 +71,7 @@ class FullProfileTab extends ConsumerWidget {
                 CardInformation(
                   title: "Datos de contacto",
                   label1: "Teléfono",
-                  content1: profile.gender,
+                  content1: profile.phone,
                   label2: "e-mail",
                   content2: profile.email,
                 ),

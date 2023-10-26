@@ -59,7 +59,6 @@ class SerManosTypography extends _BaseTypography {
           textStyle: SerManosTextStyle.body1(color: color),
         );
 
-
   SerManosTypography.body2(
     String text, {
     super.key,

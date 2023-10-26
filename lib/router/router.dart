@@ -53,8 +53,10 @@ class RouterBuilder {
                   Widget page;
                   switch (state.pathParameters["tab"]!) {
                     case "volunterings":
+                      final Map map = state.extra! as Map;
                       // TODO: pass path param state.pathParameters["param"]!
-                      page = const VolunteeringDetailPage();
+                      page = VolunteeringDetailPage(
+                          volunteering: map["volunteering"], id: map["id"]);
                       break;
                     case "profile":
                       if (param != "edit") {
@@ -64,11 +66,14 @@ class RouterBuilder {
                       break;
                     case "news":
                       // TODO: pass path param state.pathParameters["id"]!
-                      page = const NewDetailPage();
+                      final Map map = state.extra! as Map;
+                      page = NewDetailPage(news: map["news"]);
                       break;
                     default:
                       // TODO: page = errorPage
-                      page = const VolunteeringDetailPage();
+                      final Map map = state.extra! as Map;
+                      page = VolunteeringDetailPage(
+                          volunteering: map["volunteering"], id: map["id"]);
                   }
                   return page;
                 },

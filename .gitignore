@@ -45,3 +45,4 @@ app.*.map.json
 
 # Riverpod Generated files
 *.g.dart
+*.freezed.dart

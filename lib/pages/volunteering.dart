@@ -1,134 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/searchbars.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
-import 'package:ser_manos/models/volunteering.dart';
+import 'package:ser_manos/models/models.dart';
+import 'package:ser_manos/providers/volunteering_provider.dart';
 
-class VolunteeringTab extends StatefulWidget {
+class VolunteeringTab extends ConsumerWidget {
   const VolunteeringTab({super.key});
 
   @override
-  State<VolunteeringTab> createState() => _VolunteeringTabState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<Map<String, Volunteering>> volunteering =
+        ref.watch(fetchVolunteeringProvider);
 
-class _VolunteeringTabState extends State<VolunteeringTab> {
-  List<Volunteering> volunteering = [
-    Volunteering(
-        purpose:
-            "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.",
-        activity:
-            "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-        requirements: "Mayor de edad",
-        disponibility: "Mayor de edad",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 3,
-        favorite: true),
-    Volunteering(
-        purpose:
-            "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.",
-        activity:
-            "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-        requirements: "Mayor de edad",
-        disponibility: "Mayor de edad",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 3,
-        favorite: true),
-    Volunteering(
-        purpose:
-            "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.",
-        activity:
-            "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-        requirements: "Mayor de edad",
-        disponibility: "Mayor de edad",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 3,
-        favorite: true),
-    Volunteering(
-        purpose:
-            "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.",
-        activity:
-            "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-        requirements: "Mayor de edad",
-        disponibility: "Mayor de edad",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 3,
-        favorite: true),
-    Volunteering(
-        purpose:
-            "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.",
-        activity:
-            "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-        requirements: "Mayor de edad",
-        disponibility: "Mayor de edad",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 3,
-        favorite: true),
-    Volunteering(
-        purpose:
-            "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.",
-        activity:
-            "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-        requirements: "Mayor de edad",
-        disponibility: "Mayor de edad",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0VmLLctGvgXcyIpZIlk_d-uZu0LRYWqvetA&usqp=CAU",
-        name: "Ser Donante Voluntario",
-        vacant: 3,
-        favorite: true),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: SerManosColor.secondary10,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 24),
-          SerManosGrid(child: SerManosSearchBar.map()),
-          const SizedBox(height: 24),
-          SerManosGrid(
-              child: SerManosTypography.heading1(
-            "Voluntariados",
-            align: TextAlign.start,
-          )),
-          Expanded(
-            child: ListView.separated(
-                padding: const EdgeInsets.only(top: 24, bottom: 24),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return SerManosGrid(
-                    child: VolunteerCard(
-                      image: volunteering[index].image,
-                      name: volunteering[index].name,
-                      vacant: volunteering[index].vacant,
-                      isFavorite: volunteering[index].favorite,
-                      //TODO: replace id with real id
-                      onTapFunction: () => context.go("/home/volunteerings/id"),
-                    ),
-                  );
-                },
-                separatorBuilder: ((context, index) => const SizedBox(
-                      height: 24,
-                    )),
-                itemCount: volunteering.length),
-          )
-        ],
-      ),
+    return volunteering.when(
+      loading: () => const CircularProgressIndicator(),
+      error: (err, stack) => Text('Error: $err'),
+      data: (volunteering) {
+        final volunteeringList = volunteering.values.toList();
+        return Container(
+          color: SerManosColor.secondary10,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 24),
+              SerManosGrid(child: SerManosSearchBar.map()),
+              const SizedBox(height: 24),
+              SerManosGrid(
+                  child: SerManosTypography.heading1(
+                "Voluntariados",
+                align: TextAlign.start,
+              )),
+              Expanded(
+                child: ListView.separated(
+                    padding: const EdgeInsets.only(top: 24, bottom: 24),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return VolunteerCard(
+                          image: volunteeringList[index].image,
+                          name: volunteeringList[index].name,
+                          vacant: volunteeringList[index].vacants,
+                          isFavorite: true,
+                          onTapFunction: () =>
+                              context.go("/home/volunteerings/id", extra: {
+                                "volunteering": volunteeringList[index],
+                                "id": volunteering.keys.elementAt(index)
+                              }));
+                    },
+                    separatorBuilder: ((context, index) => const SizedBox(
+                          height: 24,
+                        )),
+                    itemCount: volunteeringList.length),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
