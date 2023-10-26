@@ -48,7 +48,7 @@ class VolunteeringTab extends ConsumerWidget{
                       vacant: volunteeringList[index].vacants,
                       isFavorite: true,
                       onTapFunction: () => context.go("/volunteering_detail", 
-                      extra: {"data": volunteeringList[index], "id": volunteering.keys.elementAt(index)}
+                      extra: {"volunteering": volunteeringList[index], "id": volunteering.keys.elementAt(index)}
                       )
                       );
                 },

@@ -45,14 +45,15 @@ final GoRouter myRouter = GoRouter(
         GoRoute(
           path: 'new_detail',
           builder: (BuildContext context, GoRouterState state) {
-            return const NewDetailPage();
+            final Map map = state.extra! as Map;
+            return NewDetailPage(news: map['news']);
           },
         ),
         GoRoute(
           path: 'volunteering_detail',
           builder: (BuildContext context, GoRouterState state) {
             final Map map = state.extra! as Map;
-            return VolunteeringDetailPage(volunteering: map['data'], id: map['id']);
+            return VolunteeringDetailPage(volunteering: map['volunteering'], id: map['id']);
           },
         ),
         GoRoute(
