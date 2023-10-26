@@ -28,4 +28,13 @@ class AuthData {
       rethrow;
     }
   }
+
+  Future<void> logOut() async {
+    try {
+      await firebaseAuth.signOut();
+    } on FirebaseAuthException catch (_) {
+      // TODO: Handle error
+      rethrow;
+    }
+  }
 }

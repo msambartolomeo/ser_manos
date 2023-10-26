@@ -6,7 +6,8 @@ import 'package:ser_manos/design_system/tokens/text_style.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 
 class SerManosHeader extends AppBar {
-  SerManosHeader.tabs({super.key})
+  SerManosHeader.tabs(
+      {super.key, TabController? controller, required void Function(int) onTap})
       : super(
           systemOverlayStyle: const SerManosStatusBar.secondary(),
           title: const Padding(
@@ -14,22 +15,24 @@ class SerManosHeader extends AppBar {
             child: RectangularLogo(),
           ),
           backgroundColor: SerManosColor.secondary90,
-          bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(52),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(52),
             child: Material(
               color: SerManosColor.secondary100,
               child: TabBar(
+                controller: controller,
+                onTap: onTap,
                 unselectedLabelColor: SerManosColor.neutral25,
                 labelColor: SerManosColor.neutral0,
-                labelStyle: SerManosTextStyle.button(),
+                labelStyle: const SerManosTextStyle.button(),
                 indicatorSize: TabBarIndicatorSize.tab,
-                indicator: BoxDecoration(
+                indicator: const BoxDecoration(
                   color: SerManosColor.secondary200,
                   border: Border(
                     bottom: BorderSide(color: SerManosColor.neutral0, width: 3),
                   ),
                 ),
-                tabs: [
+                tabs: const [
                   Tab(
                     height: 52,
                     text: "Postularse",
@@ -83,6 +86,4 @@ class SerManosHeader extends AppBar {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: button);
-
-            
 }

@@ -5,8 +5,8 @@ import 'package:ser_manos/providers/firebase_providers.dart';
 part 'generated/current_user_provider.g.dart';
 
 @riverpod
-Stream<User?> authStateChange(AuthStateChangeRef ref) async* {
-  ref.watch(firebaseAuthProvider).authStateChanges();
+Stream<User?> authStateChange(AuthStateChangeRef ref) {
+  return ref.watch(firebaseAuthProvider).authStateChanges();
 }
 
 @riverpod

@@ -14,7 +14,11 @@ class AuthService {
     String email,
     String password,
   ) async {
-    final response = await authData.register(email, password);
+    await authData.register(email, password);
     // TODO: register User in firestore
+  }
+
+  Future<void> logOut() async {
+    await authData.logOut();
   }
 }

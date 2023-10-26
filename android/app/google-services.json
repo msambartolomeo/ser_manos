@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:58443286682:android:5a51259bf67d613d1bf723",
+        "mobilesdk_app_id": "1:58443286682:android:fda313c80d081bfa1bf723",
         "android_client_info": {
-          "package_name": "com.example.ser_manos"
+          "package_name": "ar.edu.itba.ser_manos"
         }
       },
       "oauth_client": [],
