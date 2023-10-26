@@ -42,7 +42,10 @@ class Profile with _$Profile{
     required String email,
     required String birthday,
     required String gender,
-    required String phone
+    required String phone,
+    required List<String> favorites,
+    required String? myVolunteering,
+    required bool aproved
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, Object?> json)

@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/providers/data_providers.dart';
 import 'package:ser_manos/servicies/auth_service.dart';
+import 'package:ser_manos/servicies/profile_service.dart';
 
 part 'generated/servicies_providers.g.dart';
 
@@ -12,9 +13,9 @@ AuthService authService(AuthServiceRef ref) {
 }
 
 @Riverpod(keepAlive: true)
-UserService userService(UserServiceRef ref){
-  return UserService(
-    userData: ref.read(userDataProvider)
+ProfileService profileService(ProfileServiceRef ref){
+  return ProfileService(
+    profileData: ref.read(profileDataProvider)
   );
 }
 

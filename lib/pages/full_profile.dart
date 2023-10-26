@@ -2,7 +2,9 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/profile_controller.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
@@ -11,22 +13,19 @@ import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 
-class FullProfileTab extends StatefulWidget{
+class FullProfileTab extends ConsumerWidget{
   const FullProfileTab({super.key});
   
   @override
-  State<StatefulWidget> createState() => _FullProfileTabState();
+  Widget build(BuildContext context, WidgetRef ref) {
 
-  
-}
+    final AsyncValue<Profile> profile = ref.watch(profileControllerProvider);
 
-class _FullProfileTabState extends State<FullProfileTab>{
-
-  Profile profile = const Profile(image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBsW1R-C7zPe66dsE_smtN6VB6ojpzwn-iMA&usqp=CAU", 
-  name: "Lionel", email: "liomessi@mail.com", birthday: "10/10/2000", gender: "Hombre", phone: "+5491165863216");
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return profile.when(
+    loading: () => const CircularProgressIndicator(),
+    error: (err, stack) => Text('Error: $err'),
+    data: (profile) {
+      return SingleChildScrollView(
       child: Container(
         color: SerManosColor.neutral0,
         child: SerManosGrid(
@@ -42,7 +41,7 @@ class _FullProfileTabState extends State<FullProfileTab>{
               CardInformation(title: "Información personal", label1: "Fecha de nacimiento", content1: profile.birthday,
               label2: "Género", content2: profile.gender),
               const SizedBox(height: 32),
-              CardInformation(title: "Datos de contacto", label1: "Teléfono", content1: profile.gender,
+              CardInformation(title: "Datos de contacto", label1: "Teléfono", content1: profile.phone,
               label2: "e-mail", content2: profile.email),
               const SizedBox(height: 32),
               SerManosButton.cta("Editar perfil", onPressed: () => context.go("/edit_profile") , fill: true),
@@ -53,6 +52,8 @@ class _FullProfileTabState extends State<FullProfileTab>{
         ),
       ),
     );
+  }
+  );
   }
 
 
