@@ -12,21 +12,15 @@ Future<Map<String, Volunteering>> fetchVolunteering(
   final querySnapshot = await collection.get();
 
   Map<String, Volunteering> volunteeringMap =
-      querySnapshot.docs.fold<Map<String, Volunteering>>({}, (map, doc) {
-    final data = doc.data();
-    final volunteering = Volunteering(
-      name: data['name'],
-      purpose: data['purpose'],
-      image: data['image'],
-      description: data['description'],
-      vacants: data['vacants'],
-      address: data['address'],
-      requirements: List<String>.from(data['requirements']),
-      disponibility: List<String>.from(data['disponibility']),
-    );
-    map[doc.id] = volunteering; // Usamos el ID del documento como clave
-    return map;
-  });
+      querySnapshot.docs.fold<Map<String, Volunteering>>(
+    {},
+    (map, doc) {
+      final data = doc.data();
+      final volunteering = Volunteering.fromJson(data);
+      map[doc.id] = volunteering; // Usamos el ID del documento como clave
+      return map;
+    },
+  );
 
   return volunteeringMap;
 }

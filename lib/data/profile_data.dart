@@ -12,15 +12,6 @@ class ProfileData {
 
     final map = documentReference.data()!;
 
-    return Profile(
-        name: map["name"],
-        image: map["image"],
-        email: map["email"],
-        birthday: map["birthday"],
-        gender: map["gender"],
-        phone: map["phone"],
-        favorites: List<String>.from(map["favorites"]),
-        myVolunteering: map["myVolunteering"],
-        aproved: map["aproved"]);
+    return Profile.fromJson(map);
   }
 }
