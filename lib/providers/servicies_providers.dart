@@ -10,3 +10,11 @@ AuthService authService(AuthServiceRef ref) {
     authData: ref.read(authDataProvider),
   );
 }
+
+@Riverpod(keepAlive: true)
+UserService userService(UserServiceRef ref){
+  return UserService(
+    userData: ref.read(userDataProvider)
+  );
+}
+

@@ -10,3 +10,11 @@ AuthData authData(AuthDataRef ref) {
     firebaseAuth: ref.read(firebaseAuthProvider),
   );
 }
+
+@Riverpod(keepAlive: true)
+UserData userData(UserDataRef ref) {
+  return UserData(
+    firebaseFirestore: ref.read(firebaseFirestoreProvider),
+  );
+}
+
