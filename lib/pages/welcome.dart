@@ -35,7 +35,7 @@ class WelcomePage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 92),
                 child: SerManosButton.cta(
                   "Comenzar",
-                  onPressed: () => context.go("/home"),
+                  onPressed: () => context.go("/home/volunteerings"),
                   fill: true,
                 ),
               ),

@@ -47,3 +47,21 @@ class RegisterController extends _$RegisterController {
     });
   }
 }
+
+@riverpod
+class LogOutController extends _$LogOutController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> logOut() async {
+    final AuthService authService = ref.read(authServiceProvider);
+    final GoRouter router = ref.read(routerProvider);
+
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      await authService.logOut();
+      router.go("/");
+    });
+  }
+}

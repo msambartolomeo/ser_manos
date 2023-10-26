@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,59 +9,58 @@ import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/volunteering_provider.dart';
 
-class VolunteeringTab extends ConsumerWidget{
+class VolunteeringTab extends ConsumerWidget {
   const VolunteeringTab({super.key});
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<Map<String, Volunteering>> volunteering = ref.watch(fetchVolunteeringProvider);
+    AsyncValue<Map<String, Volunteering>> volunteering =
+        ref.watch(fetchVolunteeringProvider);
 
-  return volunteering.when(
-    loading: () => const CircularProgressIndicator(),
-    error: (err, stack) => Text('Error: $err'),
-    data: (volunteering) {
-    final volunteeringList = volunteering.values.toList();
-    return Container(
-      color: SerManosColor.secondary10,
-      child: SerManosGrid(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 24),
-            SerManosSearchBar.map(),
-            const SizedBox(height: 24),
-            SerManosTypography.heading1("Voluntariados", align: TextAlign.start,),
-
-
-            
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.only(top: 24, bottom: 24),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return VolunteerCard(
-                      image: volunteeringList[index].image,
-                      name: volunteeringList[index].name,
-                      vacant: volunteeringList[index].vacants,
-                      isFavorite: true,
-                      onTapFunction: () => context.go("/volunteering_detail", 
-                      extra: {"volunteering": volunteeringList[index], "id": volunteering.keys.elementAt(index)}
-                      )
-                      );
-                },
-                separatorBuilder: ((context, index) => const SizedBox(
-                      height: 24,
-                    )),
-                itemCount: volunteeringList.length),
-            )],
-        ),
-      ),
+    return volunteering.when(
+      loading: () => const CircularProgressIndicator(),
+      error: (err, stack) => Text('Error: $err'),
+      data: (volunteering) {
+        final volunteeringList = volunteering.values.toList();
+        return Container(
+          color: SerManosColor.secondary10,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 24),
+              SerManosGrid(child: SerManosSearchBar.map()),
+              const SizedBox(height: 24),
+              SerManosGrid(
+                  child: SerManosTypography.heading1(
+                "Voluntariados",
+                align: TextAlign.start,
+              )),
+              Expanded(
+                child: ListView.separated(
+                    padding: const EdgeInsets.only(top: 24, bottom: 24),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return VolunteerCard(
+                          image: volunteeringList[index].image,
+                          name: volunteeringList[index].name,
+                          vacant: volunteeringList[index].vacants,
+                          isFavorite: true,
+                          onTapFunction: () =>
+                              context.go("/home/volunteerings/id", extra: {
+                                "volunteering": volunteeringList[index],
+                                "id": volunteering.keys.elementAt(index)
+                              }));
+                    },
+                    separatorBuilder: ((context, index) => const SizedBox(
+                          height: 24,
+                        )),
+                    itemCount: volunteeringList.length),
+              )
+            ],
+          ),
+        );
+      },
     );
-  
-    },
-  );
-
-}
+  }
 }
