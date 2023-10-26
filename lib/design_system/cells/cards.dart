@@ -15,53 +15,54 @@ class VolunteerCard extends InkWell {
       required bool isFavorite,
       required void Function() onTapFunction})
       : super(
-        onTap: onTapFunction,
-        child:Container(
-            decoration: BoxDecoration(
-              color: SerManosColor.neutral0,
-              borderRadius: const BorderRadius.all(Radius.circular(2.0)),
-              boxShadow: SerManosShadows.shadow2,
-            ),
-            child: Column(
-              children: [
-                Image.network(image, height: 138, fit: BoxFit.cover),
-                //Image(image: image, height: 138, fit: BoxFit.cover),
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            onTap: onTapFunction,
+            child: Container(
+                decoration: BoxDecoration(
+                  color: SerManosColor.neutral0,
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                  boxShadow: SerManosShadows.shadow2,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Image.network(image, height: 138, fit: BoxFit.cover),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            SerManosTypography.overline("acción social",
-                                color: SerManosColor.neutral75),
-                            SerManosTypography.subtitle1(name,
-                                color: SerManosColor.neutral100),
-                            const SizedBox(height: 4),
-                            vacant ==
-                                    0 //habria que ver si se deshabilita con 0 o con otra condicion
-                                ? SerManosVacantComponent.disabled(vacant)
-                                : SerManosVacantComponent.enabled(vacant),
-                          ],
-                        )),
-                        Row(children: [
-                          isFavorite
-                              ? const SerManosIcon.primary(
-                                  SerManosIconData.favorite,
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SerManosTypography.overline("acción social",
+                                    color: SerManosColor.neutral75),
+                                SerManosTypography.subtitle1(name,
+                                    color: SerManosColor.neutral100),
+                                const SizedBox(height: 4),
+                                vacant ==
+                                        0 //habria que ver si se deshabilita con 0 o con otra condicion
+                                    ? SerManosVacantComponent.disabled(vacant)
+                                    : SerManosVacantComponent.enabled(vacant),
+                              ],
+                            )),
+                            Row(children: [
+                              isFavorite
+                                  ? const SerManosIcon.primary(
+                                      SerManosIconData.favorite,
+                                      active: true)
+                                  : const SerManosIcon.primary(
+                                      SerManosIconData.favoriteOutline,
+                                      active: true),
+                              const SizedBox(width: 16),
+                              const SerManosIcon.primary(
+                                  SerManosIconData.location,
                                   active: true)
-                              : const SerManosIcon.primary(
-                                  SerManosIconData.favoriteOutline,
-                                  active: true),
-                          const SizedBox(width: 16),
-                          const SerManosIcon.primary(SerManosIconData.location,
-                              active: true)
-                        ])
-                      ],
-                    ))
-              ],
-            )));
+                            ])
+                          ],
+                        ))
+                  ],
+                )));
 }
 
 class NewsCard extends Container {
@@ -79,37 +80,39 @@ class NewsCard extends Container {
               borderRadius: const BorderRadius.all(Radius.circular(2.0)),
               boxShadow: SerManosShadows.shadow2,
             ),
-            child: Row(
-              children: [
-                Image.network(image, width: 118, fit: BoxFit.fitHeight),
-                //Image(image: image, width: 118, fit: BoxFit.fitHeight),
-                Expanded(
-                  child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 8, right: 8, top: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SerManosTypography.overline(overline,
-                              color: SerManosColor.neutral75),
-                          SerManosTypography.subtitle1(title,
-                              color: SerManosColor.neutral100),
-                          SerManosTypography.body2(subtitle,
-                              color: SerManosColor.neutral75,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SerManosButton.ctaText("Leer Más",
-                                  onPressed: onPressedFunction)
-                            ],
-                          )
-                        ],
-                      )),
-                )
-              ],
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.network(image, width: 118, fit: BoxFit.cover),
+                  Expanded(
+                    child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 8, right: 8, top: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SerManosTypography.overline(overline,
+                                color: SerManosColor.neutral75),
+                            SerManosTypography.subtitle1(title,
+                                color: SerManosColor.neutral100),
+                            SerManosTypography.body2(subtitle,
+                                color: SerManosColor.neutral75,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SerManosButton.ctaText("Leer Más",
+                                    onPressed: onPressedFunction)
+                              ],
+                            )
+                          ],
+                        )),
+                  )
+                ],
+              ),
             ));
 }
 

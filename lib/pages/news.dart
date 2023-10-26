@@ -65,26 +65,26 @@ class _NewsTabState extends State<NewsTab> {
   Widget build(BuildContext context) {
     return Container(
       color: SerManosColor.secondary10,
-      child: SerManosGrid(
-        child: ListView.separated(
-            padding: const EdgeInsets.only(top: 32, bottom: 24),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return NewsCard(
+      child: ListView.separated(
+          padding: const EdgeInsets.only(top: 32, bottom: 24),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return SerManosGrid(
+              child: NewsCard(
                 image: news[index].image,
                 overline: news[index].overline,
                 title: news[index].title,
                 subtitle: news[index].subtitle,
                 //TODO: replace id with real id
                 onPressedFunction: () => context.go("/home/news/id"),
-              );
-            },
-            separatorBuilder: ((context, index) => const SizedBox(
-                  height: 24,
-                )),
-            itemCount: news.length),
-      ),
+              ),
+            );
+          },
+          separatorBuilder: ((context, index) => const SizedBox(
+                height: 24,
+              )),
+          itemCount: news.length),
     );
   }
 }
