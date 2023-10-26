@@ -1,13 +1,10 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 
-class EditProfileModal extends StatelessWidget{
+class EditProfileModal extends StatelessWidget {
   const EditProfileModal({super.key});
 
   @override
@@ -24,13 +21,13 @@ class EditProfileModal extends StatelessWidget{
                 const SizedBox(height: 32),
                 SerManosForm.contactData(),
                 const SizedBox(height: 32),
-                SerManosButton.cta("Guardar datos", onPressed: (){}, fill: true),
+                SerManosButton.cta("Guardar datos",
+                    onPressed: () {}, fill: true),
               ],
             ),
-            ),
+          ),
         ),
-      ) ,
+      ),
     );
   }
-
 }

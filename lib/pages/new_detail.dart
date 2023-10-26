@@ -15,7 +15,6 @@ class NewDetailPage extends StatefulWidget {
 }
 
 class _NewDetailState extends State<NewDetailPage> {
-
   @override
   Widget build(BuildContext context) {
     News anew = widget.news;

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/atoms/logos.dart';
@@ -7,7 +6,7 @@ import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 
-class EntryPage extends StatelessWidget{
+class EntryPage extends StatelessWidget {
   const EntryPage({super.key});
 
   @override
@@ -31,31 +30,29 @@ class EntryPage extends StatelessWidget{
               ),
               const Spacer(),
               Column(
-              children: [
-                SerManosButton.cta(
-                  "Iniciar Sesión",
-                  onPressed: () => context.go("/login"),
-                  fill: true,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                SerManosButton.ctaText(
-                  "Registrarse",
-                  onPressed: () => context.go("/register"),
-                  fill: true,
-                ),
-                const SizedBox(
-                  height: 32,
-                )
-              ],
-            )
+                children: [
+                  SerManosButton.cta(
+                    "Iniciar Sesión",
+                    onPressed: () => context.go("/login"),
+                    fill: true,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  SerManosButton.ctaText(
+                    "Registrarse",
+                    onPressed: () => context.go("/register"),
+                    fill: true,
+                  ),
+                  const SizedBox(
+                    height: 32,
+                  )
+                ],
+              )
             ],
           ),
         ),
       ),
     );
   }
-
-
 }

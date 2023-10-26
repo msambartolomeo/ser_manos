@@ -18,4 +18,3 @@ ProfileData profileData(ProfileDataRef ref) {
     firebaseFirestore: ref.read(firebaseFirestoreProvider),
   );
 }
-

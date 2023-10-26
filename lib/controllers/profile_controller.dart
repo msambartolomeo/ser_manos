@@ -7,14 +7,12 @@ import 'package:ser_manos/providers/servicies_providers.dart';
 part 'generated/profile_controller.g.dart';
 
 @riverpod
-class ProfileController extends _$ProfileController{
-
+class ProfileController extends _$ProfileController {
   @override
   FutureOr<Profile> build() async {
-
     final User? user = ref.read(currentUserProvider);
 
-    if(user == null) {
+    if (user == null) {
       throw Exception("User not logged in.");
     }
 
@@ -23,24 +21,13 @@ class ProfileController extends _$ProfileController{
     return await service.getProfile(user.uid);
   }
 
-  FutureOr<void> create(Profile profile){
+  FutureOr<void> create(Profile profile) {}
 
-  }
+  FutureOr<void> updateProfile(Profile profile) {}
 
-  FutureOr<void> updateProfile(Profile profile){
-    
-  }
+  FutureOr<void> updateVolunteering(String volunteeringId) {}
 
-  FutureOr<void> updateVolunteering(String volunteeringId){
-    
-  }
+  FutureOr<void> addFavorite(String volunteeringId) {}
 
-  FutureOr<void> addFavorite(String volunteeringId){
-    
-  }
-
-  FutureOr<void> removeFavorite(String volunteeringId){
-    
-  }
-
+  FutureOr<void> removeFavorite(String volunteeringId) {}
 }
