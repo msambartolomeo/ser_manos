@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
@@ -11,22 +13,25 @@ import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 
-class VolunteeringDetailPage extends StatefulWidget {
-  final Volunteering volunteering;
+class VolunteeringDetailPage extends ConsumerWidget {
+  final Volunteering? volunteering;
   final String id;
   const VolunteeringDetailPage(
       {super.key, required this.volunteering, required this.id});
 
   @override
-  State<StatefulWidget> createState() {
-    return _VolunteeringDetailState();
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = volunteering ??
+        ref.watch(volunteeringGetByIdControllerProvider(id)).when(
+              data: (volunteering) => volunteering,
+              error: (e, _) => null,
+              loading: () => null,
+            );
 
-class _VolunteeringDetailState extends State<VolunteeringDetailPage> {
-  @override
-  Widget build(BuildContext context) {
-    final volunteering = widget.volunteering;
+    if (data == null) {
+      return const CircularProgressIndicator();
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: SerManosHeader.opacity(
@@ -52,12 +57,12 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage> {
                 children: [
                   SerManosTypography.overline("Acción social",
                       color: SerManosColor.neutral75),
-                  SerManosTypography.heading1(volunteering.name),
+                  SerManosTypography.heading1(data.name),
                   const SizedBox(
                     height: 16,
                   ),
                   SerManosTypography.body1(
-                    volunteering.purpose,
+                    data.purpose,
                     color: SerManosColor.secondary200,
                   ),
                   const SizedBox(
@@ -67,11 +72,11 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  SerManosTypography.body1(volunteering.description),
+                  SerManosTypography.body1(data.description),
                   const SizedBox(
                     height: 24,
                   ),
-                  LocationCardWithoutMap(location: volunteering.address),
+                  LocationCardWithoutMap(location: data.address),
                   const SizedBox(
                     height: 24,
                   ),
@@ -83,7 +88,7 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  SerManosTypography.body1("• ${volunteering.requirements}"),
+                  SerManosTypography.body1("• ${data.requirements}"),
                   const SizedBox(
                     height: 8,
                   ),
@@ -91,11 +96,11 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  SerManosTypography.body1("• ${volunteering.disponibility}"),
+                  SerManosTypography.body1("• ${data.disponibility}"),
                   const SizedBox(
                     height: 8,
                   ),
-                  SerManosVacantComponent.enabled(volunteering.vacants),
+                  SerManosVacantComponent.enabled(data.vacants),
                   const SizedBox(
                     height: 24,
                   ),
@@ -105,7 +110,7 @@ class _VolunteeringDetailState extends State<VolunteeringDetailPage> {
                         builder: (context) {
                           return SerManosModal(
                               context: context,
-                              title: volunteering.name,
+                              title: data.name,
                               onConfirm: () {});
                         });
                   }, fill: true)

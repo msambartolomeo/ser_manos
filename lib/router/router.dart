@@ -49,14 +49,14 @@ class RouterBuilder {
                 path: ":param",
                 builder: (context, state) {
                   String param = state.pathParameters["param"]!;
-
                   Widget page;
                   switch (state.pathParameters["tab"]!) {
-                    case "volunterings":
-                      final Map map = state.extra! as Map;
-                      // TODO: pass path param state.pathParameters["param"]!
+                    case "volunteerings":
                       page = VolunteeringDetailPage(
-                          volunteering: map["volunteering"], id: map["id"]);
+                          volunteering: state.extra == null
+                              ? null
+                              : (state.extra as Map)["volunteering"],
+                          id: param);
                       break;
                     case "profile":
                       if (param != "edit") {

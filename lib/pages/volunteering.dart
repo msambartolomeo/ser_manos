@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/searchbars.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
-import 'package:ser_manos/providers/volunteering_provider.dart';
 
 class VolunteeringTab extends ConsumerWidget {
   const VolunteeringTab({super.key});
@@ -15,7 +15,7 @@ class VolunteeringTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<Map<String, Volunteering>> volunteering =
-        ref.watch(fetchVolunteeringProvider);
+        ref.watch(volunteeringGetAllControllerProvider);
 
     return volunteering.when(
       loading: () => const CircularProgressIndicator(),
@@ -46,11 +46,9 @@ class VolunteeringTab extends ConsumerWidget {
                           name: volunteeringList[index].name,
                           vacant: volunteeringList[index].vacants,
                           isFavorite: true,
-                          onTapFunction: () =>
-                              context.go("/home/volunteerings/id", extra: {
-                                "volunteering": volunteeringList[index],
-                                "id": volunteering.keys.elementAt(index)
-                              }));
+                          onTapFunction: () => context.go(
+                              "/home/volunteerings/${volunteering.keys.elementAt(index)}",
+                              extra: {"volunteering": volunteeringList[index]}));
                     },
                     separatorBuilder: ((context, index) => const SizedBox(
                           height: 24,
