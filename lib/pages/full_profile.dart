@@ -27,7 +27,7 @@ class FullProfileTab extends ConsumerWidget {
     final LogOutController logOutController =
         ref.watch(logOutControllerProvider.notifier);
 
-    final Profile? profile = ref.watch(profileControllerProvider).when(
+    final User? profile = ref.watch(profileControllerProvider).when(
           data: (profile) => profile,
           loading: () => null,
           error: (e, _) => null, // TODO: Handle error

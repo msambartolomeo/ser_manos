@@ -31,18 +31,18 @@ class News with _$News {
 }
 
 @freezed
-class Profile with _$Profile {
-  const factory Profile(
-      {required String name,
-      required String image,
-      required String email,
-      required String birthday,
-      required String gender,
-      required String phone,
-      required List<String> favorites,
-      required String? myVolunteering,
-      required bool aproved}) = _Profile;
+class User with _$User {
+  const factory User({
+    required String name,
+    required String image,
+    required String email,
+    required String birthday,
+    required String gender,
+    required String phone,
+    required List<String> favorites,
+    required String? myVolunteering,
+    required bool aproved,
+  }) = _User;
 
-  factory Profile.fromJson(Map<String, Object?> json) =>
-      _$ProfileFromJson(json);
+  factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 }

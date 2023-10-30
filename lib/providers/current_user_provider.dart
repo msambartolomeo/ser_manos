@@ -4,6 +4,8 @@ import 'package:ser_manos/providers/firebase_providers.dart';
 
 part 'generated/current_user_provider.g.dart';
 
+typedef AuthUser = User;
+
 @riverpod
 Stream<User?> authStateChange(AuthStateChangeRef ref) {
   return ref.watch(firebaseAuthProvider).authStateChanges();
@@ -12,14 +14,11 @@ Stream<User?> authStateChange(AuthStateChangeRef ref) {
 @riverpod
 class CurrentUser extends _$CurrentUser {
   @override
-  User? build() {
+  AuthUser? build() {
     final loginState = ref.watch(authStateChangeProvider);
 
     return loginState.maybeWhen(
-      data: (user) {
-        // TODO: get full user from firebase
-        return user;
-      },
+      data: (user) => user,
       orElse: () => null,
     );
   }
