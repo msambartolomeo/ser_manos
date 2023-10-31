@@ -7,7 +7,7 @@ part 'generated/router_provider.g.dart';
 
 @riverpod
 GoRouter router(RouterRef ref) {
-  final bool authState = ref.watch(currentUserProvider) != null;
+  final bool authState = ref.watch(currentAuthUserProvider) != null;
 
   return RouterBuilder(authState).build();
 }

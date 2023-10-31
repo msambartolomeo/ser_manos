@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ser_manos/controllers/profile_controller.dart';
 import 'package:ser_manos/controllers/auth_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
@@ -10,6 +9,7 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
+import 'package:ser_manos/providers/current_user_provider.dart';
 
 class FullProfileTab extends ConsumerWidget {
   const FullProfileTab({super.key});
@@ -27,13 +27,13 @@ class FullProfileTab extends ConsumerWidget {
     final LogOutController logOutController =
         ref.watch(logOutControllerProvider.notifier);
 
-    final User? profile = ref.watch(profileControllerProvider).when(
-          data: (profile) => profile,
+    final User? user = ref.watch(currentUserProvider).when(
+          data: (user) => user,
           loading: () => null,
           error: (e, _) => null, // TODO: Handle error
         );
 
-    if (profile == null) {
+    if (user == null) {
       return const CircularProgressIndicator();
     }
 
@@ -45,35 +45,35 @@ class FullProfileTab extends ConsumerWidget {
             padding: const EdgeInsets.only(bottom: 32, top: 32),
             child: Column(
               children: [
-                SerManosProfilePicture.big(profile.image),
+                SerManosProfilePicture.big(user.image!),
                 const SizedBox(height: 16),
                 SerManosTypography.overline(
                   "Voluntario",
                   color: SerManosColor.neutral75,
                 ),
                 SerManosTypography.subtitle1(
-                  profile.name,
+                  "${user.name} ${user.surname}",
                   color: SerManosColor.neutral100,
                 ),
                 SerManosTypography.body1(
-                  profile.email,
+                  user.email!,
                   color: SerManosColor.secondary200,
                 ),
                 const SizedBox(height: 32),
                 CardInformation(
                   title: "Información personal",
                   label1: "Fecha de nacimiento",
-                  content1: profile.birthday,
+                  content1: user.birthday!,
                   label2: "Género",
-                  content2: profile.gender,
+                  content2: user.gender!.text,
                 ),
                 const SizedBox(height: 32),
                 CardInformation(
                   title: "Datos de contacto",
                   label1: "Teléfono",
-                  content1: profile.phone,
+                  content1: user.phone!,
                   label2: "e-mail",
-                  content2: profile.email,
+                  content2: user.email!,
                 ),
                 const SizedBox(height: 32),
                 SerManosButton.cta(

@@ -1,18 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/firebase_providers.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:ser_manos/providers/servicies_providers.dart';
+import 'package:ser_manos/servicies/user_service.dart';
 
 part 'generated/current_user_provider.g.dart';
 
-typedef AuthUser = User;
+typedef AuthUser = auth.User;
 
 @riverpod
-Stream<User?> authStateChange(AuthStateChangeRef ref) {
+Stream<AuthUser?> authStateChange(AuthStateChangeRef ref) {
   return ref.watch(firebaseAuthProvider).authStateChanges();
 }
 
 @riverpod
-class CurrentUser extends _$CurrentUser {
+class CurrentAuthUser extends _$CurrentAuthUser {
   @override
   AuthUser? build() {
     final loginState = ref.watch(authStateChangeProvider);
@@ -21,5 +24,20 @@ class CurrentUser extends _$CurrentUser {
       data: (user) => user,
       orElse: () => null,
     );
+  }
+}
+
+@riverpod
+class CurrentUser extends _$CurrentUser {
+  @override
+  FutureOr<User?> build() async {
+    final UserService userService = ref.watch(userServiceProvider);
+    final AuthUser? user = ref.read(currentAuthUserProvider);
+
+    if (user == null) {
+      return Future.value(null);
+    }
+
+    return await userService.getUser(user.uid);
   }
 }

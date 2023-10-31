@@ -9,7 +9,7 @@ part 'generated/profile_controller.g.dart';
 class ProfileController extends _$ProfileController {
   @override
   FutureOr<User> build() async {
-    final AuthUser? user = ref.read(currentUserProvider);
+    final AuthUser? user = ref.read(currentAuthUserProvider);
 
     if (user == null) {
       throw Exception("User not logged in.");
