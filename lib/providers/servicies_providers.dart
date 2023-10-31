@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/providers/data_providers.dart';
 import 'package:ser_manos/servicies/auth_service.dart';
+import 'package:ser_manos/servicies/favorites_service.dart';
 import 'package:ser_manos/servicies/profile_service.dart';
 import 'package:ser_manos/servicies/volunteering_service.dart';
 
@@ -16,6 +17,11 @@ AuthService authService(AuthServiceRef ref) {
 @Riverpod(keepAlive: true)
 ProfileService profileService(ProfileServiceRef ref) {
   return ProfileService(profileData: ref.read(profileDataProvider));
+}
+
+@Riverpod(keepAlive: true)
+FavoritesService favoritesService(FavoritesServiceRef ref) {
+  return FavoritesService(favoritesData: ref.read(favoritesDataProvider));
 }
 
 @Riverpod(keepAlive: true)

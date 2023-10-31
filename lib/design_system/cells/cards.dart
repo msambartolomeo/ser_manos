@@ -12,7 +12,7 @@ class VolunteerCard extends InkWell {
       required String image,
       required String name,
       required int vacant,
-      required bool isFavorite,
+      required String volunteering,
       required void Function() onTapFunction})
       : super(
             onTap: onTapFunction,
@@ -47,13 +47,7 @@ class VolunteerCard extends InkWell {
                               ],
                             )),
                             Row(children: [
-                              isFavorite
-                                  ? const SerManosIcon.primary(
-                                      SerManosIconData.favorite,
-                                      active: true)
-                                  : const SerManosIcon.primary(
-                                      SerManosIconData.favoriteOutline,
-                                      active: true),
+                              FavoriteButton(volunteering: volunteering),
                               const SizedBox(width: 16),
                               const SerManosIcon.primary(
                                   SerManosIconData.location,

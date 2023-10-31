@@ -41,14 +41,16 @@ class VolunteeringTab extends ConsumerWidget {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return VolunteerCard(
-                          image: volunteeringList[index].image,
-                          name: volunteeringList[index].name,
-                          vacant: volunteeringList[index].vacants,
-                          isFavorite: true,
-                          onTapFunction: () => context.go(
-                              "/home/volunteerings/${volunteering.keys.elementAt(index)}",
-                              extra: {"volunteering": volunteeringList[index]}));
+                      return SerManosGrid(
+                        child: VolunteerCard(
+                            image: volunteeringList[index].image,
+                            name: volunteeringList[index].name,
+                            vacant: volunteeringList[index].vacants,
+                            volunteering: volunteering.keys.elementAt(index),
+                            onTapFunction: () => context.go(
+                                "/home/volunteerings/${volunteering.keys.elementAt(index)}",
+                                extra: {"volunteering": volunteeringList[index]})),
+                      );
                     },
                     separatorBuilder: ((context, index) => const SizedBox(
                           height: 24,

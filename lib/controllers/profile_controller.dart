@@ -26,8 +26,5 @@ class ProfileController extends _$ProfileController {
   FutureOr<void> updateProfile(Profile profile) {}
 
   FutureOr<void> updateVolunteering(String volunteeringId) {}
-
-  FutureOr<void> addFavorite(String volunteeringId) {}
-
-  FutureOr<void> removeFavorite(String volunteeringId) {}
+  
 }
