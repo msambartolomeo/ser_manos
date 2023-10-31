@@ -16,6 +16,12 @@ class Volunteering with _$Volunteering {
 
   factory Volunteering.fromJson(Map<String, dynamic> json) =>
       _$VolunteeringFromJson(json);
+
+  const Volunteering._();
+
+  bool hasVacancies() {
+    return vacants > 0;
+  }
 }
 
 @freezed
@@ -45,4 +51,14 @@ class Profile with _$Profile {
 
   factory Profile.fromJson(Map<String, Object?> json) =>
       _$ProfileFromJson(json);
+
+  const Profile._();
+
+  bool hasVolunteering() {
+    return myVolunteering != "";
+  }
+
+  bool isAproved() {
+    return aproved;
+  }
 }

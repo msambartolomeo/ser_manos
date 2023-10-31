@@ -16,7 +16,9 @@ AuthService authService(AuthServiceRef ref) {
 
 @Riverpod(keepAlive: true)
 ProfileService profileService(ProfileServiceRef ref) {
-  return ProfileService(profileData: ref.read(profileDataProvider));
+  return ProfileService(
+      profileData: ref.read(profileDataProvider),
+      volunteeringService: ref.read(volunteeringServiceProvider));
 }
 
 @Riverpod(keepAlive: true)
