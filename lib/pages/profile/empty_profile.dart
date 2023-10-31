@@ -4,11 +4,12 @@ import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
+import 'package:ser_manos/models/models.dart';
 
 class EmptyProfileTab extends StatelessWidget {
-  final String name;
+  const EmptyProfileTab({super.key, required this.user});
 
-  const EmptyProfileTab({super.key, required this.name});
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class EmptyProfileTab extends StatelessWidget {
                   height: 8,
                 ),
                 SerManosTypography.subtitle1(
-                  name,
+                  user.fullName(),
                   color: SerManosColor.neutral100,
                 ),
                 const SizedBox(

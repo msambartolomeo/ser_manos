@@ -32,10 +32,13 @@ class News with _$News {
 
 @freezed
 class User with _$User {
+  const User._();
+
   const factory User({
     required String uid,
     required String name,
     required String surname,
+    @Default(false) bool completed,
     String? email,
     String? image,
     String? birthday,
@@ -47,6 +50,10 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+
+  String fullName() {
+    return "$name $surname";
+  }
 }
 
 @JsonEnum()

@@ -9,10 +9,12 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
-import 'package:ser_manos/providers/current_user_provider.dart';
 
 class FullProfileTab extends ConsumerWidget {
-  const FullProfileTab({super.key});
+  const FullProfileTab({super.key, required this.user});
+
+  // Precondition: this is a full user without null fields
+  final User user;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,16 +28,6 @@ class FullProfileTab extends ConsumerWidget {
 
     final LogOutController logOutController =
         ref.watch(logOutControllerProvider.notifier);
-
-    final User? user = ref.watch(currentUserProvider).when(
-          data: (user) => user,
-          loading: () => null,
-          error: (e, _) => null, // TODO: Handle error
-        );
-
-    if (user == null) {
-      return const CircularProgressIndicator();
-    }
 
     return SingleChildScrollView(
       child: Container(
@@ -52,7 +44,7 @@ class FullProfileTab extends ConsumerWidget {
                   color: SerManosColor.neutral75,
                 ),
                 SerManosTypography.subtitle1(
-                  "${user.name} ${user.surname}",
+                  user.fullName(),
                   color: SerManosColor.neutral100,
                 ),
                 SerManosTypography.body1(
