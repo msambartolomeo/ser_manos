@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
-import 'package:ser_manos/pages/full_profile.dart';
+import 'package:ser_manos/pages/profile/full_profile.dart';
 import 'package:ser_manos/pages/news.dart';
 import 'package:ser_manos/pages/volunteering.dart';
 
