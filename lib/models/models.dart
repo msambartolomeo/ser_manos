@@ -33,16 +33,36 @@ class News with _$News {
 @freezed
 class User with _$User {
   const factory User({
+    required String uid,
     required String name,
-    required String image,
-    required String email,
-    required String birthday,
-    required String gender,
-    required String phone,
-    required List<String> favorites,
-    required String? myVolunteering,
-    required bool aproved,
+    required String surname,
+    String? email,
+    String? image,
+    String? birthday,
+    Gender? gender,
+    String? phone,
+    @Default([]) List<String> favorites,
+    String? myVolunteering,
+    @Default(false) bool aproved,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+}
+
+@JsonEnum()
+enum Gender {
+  male("Hombre"),
+  female("Mujer"),
+  nonBinary("No binario");
+
+  final String text;
+
+  const Gender(this.text);
+
+  static Gender? getGenderFromString(String value) {
+    return Gender.values.firstWhere(
+      (element) => element.name == value,
+      orElse: () => Gender.male,
+    );
+  }
 }

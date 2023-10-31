@@ -9,6 +9,7 @@ part 'generated/servicies_providers.g.dart';
 AuthService authService(AuthServiceRef ref) {
   return AuthService(
     authData: ref.read(authDataProvider),
+    userService: ref.read(userServiceProvider),
   );
 }
 
