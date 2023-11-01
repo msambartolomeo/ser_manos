@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
+import 'package:ser_manos/models/models.dart';
 
 class SerManosForm extends Column {
   SerManosForm.register({
     super.key,
-    TextEditingController? nameController,
-    TextEditingController? surnameController,
-    TextEditingController? emailController,
-    TextEditingController? passwordController,
+    required TextEditingController nameController,
+    required TextEditingController surnameController,
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
   }) : super(children: [
           SerManosTextInput(
             controller: nameController,
@@ -39,8 +40,8 @@ class SerManosForm extends Column {
 
   SerManosForm.login({
     super.key,
-    TextEditingController? emailController,
-    TextEditingController? passwordController,
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
   }) : super(children: [
           SerManosTextInput(
             controller: emailController,
@@ -61,6 +62,8 @@ class SerManosForm extends Column {
     super.key,
     required BuildContext context,
     required TextEditingController birthdateController,
+    required Gender? selectedGender,
+    required void Function(Gender?) onGenderChange,
   }) : super(children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -74,7 +77,10 @@ class SerManosForm extends Column {
             controller: birthdateController,
           ),
           const SizedBox(height: 24.0),
-          InputCard(),
+          GenderCard(
+            selectedGender: selectedGender,
+            onGenderChange: onGenderChange,
+          ),
           const SizedBox(height: 24.0),
           EmptyProfilePictureCard(),
         ]);

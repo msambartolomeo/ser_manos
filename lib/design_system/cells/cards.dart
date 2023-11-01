@@ -5,6 +5,7 @@ import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/shadows.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
+import 'package:ser_manos/models/models.dart';
 
 class VolunteerCard extends InkWell {
   VolunteerCard(
@@ -265,62 +266,43 @@ class CardInformation extends _BaseCardInformation {
         );
 }
 
-class InputCard extends _BaseCardInformation {
-  InputCard({super.key})
-      : super(
-            title: "Información de perfil",
-            information: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SerManosIcon.primary(
-                        SerManosIconData.radioButtonOff,
-                        active: true,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      SerManosTypography.body1("Hombre"),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SerManosIcon.primary(
-                        SerManosIconData.radioButtonOff,
-                        active: true,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      SerManosTypography.body1("Mujer"),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SerManosIcon.primary(
-                        SerManosIconData.radioButtonOff,
-                        active: true,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      SerManosTypography.body1("Hombre"),
-                    ],
-                  ),
-                ),
-              ],
-            ));
+class GenderCard extends _BaseCardInformation {
+  GenderCard({
+    super.key,
+    required Gender? selectedGender,
+    required void Function(Gender?) onGenderChange,
+  }) : super(
+          title: "Información de perfil",
+          information: Column(
+            children: [
+              RadioListTile<Gender>(
+                title: Text(Gender.male.text),
+                groupValue: selectedGender,
+                value: Gender.male,
+                onChanged: onGenderChange,
+              ),
+              RadioListTile<Gender>(
+                selected: true,
+                title: Text(Gender.female.text),
+                groupValue: selectedGender,
+                value: Gender.female,
+                onChanged: onGenderChange,
+              ),
+              RadioListTile<Gender>(
+                title: Text(Gender.nonBinary.text),
+                groupValue: selectedGender,
+                value: Gender.nonBinary,
+                onChanged: onGenderChange,
+              ),
+            ],
+          ),
+        );
+
+  static updateGender(TextEditingController controller, Gender? value) {
+    if (value != null) {
+      controller.text = value.text;
+    }
+  }
 }
 
 class LocationCardWithoutMap extends _BaseCardInformation {

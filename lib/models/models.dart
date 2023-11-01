@@ -66,7 +66,7 @@ enum Gender {
 
   const Gender(this.text);
 
-  static Gender? getGenderFromString(String value) {
+  static Gender? fromString(String? value) {
     return Gender.values.firstWhere(
       (element) => element.name == value,
       orElse: () => Gender.male,
