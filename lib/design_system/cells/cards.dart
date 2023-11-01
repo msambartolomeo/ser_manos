@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
@@ -150,39 +152,84 @@ class CurrentVolunteerCard extends Container {
             ));
 }
 
-//no me convence la altura del button
-class EmptyProfilePictureCard extends Container {
-  EmptyProfilePictureCard({super.key})
-      : super(
-            decoration: const BoxDecoration(
-                color: SerManosColor.secondary25,
-                borderRadius: BorderRadius.all(Radius.circular(2.0))),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-              child: Row(children: [
-                Expanded(
-                    child: SerManosTypography.subtitle1(
-                  "Foto de perfil",
-                  color: SerManosColor.neutral100,
-                )),
-                const SizedBox(width: 8),
-                SerManosButton.cta("Subir foto", onPressed: () => {})
-              ]),
-            ));
+class ProfilePicture extends StatelessWidget {
+  const ProfilePicture({
+    super.key,
+    this.image,
+    this.imageType,
+    required this.onImageChange,
+  });
+
+  final String? image;
+  final ImageType? imageType;
+  final void Function(File? image) onImageChange;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (image == null || imageType == null) {
+      true => EmptyProfilePictureCard(onImageChange: onImageChange),
+      false => FullProfilePictureCard(
+          image: image!,
+          imageType: imageType!,
+          onImageChange: onImageChange,
+        ),
+    };
+  }
 }
 
-//no me convence la altura del button
-class ProfilePictureCard extends Container {
-  ProfilePictureCard({super.key, required String image})
-      : super(
-            decoration: const BoxDecoration(
-                color: SerManosColor.secondary25,
-                borderRadius: BorderRadius.all(Radius.circular(2.0))),
-            child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                child: Row(children: [
-                  Expanded(
-                      child: Column(
+class EmptyProfilePictureCard extends Container {
+  EmptyProfilePictureCard({
+    super.key,
+    required void Function(File? image) onImageChange,
+  }) : super(
+          decoration: const BoxDecoration(
+              color: SerManosColor.secondary25,
+              borderRadius: BorderRadius.all(Radius.circular(2.0))),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SerManosTypography.subtitle1(
+                    "Foto de perfil",
+                    color: SerManosColor.neutral100,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                SerManosButton.cta(
+                  "Subir foto",
+                  onPressed: () async {
+                    FilePickerResult? result = await FilePicker.platform
+                        .pickFiles(type: FileType.image);
+
+                    if (result != null) {
+                      File file = File(result.files.single.path!);
+                      onImageChange(file);
+                    }
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+}
+
+class FullProfilePictureCard extends Container {
+  FullProfilePictureCard({
+    super.key,
+    required String image,
+    required ImageType imageType,
+    required void Function(File? image) onImageChange,
+  }) : super(
+          decoration: const BoxDecoration(
+              color: SerManosColor.secondary25,
+              borderRadius: BorderRadius.all(Radius.circular(2.0))),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SerManosTypography.subtitle1(
@@ -190,12 +237,26 @@ class ProfilePictureCard extends Container {
                         color: SerManosColor.neutral100,
                       ),
                       const SizedBox(height: 8),
-                      SerManosButton.cta("Cambiar foto", onPressed: () => {})
+                      SerManosButton.cta(
+                        "Cambiar foto",
+                        onPressed: () async {
+                          FilePickerResult? result = await FilePicker.platform
+                              .pickFiles(type: FileType.image);
+
+                          if (result != null) {
+                            File file = File(result.files.single.path!);
+                            onImageChange(file);
+                          }
+                        },
+                      )
                     ],
-                  )),
-                  SerManosProfilePicture.small(image)
-                  //ProfilePicture()
-                ])));
+                  ),
+                ),
+                SerManosProfilePicture.small(image, type: imageType),
+              ],
+            ),
+          ),
+        );
 }
 
 class _BaseCardInformation extends Container {

@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
+import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
@@ -19,6 +21,10 @@ class EditProfileModal extends ConsumerStatefulWidget {
 
 class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   Gender? gender;
+  File? image;
+  ImageType imageType = ImageType.network;
+
+  late final TextEditingController birthdate;
   late final User? user;
 
   @override
@@ -31,6 +37,11 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
               error: (e, _) => null, // TODO: Handle error
             );
 
+    if (user == null) {
+      birthdate = TextEditingController();
+    } else {
+      birthdate = TextEditingController(text: user?.birthday);
+    }
     gender = user?.gender ?? Gender.male;
   }
 
@@ -40,12 +51,17 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
     }
   }
 
+  void setImage(File? file) {
+    if (file != null) {
+      setState(() {
+        image = file;
+        imageType = ImageType.file;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController birthdate = TextEditingController();
-
-    debugPrint(gender?.text);
-
     return Scaffold(
       appBar: SerManosHeader.modal(),
       body: SerManosGrid(
@@ -61,6 +77,9 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
                       birthdateController: birthdate,
                       selectedGender: gender,
                       onGenderChange: setGender,
+                      onImageChange: setImage,
+                      image: image?.path,
+                      imageType: imageType,
                     ),
                     const SizedBox(height: 32),
                     SerManosForm.contactData(),

@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
+import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
@@ -57,13 +59,15 @@ class SerManosForm extends Column {
           ),
         ]);
 
-  // TODO: add controllers
   SerManosForm.personalData({
     super.key,
     required BuildContext context,
     required TextEditingController birthdateController,
     required Gender? selectedGender,
     required void Function(Gender?) onGenderChange,
+    String? image,
+    ImageType imageType = ImageType.network,
+    required void Function(File? image) onImageChange,
   }) : super(children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -82,7 +86,11 @@ class SerManosForm extends Column {
             onGenderChange: onGenderChange,
           ),
           const SizedBox(height: 24.0),
-          EmptyProfilePictureCard(),
+          ProfilePicture(
+            image: image,
+            onImageChange: onImageChange,
+            imageType: imageType,
+          ),
         ]);
 
   // TODO: add controllers
