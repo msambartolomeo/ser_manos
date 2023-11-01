@@ -25,13 +25,13 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   void initState() {
     super.initState();
     user = widget.user ??
-        ref.watch(currentUserProvider).when(
+        ref.read(currentUserProvider).when(
               data: (user) => user,
               loading: () => null,
               error: (e, _) => null, // TODO: Handle error
             );
 
-    gender = user?.gender;
+    gender = user?.gender ?? Gender.male;
   }
 
   void setGender(Gender? gender) {
