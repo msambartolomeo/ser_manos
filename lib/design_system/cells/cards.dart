@@ -158,20 +158,26 @@ class ProfilePicture extends StatelessWidget {
     this.image,
     this.imageType,
     required this.onImageChange,
+    this.enabled = true,
   });
 
   final String? image;
   final ImageType? imageType;
   final void Function(File? image) onImageChange;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return switch (image == null || imageType == null) {
-      true => EmptyProfilePictureCard(onImageChange: onImageChange),
+      true => EmptyProfilePictureCard(
+          onImageChange: onImageChange,
+          enabled: enabled,
+        ),
       false => FullProfilePictureCard(
           image: image!,
           imageType: imageType!,
           onImageChange: onImageChange,
+          enabled: enabled,
         ),
     };
   }
@@ -181,6 +187,7 @@ class EmptyProfilePictureCard extends Container {
   EmptyProfilePictureCard({
     super.key,
     required void Function(File? image) onImageChange,
+    bool enabled = true,
   }) : super(
           decoration: const BoxDecoration(
               color: SerManosColor.secondary25,
@@ -198,6 +205,7 @@ class EmptyProfilePictureCard extends Container {
                 const SizedBox(width: 8),
                 SerManosButton.cta(
                   "Subir foto",
+                  disabled: !enabled,
                   onPressed: () async {
                     FilePickerResult? result = await FilePicker.platform
                         .pickFiles(type: FileType.image);
@@ -220,10 +228,12 @@ class FullProfilePictureCard extends Container {
     required String image,
     required ImageType imageType,
     required void Function(File? image) onImageChange,
+    bool enabled = true,
   }) : super(
           decoration: const BoxDecoration(
-              color: SerManosColor.secondary25,
-              borderRadius: BorderRadius.all(Radius.circular(2.0))),
+            color: SerManosColor.secondary25,
+            borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          ),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Row(
@@ -239,6 +249,7 @@ class FullProfilePictureCard extends Container {
                       const SizedBox(height: 8),
                       SerManosButton.cta(
                         "Cambiar foto",
+                        disabled: !enabled,
                         onPressed: () async {
                           FilePickerResult? result = await FilePicker.platform
                               .pickFiles(type: FileType.image);

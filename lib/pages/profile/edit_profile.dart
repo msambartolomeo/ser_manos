@@ -24,8 +24,10 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   File? image;
   ImageType imageType = ImageType.network;
 
-  late final TextEditingController birthdate;
   late final User? user;
+  late final TextEditingController birthdate;
+  late final TextEditingController phone;
+  late final TextEditingController email;
 
   @override
   void initState() {
@@ -39,8 +41,12 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
 
     if (user == null) {
       birthdate = TextEditingController();
+      phone = TextEditingController();
+      email = TextEditingController();
     } else {
       birthdate = TextEditingController(text: user?.birthday);
+      phone = TextEditingController(text: user?.phone);
+      email = TextEditingController(text: user?.email);
     }
     gender = user?.gender ?? Gender.male;
   }
@@ -82,7 +88,10 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
                       imageType: imageType,
                     ),
                     const SizedBox(height: 32),
-                    SerManosForm.contactData(),
+                    SerManosForm.contactData(
+                      phoneController: phone,
+                      emailController: email,
+                    ),
                   ],
                 ),
               ),
