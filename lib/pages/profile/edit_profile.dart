@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ser_manos/controllers/profile_controllers.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
@@ -68,6 +69,17 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
+
+    ref.watch(updateUserControllerProvider).maybeWhen(
+          orElse: () => {},
+          loading: () => isLoading = true,
+          error: (e, _) => {}, // TODO: Handle error
+        );
+
+    final UpdateUserController updateUserController =
+        ref.watch(updateUserControllerProvider.notifier);
+
     return Scaffold(
       appBar: SerManosHeader.modal(),
       body: SerManosGrid(
@@ -79,6 +91,7 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
                 child: ListView(
                   children: [
                     SerManosForm.personalData(
+                      enabled: !isLoading,
                       context: context,
                       birthdateController: birthdate,
                       selectedGender: gender,
@@ -89,6 +102,7 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
                     ),
                     const SizedBox(height: 32),
                     SerManosForm.contactData(
+                      enabled: !isLoading,
                       phoneController: phone,
                       emailController: email,
                     ),
@@ -97,8 +111,18 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
               ),
               const SizedBox(height: 32),
               SerManosButton.cta(
+                disabled: isLoading,
                 "Guardar datos",
-                onPressed: () {},
+                onPressed: () async {
+                  await updateUserController.updateUser(
+                    user!.uid,
+                    image,
+                    birthdate.text,
+                    gender,
+                    phone.text,
+                    email.text,
+                  );
+                },
                 fill: true,
               ),
             ],

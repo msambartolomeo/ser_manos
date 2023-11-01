@@ -23,27 +23,13 @@ class UserData {
     userRef.set(user.toJson());
   }
 
-  Future<void> updateUser(
-    User user,
-    String birthday,
-    Gender gender,
-    String image,
-    String phone,
-    String email,
-  ) async {
-    final userRef = firebaseFirestore.collection("users").doc(user.uid);
+  Future<void> updateUser(String uid, UserUpdate user) async {
+    final userRef = firebaseFirestore.collection("users").doc(uid);
 
-    final User updatedUser = User(
-      uid: user.uid,
-      name: user.name,
-      surname: user.surname,
-      birthday: birthday,
-      gender: gender,
-      image: image,
-      phone: phone,
-      email: email,
-    );
+    final json = user.toJson();
+    // NOTE: Remove empty values to only update user selected fields
+    json.removeWhere((_, value) => value == null);
 
-    userRef.update(updatedUser.toJson());
+    userRef.update(json);
   }
 }

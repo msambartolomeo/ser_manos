@@ -73,3 +73,18 @@ enum Gender {
     );
   }
 }
+
+@freezed
+class UserUpdate with _$UserUpdate {
+  const factory UserUpdate({
+    @Default(true) bool completed,
+    String? email,
+    String? image,
+    String? birthday,
+    Gender? gender,
+    String? phone,
+  }) = _UserUpdate;
+
+  factory UserUpdate.fromJson(Map<String, Object?> json) =>
+      _$UserUpdateFromJson(json);
+}
