@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
@@ -31,9 +29,11 @@ class FavoritesController extends _$FavoritesController {
 
     final service = ref.read(favoritesServiceProvider);
 
-    //print("add");
+    service.addFavorite(user.uid, volunteeringId);
 
-    return service.addFavorite(user.uid, volunteeringId);
+    state = state.whenData((data) {
+      return [...data, volunteeringId];
+    });
   }
 
   FutureOr<void> removeFavorite(String volunteeringId) {
@@ -45,8 +45,11 @@ class FavoritesController extends _$FavoritesController {
 
     final service = ref.read(favoritesServiceProvider);
 
-    //print("remove");
+    service.removeFavorite(user.uid, volunteeringId);
 
-    return service.removeFavorite(user.uid, volunteeringId);
+    state = state.whenData((data) {
+      data.remove(volunteeringId);
+      return data;
+    });
   }
 }
