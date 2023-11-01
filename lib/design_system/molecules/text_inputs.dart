@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/text_style.dart';
@@ -45,15 +46,31 @@ class SerManosTextInput extends TextFormField {
               color: SerManosColor.neutral100),
         );
 
-  SerManosTextInput.calendar(
-      {super.key,
-      required label,
-      hintText = "",
-      super.controller,
-      super.onSaved,
-      super.validator,
-      super.enabled})
-      : super(
+  SerManosTextInput.calendar({
+    super.key,
+    required label,
+    hintText = "",
+    super.controller,
+    super.onSaved,
+    super.validator,
+    super.enabled,
+    required BuildContext context,
+  }) : super(
+          onTap: () async {
+            FocusScope.of(context).requestFocus(FocusNode());
+
+            final date = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1900),
+              lastDate: DateTime.now(),
+              initialEntryMode: DatePickerEntryMode.calendarOnly,
+            );
+
+            if (date != null) {
+              controller?.text = DateFormat("d/M/yyyy").format(date);
+            }
+          },
           decoration: _baseInputDecoration.copyWith(
             hintText: hintText,
             floatingLabelBehavior: hintText != ""

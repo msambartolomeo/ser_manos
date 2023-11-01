@@ -62,7 +62,7 @@ class RouterBuilder {
                       if (param != "edit") {
                         // TODO: page = errorPage
                       }
-                      page = const EditProfileModal();
+                      page = EditProfileModal();
                       break;
                     case "news":
                       // TODO: pass path param state.pathParameters["id"]!

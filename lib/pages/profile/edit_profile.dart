@@ -5,7 +5,9 @@ import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 
 class EditProfileModal extends StatelessWidget {
-  const EditProfileModal({super.key});
+  EditProfileModal({super.key});
+
+  final TextEditingController birthdate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,10 @@ class EditProfileModal extends StatelessWidget {
               Flexible(
                 child: ListView(
                   children: [
-                    SerManosForm.personalData(),
+                    SerManosForm.personalData(
+                      context: context,
+                      birthdateController: birthdate,
+                    ),
                     const SizedBox(height: 32),
                     SerManosForm.contactData(),
                   ],

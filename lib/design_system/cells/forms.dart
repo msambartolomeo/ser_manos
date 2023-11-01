@@ -57,15 +57,21 @@ class SerManosForm extends Column {
         ]);
 
   // TODO: add controllers
-  SerManosForm.personalData({super.key})
-      : super(children: [
+  SerManosForm.personalData({
+    super.key,
+    required BuildContext context,
+    required TextEditingController birthdateController,
+  }) : super(children: [
           Align(
-              alignment: Alignment.centerLeft,
-              child: SerManosTypography.heading1("Datos de perfil")),
+            alignment: Alignment.centerLeft,
+            child: SerManosTypography.heading1("Datos de perfil"),
+          ),
           const SizedBox(height: 24.0),
           SerManosTextInput.calendar(
+            context: context,
             label: "Fecha de nacimiento",
             hintText: "DD/MM/YYYY",
+            controller: birthdateController,
           ),
           const SizedBox(height: 24.0),
           InputCard(),
