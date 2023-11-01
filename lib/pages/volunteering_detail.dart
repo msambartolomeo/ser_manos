@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/profile_controller.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/cells/modal.dart';
+import 'package:ser_manos/design_system/cells/volunteering_apply.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -28,9 +30,20 @@ class VolunteeringDetailPage extends ConsumerWidget {
               loading: () => null,
             );
 
+    final profile = ref.watch(profileControllerProvider).when(
+          data: (profile) => profile,
+          error: (e, _) => null,
+          loading: () => null,
+        );
+
     if (data == null) {
       return const CircularProgressIndicator();
     }
+
+    bool notLoggedIn = profile == null;
+    bool hasVoluntering = !notLoggedIn && profile.hasVolunteering();
+    bool appliedToCurrentVolunteering =
+        hasVoluntering && profile.myVolunteering == id;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -104,16 +117,40 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  SerManosButton.cta("Postularme", onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return SerManosModal(
-                              context: context,
-                              title: data.name,
-                              onConfirm: () {});
-                        });
-                  }, fill: true)
+                  Visibility(
+                      visible: !notLoggedIn && hasVoluntering,
+                      child: appliedToCurrentVolunteering
+                          ? profile.isAproved()
+                              ? VolunteeringApply.alreadyAppliedAndAproved()
+                              : VolunteeringApply.alreadyApplied()
+                          : VolunteeringApply
+                              .alreadyAppliedToOtherVolunteering()),
+                  Visibility(
+                      visible:
+                          (profile != null && !profile.hasVolunteering()) ||
+                              (profile != null &&
+                                  profile.hasVolunteering() &&
+                                  profile.myVolunteering != id),
+                      child: SerManosButton.cta("Postularme", onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SerManosModal(
+                                  context: context,
+                                  title: data.name,
+                                  onConfirm: () {
+                                    ref
+                                        .read(
+                                            profileControllerProvider.notifier)
+                                        .apply(id);
+                                  });
+                            });
+                      },
+                          fill: true,
+                          disabled: !data.hasVacancies() ||
+                              (profile != null &&
+                                  profile.hasVolunteering() &&
+                                  profile.myVolunteering != id)))
                 ],
               ),
             ),
