@@ -2,7 +2,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/providers/data_providers.dart';
 import 'package:ser_manos/servicies/auth_service.dart';
 import 'package:ser_manos/servicies/user_service.dart';
-import 'package:ser_manos/servicies/profile_service.dart';
 import 'package:ser_manos/servicies/volunteering_service.dart';
 
 part 'generated/servicies_providers.g.dart';
