@@ -2,6 +2,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/data/auth_data.dart';
 import 'package:ser_manos/data/image_data.dart';
 import 'package:ser_manos/data/user_data.dart';
+import 'package:ser_manos/data/profile_data.dart';
+import 'package:ser_manos/data/volunteering_data.dart';
 import 'package:ser_manos/providers/firebase_providers.dart';
 
 part 'generated/data_providers.g.dart';
@@ -24,5 +26,12 @@ UserData userData(UserDataRef ref) {
 ImageData imageData(ImageDataRef ref) {
   return ImageData(
     firebaseStorage: ref.read(firebaseStorageProvider),
+  );
+}
+
+@Riverpod(keepAlive: true)
+VolunteeringData volunteeringData(VolunteeringDataRef ref) {
+  return VolunteeringData(
+    firebaseFirestore: ref.read(firebaseFirestoreProvider),
   );
 }
