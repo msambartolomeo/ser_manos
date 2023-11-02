@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/controllers/auth_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
+import 'package:ser_manos/design_system/cells/modal.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -77,9 +78,14 @@ class FullProfileTab extends ConsumerWidget {
                 const SizedBox(height: 8),
                 SerManosButton.ctaText(
                   "Cerrar sesión",
-                  onPressed: () async {
-                    await logOutController.logOut();
-                  },
+                  onPressed: () => showSerManosModal(
+                    context,
+                    title: "¿Estas seguro que quieres cerrar sesión?",
+                    confirmText: "Cerrar sesión",
+                    onConfirm: () async {
+                      await logOutController.logOut();
+                    },
+                  ),
                   fill: true,
                   disabled: isLoading,
                   color: SerManosColor.error100,
