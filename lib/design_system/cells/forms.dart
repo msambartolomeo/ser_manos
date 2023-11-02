@@ -17,6 +17,7 @@ class SerManosForm extends Column {
   }) : super(
           children: [
             SerManosTextInput(
+              validator: requiredValidator,
               controller: nameController,
               enabled: enabled,
               label: "Nombre",
@@ -24,6 +25,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              validator: requiredValidator,
               controller: surnameController,
               enabled: enabled,
               label: "Apellido",
@@ -31,6 +33,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              validator: validateEmail,
               controller: emailController,
               enabled: enabled,
               label: "Email",
@@ -38,6 +41,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              validator: requiredValidator,
               controller: passwordController,
               enabled: enabled,
               obscureText: true,
@@ -55,6 +59,7 @@ class SerManosForm extends Column {
   }) : super(
           children: [
             SerManosTextInput(
+              validator: validateEmail,
               controller: emailController,
               enabled: enabled,
               label: "Email",
@@ -62,6 +67,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              validator: requiredValidator,
               controller: passwordController,
               enabled: enabled,
               obscureText: true,
@@ -89,6 +95,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput.calendar(
+              validator: requiredValidator,
               context: context,
               enabled: enabled,
               label: "Fecha de nacimiento",
@@ -130,6 +137,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              validator: validatePhone,
               controller: phoneController,
               enabled: enabled,
               label: "Teléfono",
@@ -137,6 +145,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              validator: validateEmail,
               controller: emailController,
               enabled: enabled,
               label: "Mail",
@@ -144,4 +153,30 @@ class SerManosForm extends Column {
             )
           ],
         );
+
+  static String? requiredValidator(String? value) {
+    debugPrint("running required validator");
+    if (value == null || value == "") return "Este campo es obligatorio";
+    return null;
+  }
+
+  static String? validateEmail(String? value) {
+    debugPrint("running email validator");
+    if (value == null || value == "") return "Este campo es obligatorio";
+    return RegExp(
+      r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$',
+    ).hasMatch(value)
+        ? null
+        : "No es un email valido";
+  }
+
+  static String? validatePhone(String? value) {
+    debugPrint("running phonevalidator with $value");
+    if (value == null || value == "") return "Este campo es obligatorio";
+    return RegExp(
+      r'\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$',
+    ).hasMatch(value)
+        ? null
+        : "No es un telefono valido";
+  }
 }

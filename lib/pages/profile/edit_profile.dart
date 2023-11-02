@@ -30,6 +30,8 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   late final TextEditingController phone;
   late final TextEditingController email;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -82,50 +84,55 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
 
     return Scaffold(
       appBar: SerManosHeader.modal(),
-      body: SerManosGrid(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16, bottom: 32),
-          child: Column(
-            children: [
-              Flexible(
-                child: ListView(
-                  children: [
-                    SerManosForm.personalData(
-                      enabled: !isLoading,
-                      context: context,
-                      birthdateController: birthdate,
-                      selectedGender: gender,
-                      onGenderChange: setGender,
-                      onImageChange: setImage,
-                      image: image?.path,
-                      imageType: imageType,
-                    ),
-                    const SizedBox(height: 32),
-                    SerManosForm.contactData(
-                      enabled: !isLoading,
-                      phoneController: phone,
-                      emailController: email,
-                    ),
-                  ],
+      body: Form(
+        key: _formKey,
+        child: SerManosGrid(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 32),
+            child: Column(
+              children: [
+                Flexible(
+                  child: ListView(
+                    children: [
+                      SerManosForm.personalData(
+                        enabled: !isLoading,
+                        context: context,
+                        birthdateController: birthdate,
+                        selectedGender: gender,
+                        onGenderChange: setGender,
+                        onImageChange: setImage,
+                        image: image?.path,
+                        imageType: imageType,
+                      ),
+                      const SizedBox(height: 32),
+                      SerManosForm.contactData(
+                        enabled: !isLoading,
+                        phoneController: phone,
+                        emailController: email,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
-              SerManosButton.cta(
-                disabled: isLoading,
-                "Guardar datos",
-                onPressed: () async {
-                  await updateUserController.updateUser(
-                    user!.uid,
-                    image,
-                    birthdate.text,
-                    gender,
-                    phone.text,
-                    email.text,
-                  );
-                },
-                fill: true,
-              ),
-            ],
+                const SizedBox(height: 32),
+                SerManosButton.cta(
+                  disabled: isLoading,
+                  "Guardar datos",
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await updateUserController.updateUser(
+                        user!.uid,
+                        image,
+                        birthdate.text,
+                        gender,
+                        phone.text,
+                        email.text,
+                      );
+                    }
+                  },
+                  fill: true,
+                ),
+              ],
+            ),
           ),
         ),
       ),
