@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
@@ -183,6 +183,18 @@ class ProfilePicture extends StatelessWidget {
   }
 }
 
+void pickImage(void Function(File? image) saveImage) async {
+  final XFile? image = await ImagePicker().pickImage(
+    source: ImageSource.gallery,
+    imageQuality: 85,
+  );
+
+  if (image != null) {
+    File file = File(image.path);
+    saveImage(file);
+  }
+}
+
 class EmptyProfilePictureCard extends Container {
   EmptyProfilePictureCard({
     super.key,
@@ -206,15 +218,7 @@ class EmptyProfilePictureCard extends Container {
                 SerManosButton.cta(
                   "Subir foto",
                   disabled: !enabled,
-                  onPressed: () async {
-                    FilePickerResult? result = await FilePicker.platform
-                        .pickFiles(type: FileType.image);
-
-                    if (result != null) {
-                      File file = File(result.files.single.path!);
-                      onImageChange(file);
-                    }
-                  },
+                  onPressed: () => pickImage(onImageChange),
                 )
               ],
             ),
@@ -250,15 +254,7 @@ class FullProfilePictureCard extends Container {
                       SerManosButton.cta(
                         "Cambiar foto",
                         disabled: !enabled,
-                        onPressed: () async {
-                          FilePickerResult? result = await FilePicker.platform
-                              .pickFiles(type: FileType.image);
-
-                          if (result != null) {
-                            File file = File(result.files.single.path!);
-                            onImageChange(file);
-                          }
-                        },
+                        onPressed: () => pickImage(onImageChange),
                       )
                     ],
                   ),

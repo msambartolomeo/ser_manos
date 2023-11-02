@@ -23,6 +23,7 @@ class EditProfileModal extends ConsumerStatefulWidget {
 class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   Gender? gender;
   File? image;
+  String? imageUrl;
   ImageType imageType = ImageType.network;
 
   late final User? user;
@@ -50,6 +51,7 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
       birthdate = TextEditingController(text: user?.birthday);
       phone = TextEditingController(text: user?.phone);
       email = TextEditingController(text: user?.email);
+      imageUrl = user?.image;
     }
     gender = user?.gender ?? Gender.male;
   }
@@ -65,6 +67,7 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
       setState(() {
         image = file;
         imageType = ImageType.file;
+        imageUrl = file.path;
       });
     }
   }
@@ -101,7 +104,7 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
                         selectedGender: gender,
                         onGenderChange: setGender,
                         onImageChange: setImage,
-                        image: image?.path,
+                        image: imageUrl,
                         imageType: imageType,
                       ),
                       const SizedBox(height: 32),

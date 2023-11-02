@@ -45,7 +45,7 @@ dependencies:
   json_annotation: ^4.8.1
   # Extra
   intl: ^0.18.1
-  file_picker: ^6.0.0
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:
