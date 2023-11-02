@@ -155,13 +155,11 @@ class SerManosForm extends Column {
         );
 
   static String? requiredValidator(String? value) {
-    debugPrint("running required validator");
     if (value == null || value == "") return "Este campo es obligatorio";
     return null;
   }
 
   static String? validateEmail(String? value) {
-    debugPrint("running email validator");
     if (value == null || value == "") return "Este campo es obligatorio";
     return RegExp(
       r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$',
@@ -171,7 +169,6 @@ class SerManosForm extends Column {
   }
 
   static String? validatePhone(String? value) {
-    debugPrint("running phonevalidator with $value");
     if (value == null || value == "") return "Este campo es obligatorio";
     return RegExp(
       r'\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$',

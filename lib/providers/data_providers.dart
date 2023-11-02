@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/data/auth_data.dart';
+import 'package:ser_manos/data/image_data.dart';
 import 'package:ser_manos/data/user_data.dart';
 import 'package:ser_manos/providers/firebase_providers.dart';
 
@@ -16,5 +17,12 @@ AuthData authData(AuthDataRef ref) {
 UserData userData(UserDataRef ref) {
   return UserData(
     firebaseFirestore: ref.read(firebaseFirestoreProvider),
+  );
+}
+
+@Riverpod(keepAlive: true)
+ImageData imageData(ImageDataRef ref) {
+  return ImageData(
+    firebaseStorage: ref.read(firebaseStorageProvider),
   );
 }

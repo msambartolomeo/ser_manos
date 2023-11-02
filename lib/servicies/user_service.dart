@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:ser_manos/data/auth_data.dart';
+import 'package:ser_manos/data/image_data.dart';
 import 'package:ser_manos/data/user_data.dart';
 import 'package:ser_manos/models/models.dart';
 
 class UserService {
   final UserData userData;
+  final ImageData imageData;
 
-  UserService({required this.userData});
+  UserService({required this.userData, required this.imageData});
 
   Future<User> getUser(UID uid) async {
     return await userData.getUser(uid);
@@ -24,8 +26,11 @@ class UserService {
     String? phone,
     String? email,
   ) async {
+    final String? imageUrl =
+        image == null ? null : await imageData.uploadProfileImage(uid, image);
+
     final update = UserUpdate(
-      // image: image, TODO: add image to firebase
+      image: imageUrl,
       birthday: birthday,
       gender: gender,
       phone: phone,
