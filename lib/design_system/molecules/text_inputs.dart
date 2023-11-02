@@ -74,7 +74,7 @@ class SerManosTextInput extends TextFormField {
             );
 
             if (date != null) {
-              controller?.text = DateFormat("d/M/yyyy").format(date);
+              controller?.text = DateFormat("dd/MM/yyyy").format(date);
             }
           },
           decoration: _baseInputDecoration.copyWith(
