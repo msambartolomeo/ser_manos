@@ -30,7 +30,11 @@ class FavoritesController extends _$FavoritesController {
 
     final service = ref.read(favoritesServiceProvider);
 
-    return service.addFavorite(uid, volunteeringId);
+    service.addFavorite(uid, volunteeringId);
+
+    state = state.whenData((data) {
+      return [...data, volunteeringId];
+    });
   }
 
   FutureOr<void> removeFavorite(String volunteeringId) {
@@ -42,7 +46,12 @@ class FavoritesController extends _$FavoritesController {
 
     final service = ref.read(favoritesServiceProvider);
 
-    return service.removeFavorite(uid, volunteeringId);
+    service.removeFavorite(uid, volunteeringId);
+
+    state = state.whenData((data) {
+      data.remove(volunteeringId);
+      return data;
+    });
   }
 
   String? _getUserId() {
