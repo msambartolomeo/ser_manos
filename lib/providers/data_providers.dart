@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/data/auth_data.dart';
 import 'package:ser_manos/data/favorites_data.dart';
-import 'package:ser_manos/data/profile_data.dart';
+import 'package:ser_manos/data/user_data.dart';
 import 'package:ser_manos/data/volunteering_data.dart';
 import 'package:ser_manos/providers/firebase_providers.dart';
 
@@ -15,8 +15,8 @@ AuthData authData(AuthDataRef ref) {
 }
 
 @Riverpod(keepAlive: true)
-ProfileData profileData(ProfileDataRef ref) {
-  return ProfileData(
+UserData userData(UserDataRef ref) {
+  return UserData(
     firebaseFirestore: ref.read(firebaseFirestoreProvider),
   );
 }

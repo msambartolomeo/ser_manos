@@ -14,7 +14,7 @@ class FavoritesData {
 
     final map = documentReference.data()!;
 
-    return Profile.fromJson(map).favorites;
+    return User.fromJson(map).favorites;
   }
 
   Future<void> addFavorite(String uid, String volunteering) async {

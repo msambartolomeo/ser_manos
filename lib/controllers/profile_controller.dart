@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
@@ -6,58 +5,62 @@ import 'package:ser_manos/providers/servicies_providers.dart';
 
 part 'generated/profile_controller.g.dart';
 
+typedef UID = String;
+
 @riverpod
 class ProfileController extends _$ProfileController {
   @override
-  FutureOr<Profile> build() async {
-    final User? user = _getUser();
+  FutureOr<User> build() async {
+    final UID? uid = _getUserId();
 
-    if (user == null) {
+    if (uid == null) {
       throw Exception("User not logged in.");
     }
 
-    final service = ref.read(profileServiceProvider);
+    final service = ref.read(userServiceProvider);
 
-    return await service.getProfile(user.uid);
+    return await service.getUser(uid);
   }
 
-  FutureOr<void> create(Profile profile) {}
+  FutureOr<void> create(User profile) {}
 
-  FutureOr<void> updateProfile(Profile profile) {}
+  FutureOr<void> updateProfile(User profile) {}
 
   FutureOr<void> leaveCurrentVolunteering() async {
-    final User? user = _getUser();
+    final UID? uid = _getUserId();
 
-    if (user == null) {
+    if (uid == null) {
       throw Exception("User not logged in.");
     }
 
-    final service = ref.read(profileServiceProvider);
+    final service = ref.read(userServiceProvider);
 
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await service.leaveCurrentVolunteering(user.uid);
-      return await service.getProfile(user.uid);
+      await service.leaveCurrentVolunteering(uid);
+      return await service.getUser(uid);
     });
   }
 
   FutureOr<void> apply(String volunteeringId) async {
-    final User? user = _getUser();
+    final UID? uid = _getUserId();
 
-    if (user == null) {
+    if (uid == null) {
       throw Exception("User not logged in.");
     }
 
-    final service = ref.read(profileServiceProvider);
+    final service = ref.read(userServiceProvider);
 
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await service.apply(user.uid, volunteeringId);
-      return await service.getProfile(user.uid);
+      await service.apply(uid, volunteeringId);
+      return await service.getUser(uid);
     });
   }
 
-  User? _getUser() {
-    return ref.read(currentUserProvider);
+  UID? _getUserId() {
+    final user = ref.read(currentAuthUserProvider);
+
+    return user?.uid;
   }
 }

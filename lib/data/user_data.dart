@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ser_manos/models/models.dart';
 
-class ProfileData {
+class UserData {
   final FirebaseFirestore firebaseFirestore;
 
-  ProfileData({required this.firebaseFirestore});
+  UserData({required this.firebaseFirestore});
 
-  Future<Profile?> getProfile(String uid) async {
+  Future<User?> getUser(String uid) async {
     final documentReference =
         await firebaseFirestore.collection("users").doc(uid).get();
 
     final map = documentReference.data()!;
 
-    return Profile.fromJson(map);
+    return User.fromJson(map);
   }
 
   Future<void> apply(String uid, String volunteeringId) async {

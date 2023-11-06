@@ -37,8 +37,8 @@ class News with _$News {
 }
 
 @freezed
-class Profile with _$Profile {
-  const factory Profile(
+class User with _$User {
+  const factory User(
       {required String name,
       required String image,
       required String email,
@@ -46,19 +46,19 @@ class Profile with _$Profile {
       required String gender,
       required String phone,
       required List<String> favorites,
-      required Map? application}) = _Profile;
+      required Map? application}) = _User;
 
-  factory Profile.fromJson(Map<String, Object?> json) =>
-      _$ProfileFromJson(json);
+  factory User.fromJson(Map<String, Object?> json) =>
+      _$UserFromJson(json);
 
-  const Profile._();
+  const User._();
 
   bool hasVolunteering() {
     return application != null;
   }
 
   bool isAproved() {
-    if (!hasVolunteering()) throw Exception("Profile with no volunteering.");
+    if (!hasVolunteering()) throw Exception("User with no volunteering.");
     return application!["approved"];
   }
 
