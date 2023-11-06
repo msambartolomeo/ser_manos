@@ -25,7 +25,21 @@ class ProfileController extends _$ProfileController {
 
   FutureOr<void> updateProfile(Profile profile) {}
 
-  FutureOr<void> updateVolunteering(String volunteeringId) {}
+  FutureOr<void> leaveCurrentVolunteering() async {
+    final User? user = _getUser();
+
+    if (user == null) {
+      throw Exception("User not logged in.");
+    }
+
+    final service = ref.read(profileServiceProvider);
+
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await service.leaveCurrentVolunteering(user.uid);
+      return await service.getProfile(user.uid);
+    });
+  }
 
   FutureOr<void> apply(String volunteeringId) async {
     final User? user = _getUser();

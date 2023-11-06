@@ -12,27 +12,27 @@ class VolunteeringApply extends Column {
               : Container()
         ]);
 
-  VolunteeringApply.alreadyApplied({super.key})
+  VolunteeringApply.alreadyApplied({super.key, onPressed})
       : super(children: [
           SerManosTypography.heading2("Te has postulado"),
           SerManosTypography.body1(
               "Pronto la organización se pondrá en contacto contigo y te inscribirá como participante."),
-          SerManosButton.ctaText("Retirar postulación", onPressed: () => {})
+          SerManosButton.ctaText("Retirar postulación", onPressed: onPressed)
         ]);
 
-  VolunteeringApply.alreadyAppliedAndAproved({super.key})
+  VolunteeringApply.alreadyAppliedAndAproved({super.key, onPressed})
       : super(children: [
           SerManosTypography.heading2("Estas participando"),
           SerManosTypography.body1(
               "La organización confirmó que ya estas participando de este voluntariado"),
-          SerManosButton.ctaText("Abandonar voluntariado", onPressed: () => {})
+          SerManosButton.ctaText("Abandonar voluntariado", onPressed: onPressed)
         ]);
 
-  VolunteeringApply.alreadyAppliedToOtherVolunteering({super.key})
+  VolunteeringApply.alreadyAppliedToOtherVolunteering({super.key, onPressed})
       : super(children: [
           SerManosTypography.body1(
               "Ya estas participando en otro voluntariado, debes abandonarlo primero para postularte a este."),
           SerManosButton.ctaText("Abandonar voluntariado actual",
-              onPressed: () => {})
+              onPressed: onPressed)
         ]);
 }

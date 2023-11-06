@@ -123,10 +123,10 @@ class FavoriteButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isFavorite =
-        ref.watch(favoritesControllerProvider.select((favorites) => favorites.value != null && favorites.value!.contains(volunteering)));
-
-    
+    final bool isFavorite = ref.watch(favoritesControllerProvider.select(
+        (favorites) =>
+            favorites.value != null &&
+            favorites.value!.contains(volunteering)));
 
     return InkWell(
         onTap: () async {

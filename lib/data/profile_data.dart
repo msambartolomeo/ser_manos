@@ -24,4 +24,13 @@ class ProfileData {
             onError: (e) =>
                 throw Exception("Cuold not apply to volunteering."));
   }
+
+  Future<void> leaveCurrentVolunteering(String uid) async {
+    final documentReference = firebaseFirestore.collection("users").doc(uid);
+
+    await documentReference
+        .update({"myVolunteering": "", "aproved": false}).then((value) => value,
+            onError: (e) =>
+                throw Exception("Cuold not apply to volunteering."));
+  }
 }

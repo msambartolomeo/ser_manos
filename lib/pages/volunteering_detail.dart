@@ -44,6 +44,11 @@ class VolunteeringDetailPage extends ConsumerWidget {
     bool hasVoluntering = !notLoggedIn && profile.hasVolunteering();
     bool appliedToCurrentVolunteering =
         hasVoluntering && profile.myVolunteering == id;
+    leaveCurrentVolunteering() => {
+          ref
+              .read(profileControllerProvider.notifier)
+              .leaveCurrentVolunteering()
+        };
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -121,10 +126,14 @@ class VolunteeringDetailPage extends ConsumerWidget {
                       visible: !notLoggedIn && hasVoluntering,
                       child: appliedToCurrentVolunteering
                           ? profile.isAproved()
-                              ? VolunteeringApply.alreadyAppliedAndAproved()
-                              : VolunteeringApply.alreadyApplied()
-                          : VolunteeringApply
-                              .alreadyAppliedToOtherVolunteering()),
+                              ? VolunteeringApply.alreadyAppliedAndAproved(
+                                  onPressed: leaveCurrentVolunteering)
+                              : VolunteeringApply.alreadyApplied(
+                                  onPressed: leaveCurrentVolunteering,
+                                )
+                          : VolunteeringApply.alreadyAppliedToOtherVolunteering(
+                              onPressed: leaveCurrentVolunteering,
+                            )),
                   Visibility(
                       visible:
                           (profile != null && !profile.hasVolunteering()) ||

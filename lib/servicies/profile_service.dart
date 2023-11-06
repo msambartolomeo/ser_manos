@@ -31,4 +31,14 @@ class ProfileService {
 
     return profileData.apply(uid, volunteeringId);
   }
+
+  Future<void> leaveCurrentVolunteering(String uid) async {
+    Profile profile = (await profileData.getProfile(uid))!;
+
+    if (profile.myVolunteering == "") {
+      throw Exception("Profile doesn't have a volunteering.");
+    }
+
+    return profileData.leaveCurrentVolunteering(uid);
+  }
 }
