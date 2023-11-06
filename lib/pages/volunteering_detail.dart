@@ -43,7 +43,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
     bool isLoggedIn = profile != null;
     bool hasVoluntering = isLoggedIn && profile.hasVolunteering();
     bool appliedToCurrentVolunteering =
-        hasVoluntering && profile.myVolunteering == id;
+        hasVoluntering && profile.getAppliedVolunteeringId() == id;
     leaveCurrentVolunteering() => {
           ref
               .read(profileControllerProvider.notifier)
@@ -140,7 +140,8 @@ class VolunteeringDetailPage extends ConsumerWidget {
                             )),
                   Visibility(
                       visible: (isLoggedIn && !profile.hasVolunteering()) ||
-                          (hasVoluntering && profile.myVolunteering != id),
+                          (hasVoluntering &&
+                              profile.getAppliedVolunteeringId() != id),
                       child: SerManosButton.cta("Postularme", onPressed: () {
                         showDialog(
                             context: context,
@@ -158,7 +159,8 @@ class VolunteeringDetailPage extends ConsumerWidget {
                       },
                           fill: true,
                           disabled: !data.hasVacancies() ||
-                              (hasVoluntering && profile.myVolunteering != id)))
+                              (hasVoluntering &&
+                                  profile.getAppliedVolunteeringId() != id)))
                 ],
               ),
             ),

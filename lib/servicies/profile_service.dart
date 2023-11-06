@@ -22,7 +22,7 @@ class ProfileService {
   Future<void> apply(String uid, String volunteeringId) async {
     Profile profile = (await profileData.getProfile(uid))!;
 
-    if (profile.myVolunteering != "") {
+    if (profile.hasVolunteering()) {
       throw Exception("Profile already applied to a volunteering.");
     }
     if (!(await volunteeringService.hasVacancies(volunteeringId))) {
@@ -35,7 +35,7 @@ class ProfileService {
   Future<void> leaveCurrentVolunteering(String uid) async {
     Profile profile = (await profileData.getProfile(uid))!;
 
-    if (profile.myVolunteering == "") {
+    if (!profile.hasVolunteering()) {
       throw Exception("Profile doesn't have a volunteering.");
     }
 

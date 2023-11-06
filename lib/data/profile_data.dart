@@ -18,19 +18,16 @@ class ProfileData {
   Future<void> apply(String uid, String volunteeringId) async {
     final documentReference = firebaseFirestore.collection("users").doc(uid);
 
-    await documentReference
-        .update({"myVolunteering": volunteeringId, "aproved": false}).then(
-            (value) => value,
-            onError: (e) =>
-                throw Exception("Cuold not apply to volunteering."));
+    await documentReference.update({
+      "application": {"volunteering": volunteeringId, "approved": false}
+    }).then((value) => value,
+        onError: (e) => throw Exception("Cuold not apply to volunteering."));
   }
 
   Future<void> leaveCurrentVolunteering(String uid) async {
     final documentReference = firebaseFirestore.collection("users").doc(uid);
 
-    await documentReference
-        .update({"myVolunteering": "", "aproved": false}).then((value) => value,
-            onError: (e) =>
-                throw Exception("Cuold not apply to volunteering."));
+    await documentReference.update({"application": null}).then((value) => value,
+        onError: (e) => throw Exception("Cuold not apply to volunteering."));
   }
 }

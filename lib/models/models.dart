@@ -46,8 +46,7 @@ class Profile with _$Profile {
       required String gender,
       required String phone,
       required List<String> favorites,
-      required String? myVolunteering,
-      required bool aproved}) = _Profile;
+      required Map? application}) = _Profile;
 
   factory Profile.fromJson(Map<String, Object?> json) =>
       _$ProfileFromJson(json);
@@ -55,10 +54,15 @@ class Profile with _$Profile {
   const Profile._();
 
   bool hasVolunteering() {
-    return myVolunteering != "";
+    return application != null;
   }
 
   bool isAproved() {
-    return aproved;
+    if (!hasVolunteering()) throw Exception("Profile with no volunteering.");
+    return application!["approved"];
+  }
+
+  String getAppliedVolunteeringId() {
+    return hasVolunteering() ? application!["volunteering"] : null;
   }
 }
