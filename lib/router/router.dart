@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ser_manos/pages/edit_profile.dart';
+import 'package:ser_manos/pages/profile/edit_profile.dart';
 import 'package:ser_manos/pages/entry.dart';
 import 'package:ser_manos/pages/home.dart';
 import 'package:ser_manos/pages/login.dart';

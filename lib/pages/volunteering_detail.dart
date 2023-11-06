@@ -104,16 +104,17 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  SerManosButton.cta("Postularme", onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return SerManosModal(
-                              context: context,
-                              title: data.name,
-                              onConfirm: () {});
-                        });
-                  }, fill: true)
+                  SerManosButton.cta(
+                    "Postularme",
+                    onPressed: () => showSerManosModal(
+                      context,
+                      title:
+                          "¿Estás seguro que querés abandonar tu voluntariado?",
+                      subtitle: data.name,
+                      onConfirm: () {},
+                    ),
+                    fill: true,
+                  )
                 ],
               ),
             ),

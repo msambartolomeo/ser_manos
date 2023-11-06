@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/text_style.dart';
 
 class SerManosTextInput extends TextFormField {
   static const _neutral75Border = OutlineInputBorder(
-      borderSide: BorderSide(color: SerManosColor.neutral75));
-  static const _error100Border =
-      OutlineInputBorder(borderSide: BorderSide(color: SerManosColor.error100));
+    borderSide: BorderSide(color: SerManosColor.neutral75),
+  );
+  static const _error100Border = OutlineInputBorder(
+    borderSide: BorderSide(color: SerManosColor.error100),
+  );
   static const _secondary100Border = OutlineInputBorder(
-      borderSide: BorderSide(color: SerManosColor.secondary200));
+    borderSide: BorderSide(color: SerManosColor.secondary200),
+  );
   static const _neutral50Border = OutlineInputBorder(
-      borderSide: BorderSide(color: SerManosColor.neutral50));
+    borderSide: BorderSide(color: SerManosColor.neutral50),
+  );
 
   static const _baseInputDecoration = InputDecoration(
     disabledBorder: _neutral50Border,
@@ -25,48 +30,70 @@ class SerManosTextInput extends TextFormField {
     errorStyle: SerManosTextStyle.body2(color: SerManosColor.error100),
   );
 
-  SerManosTextInput(
-      {super.key,
-      required label,
-      hintText = "",
-      super.controller,
-      super.onSaved,
-      super.validator,
-      super.enabled,
-      super.obscureText})
-      : super(
+  SerManosTextInput({
+    super.key,
+    required label,
+    hintText = "",
+    super.controller,
+    super.onSaved,
+    super.validator,
+    super.enabled,
+    super.obscureText,
+  }) : super(
           decoration: _baseInputDecoration.copyWith(
-              hintText: hintText,
-              labelText: label,
-              floatingLabelBehavior: hintText != ""
-                  ? FloatingLabelBehavior.always
-                  : FloatingLabelBehavior.auto),
+            hintText: hintText,
+            labelText: label,
+            floatingLabelBehavior: hintText != ""
+                ? FloatingLabelBehavior.always
+                : FloatingLabelBehavior.auto,
+          ),
           style: const SerManosTextStyle.subtitle1(
-              color: SerManosColor.neutral100),
+            color: SerManosColor.neutral100,
+          ),
         );
 
-  SerManosTextInput.calendar(
-      {super.key,
-      required label,
-      hintText = "",
-      super.controller,
-      super.onSaved,
-      super.validator,
-      super.enabled})
-      : super(
+  SerManosTextInput.calendar({
+    super.key,
+    required label,
+    hintText = "",
+    super.controller,
+    super.onSaved,
+    super.validator,
+    super.enabled,
+    required BuildContext context,
+  }) : super(
+          onTap: () async {
+            FocusScope.of(context).requestFocus(FocusNode());
+
+            final date = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1900),
+              lastDate: DateTime.now(),
+              initialEntryMode: DatePickerEntryMode.calendarOnly,
+            );
+
+            if (date != null) {
+              controller?.text = DateFormat("dd/MM/yyyy").format(date);
+            }
+          },
           decoration: _baseInputDecoration.copyWith(
             hintText: hintText,
             floatingLabelBehavior: hintText != ""
                 ? FloatingLabelBehavior.always
                 : FloatingLabelBehavior.auto,
             helperText: "Día / Mes / Año",
-            helperStyle:
-                const SerManosTextStyle.body2(color: SerManosColor.neutral75),
+            helperStyle: const SerManosTextStyle.body2(
+              color: SerManosColor.neutral75,
+            ),
             labelText: label,
-            suffixIcon: const SerManosIcon.primary(SerManosIconData.calendar,
-                active: true),
+            suffixIcon: const SerManosIcon.primary(
+              SerManosIconData.calendar,
+              active: true,
+            ),
           ),
           style: const SerManosTextStyle.subtitle1(
-              color: SerManosColor.neutral100),
+            color: SerManosColor.neutral100,
+          ),
         );
 }

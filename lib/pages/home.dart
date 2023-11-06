@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
-import 'package:ser_manos/pages/full_profile.dart';
 import 'package:ser_manos/pages/news.dart';
+import 'package:ser_manos/pages/profile/profile.dart';
 import 'package:ser_manos/pages/volunteering.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,7 +61,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           controller: _controller,
           children: const [
             VolunteeringTab(),
-            FullProfileTab(),
+            ProfileTab(),
             NewsTab(),
           ],
         ),

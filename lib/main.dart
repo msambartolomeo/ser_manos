@@ -25,8 +25,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: SerManosColor.secondary100),
+        colorScheme: ColorScheme.fromSeed(seedColor: SerManosColor.primary100),
         useMaterial3: true,
       ),
       routerConfig: router,

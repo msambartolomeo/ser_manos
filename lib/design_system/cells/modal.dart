@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 
-// TODO: Missing Shadow
 class SerManosModal extends Dialog {
   SerManosModal({
-    required BuildContext context,
     super.key,
+    required BuildContext context,
     required String title,
-    String subtitle = "Te estas por postular a",
+    required String cancelText,
+    required String confirmText,
+    String? subtitle,
     required void Function() onConfirm,
   }) : super(
           shape: RoundedRectangleBorder(
@@ -21,19 +23,21 @@ class SerManosModal extends Dialog {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SerManosTypography.subtitle1(subtitle),
-                SerManosTypography.heading2(title),
+                SerManosTypography.subtitle1(title),
+                if (subtitle != null) SerManosTypography.heading2(subtitle),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SerManosButton.ctaText(
-                      "Cancelar",
-                      // TODO: Check if this changes with another navigator
-                      onPressed: () => {Navigator.of(context).pop()},
+                      cancelText,
+                      onPressed: () => {context.pop()},
                     ),
                     const SizedBox(width: 8),
-                    SerManosButton.ctaText("Confirmar", onPressed: onConfirm),
+                    SerManosButton.ctaText(
+                      confirmText,
+                      onPressed: onConfirm,
+                    ),
                   ],
                 )
               ],
@@ -43,16 +47,22 @@ class SerManosModal extends Dialog {
 }
 
 showSerManosModal(
-  BuildContext context,
-  String title,
-  void Function() onConfirm,
-) {
+  BuildContext context, {
+  required String title,
+  required void Function() onConfirm,
+  String? subtitle,
+  String cancelText = "Cancelar",
+  String confirmText = "Confirmar",
+}) {
   showDialog(
     context: context,
     builder: (BuildContext context) => SerManosModal(
       context: context,
-      title: title,
       onConfirm: onConfirm,
+      title: title,
+      subtitle: subtitle,
+      cancelText: cancelText,
+      confirmText: confirmText,
     ),
   );
 }

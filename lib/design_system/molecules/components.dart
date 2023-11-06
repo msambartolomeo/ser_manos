@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -46,19 +47,38 @@ class SerManosVacantComponent extends _BaseVacantComponent {
 }
 
 class _BaseProfilePicture extends ClipOval {
-  _BaseProfilePicture(String image,
-      {required double width, required double height})
-      : super(
-            child: Image.network(
-          image,
-          width: width,
-          height: height,
-          fit: BoxFit.cover,
-        ));
+  _BaseProfilePicture(
+    String image, {
+    required double width,
+    required double height,
+    required ImageType type,
+  }) : super(
+          child: switch (type) {
+            ImageType.network => Image.network(
+                image,
+                width: width,
+                height: height,
+                fit: BoxFit.cover,
+              ),
+            ImageType.file => Image.file(
+                File(image),
+                width: width,
+                height: height,
+                fit: BoxFit.cover,
+              ),
+          },
+        );
+}
+
+enum ImageType {
+  network,
+  file,
 }
 
 class SerManosProfilePicture extends _BaseProfilePicture {
-  SerManosProfilePicture.small(super.image) : super(width: 84, height: 84);
+  SerManosProfilePicture.small(super.image, {super.type = ImageType.network})
+      : super(width: 84, height: 84);
 
-  SerManosProfilePicture.big(super.image) : super(width: 110, height: 110);
+  SerManosProfilePicture.big(super.image, {super.type = ImageType.network})
+      : super(width: 110, height: 110);
 }
