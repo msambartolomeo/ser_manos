@@ -40,8 +40,8 @@ class VolunteeringDetailPage extends ConsumerWidget {
       return const CircularProgressIndicator();
     }
 
-    bool notLoggedIn = profile == null;
-    bool hasVoluntering = !notLoggedIn && profile.hasVolunteering();
+    bool isLoggedIn = profile != null;
+    bool hasVoluntering = isLoggedIn && profile.hasVolunteering();
     bool appliedToCurrentVolunteering =
         hasVoluntering && profile.myVolunteering == id;
     leaveCurrentVolunteering() => {
@@ -123,7 +123,11 @@ class VolunteeringDetailPage extends ConsumerWidget {
                     height: 24,
                   ),
                   Visibility(
-                      visible: !notLoggedIn && hasVoluntering,
+                    visible: !isLoggedIn,
+                    child: const CircularProgressIndicator(),
+                  ),
+                  Visibility(
+                      visible: hasVoluntering,
                       child: appliedToCurrentVolunteering
                           ? profile.isAproved()
                               ? VolunteeringApply.alreadyAppliedAndAproved(
@@ -135,11 +139,8 @@ class VolunteeringDetailPage extends ConsumerWidget {
                               onPressed: leaveCurrentVolunteering,
                             )),
                   Visibility(
-                      visible:
-                          (profile != null && !profile.hasVolunteering()) ||
-                              (profile != null &&
-                                  profile.hasVolunteering() &&
-                                  profile.myVolunteering != id),
+                      visible: (isLoggedIn && !profile.hasVolunteering()) ||
+                          (hasVoluntering && profile.myVolunteering != id),
                       child: SerManosButton.cta("Postularme", onPressed: () {
                         showDialog(
                             context: context,
@@ -157,9 +158,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
                       },
                           fill: true,
                           disabled: !data.hasVacancies() ||
-                              (profile != null &&
-                                  profile.hasVolunteering() &&
-                                  profile.myVolunteering != id)))
+                              (hasVoluntering && profile.myVolunteering != id)))
                 ],
               ),
             ),
