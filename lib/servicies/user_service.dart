@@ -1,21 +1,43 @@
+import 'dart:io';
+import 'package:ser_manos/data/auth_data.dart';
+import 'package:ser_manos/data/image_data.dart';
 import 'package:ser_manos/data/user_data.dart';
 import 'package:ser_manos/models/models.dart';
-import 'package:ser_manos/servicies/volunteering_service.dart';
 
 class UserService {
   final UserData userData;
-  final VolunteeringService volunteeringService;
+  final ImageData imageData;
 
-  UserService({required this.userData, required this.volunteeringService});
+  UserService({required this.userData, required this.imageData});
 
-  Future<User> getUser(String uid) async {
-    User? user = await userData.getUser(uid);
+  Future<User> getUser(UID uid) async {
+    return await userData.getUser(uid);
+  }
 
-    if (user == null) {
-      throw Exception("User does not exist.");
-    }
+  Future<void> createUser(UID uid, String name, String surname) async {
+    return await userData.createUser(uid, name, surname);
+  }
 
-    return user;
+  Future<void> updateUser(
+    UID uid,
+    File? image,
+    String? birthday,
+    Gender? gender,
+    String? phone,
+    String? email,
+  ) async {
+    final String? imageUrl =
+        image == null ? null : await imageData.uploadProfileImage(uid, image);
+
+    final update = UserUpdate(
+      image: imageUrl,
+      birthday: birthday,
+      gender: gender,
+      phone: phone,
+      email: email,
+    );
+
+    await userData.updateUser(uid, update);
   }
 
   Future<void> apply(String uid, String volunteeringId) async {
@@ -24,9 +46,10 @@ class UserService {
     if (user.hasVolunteering()) {
       throw Exception("User already applied to a volunteering.");
     }
-    if (!(await volunteeringService.hasVacancies(volunteeringId))) {
-      throw Exception("Applied to volunteerings with no vacants.");
-    }
+    // TODO add vacancies check
+    // if (!(await volunteeringService.hasVacancies(volunteeringId))) {
+    //   throw Exception("Applied to volunteerings with no vacants.");
+    // }
 
     return userData.apply(uid, volunteeringId);
   }

@@ -6,7 +6,7 @@ class UserData {
 
   UserData({required this.firebaseFirestore});
 
-  Future<User?> getUser(String uid) async {
+  Future<User> getUser(String uid) async {
     final documentReference =
         await firebaseFirestore.collection("users").doc(uid).get();
 
@@ -29,5 +29,23 @@ class UserData {
 
     await documentReference.update({"application": null}).then((value) => value,
         onError: (e) => throw Exception("Cuold not apply to volunteering."));
+  }
+
+  Future<void> createUser(String uid, String name, String surname) async {
+    final userRef = firebaseFirestore.collection("users").doc(uid);
+
+    final user = User(uid: uid, name: name, surname: surname);
+
+    userRef.set(user.toJson());
+  }
+
+  Future<void> updateUser(String uid, UserUpdate user) async {
+    final userRef = firebaseFirestore.collection("users").doc(uid);
+
+    final json = user.toJson();
+    // NOTE: Remove empty values to only update user selected fields
+    json.removeWhere((_, value) => value == null);
+
+    userRef.update(json);
   }
 }

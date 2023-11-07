@@ -1,9 +1,43 @@
+import 'dart:io';
+
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
+import 'package:ser_manos/providers/router_provider.dart';
 import 'package:ser_manos/providers/servicies_providers.dart';
+import 'package:ser_manos/servicies/user_service.dart';
 
-part 'generated/profile_controller.g.dart';
+part 'generated/profile_controllers.g.dart';
+
+@riverpod
+class UpdateUserController extends _$UpdateUserController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> updateUser(
+    String uid,
+    File? image,
+    String? birthday,
+    Gender? gender,
+    String? phone,
+    String? email,
+  ) async {
+    final UserService userService = ref.read(userServiceProvider);
+    final GoRouter router = ref.read(routerProvider);
+
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      await userService.updateUser(uid, image, birthday, gender, phone, email);
+
+      // NOTE: force search of updated user
+      ref.invalidate(userServiceProvider);
+
+      router.go("/home/profile");
+    });
+  }
+}
 
 typedef UID = String;
 
@@ -21,10 +55,6 @@ class ProfileController extends _$ProfileController {
 
     return await service.getUser(uid);
   }
-
-  FutureOr<void> create(User profile) {}
-
-  FutureOr<void> updateProfile(User profile) {}
 
   FutureOr<void> leaveCurrentVolunteering() async {
     final UID? uid = _getUserId();

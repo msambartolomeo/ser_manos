@@ -20,6 +20,8 @@ class CurrentAuthUser extends _$CurrentAuthUser {
   AuthUser? build() {
     final loginState = ref.watch(authStateChangeProvider);
 
+    print(loginState);
+
     return loginState.maybeWhen(
       data: (user) => user,
       orElse: () => null,

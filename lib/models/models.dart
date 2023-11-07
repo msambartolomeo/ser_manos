@@ -38,20 +38,27 @@ class News with _$News {
 
 @freezed
 class User with _$User {
-  const factory User(
-      {required String name,
-      required String image,
-      required String email,
-      required String birthday,
-      required String gender,
-      required String phone,
-      required List<String> favorites,
-      required Map? application}) = _User;
-
-  factory User.fromJson(Map<String, Object?> json) =>
-      _$UserFromJson(json);
-
   const User._();
+
+  const factory User({
+    required String uid,
+    required String name,
+    required String surname,
+    @Default(false) bool completed,
+    String? email,
+    String? image,
+    String? birthday,
+    Gender? gender,
+    String? phone,
+    @Default([]) List<String> favorites,
+    @Default(null) Map? application,
+  }) = _User;
+
+  factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+
+  String fullName() {
+    return "$name $surname";
+  }
 
   bool hasVolunteering() {
     return application != null;
@@ -65,4 +72,37 @@ class User with _$User {
   String getAppliedVolunteeringId() {
     return hasVolunteering() ? application!["volunteering"] : null;
   }
+}
+
+@JsonEnum()
+enum Gender {
+  male("Hombre"),
+  female("Mujer"),
+  nonBinary("No binario");
+
+  final String text;
+
+  const Gender(this.text);
+
+  static Gender? fromString(String? value) {
+    return Gender.values.firstWhere(
+      (element) => element.name == value,
+      orElse: () => Gender.male,
+    );
+  }
+}
+
+@freezed
+class UserUpdate with _$UserUpdate {
+  const factory UserUpdate({
+    @Default(true) bool completed,
+    String? email,
+    String? image,
+    String? birthday,
+    Gender? gender,
+    String? phone,
+  }) = _UserUpdate;
+
+  factory UserUpdate.fromJson(Map<String, Object?> json) =>
+      _$UserUpdateFromJson(json);
 }

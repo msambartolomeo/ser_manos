@@ -1,8 +1,11 @@
 import 'package:ser_manos/data/auth_data.dart';
+import 'package:ser_manos/servicies/user_service.dart';
 
 class AuthService {
   final AuthData authData;
-  AuthService({required this.authData});
+  final UserService userService;
+
+  AuthService({required this.authData, required this.userService});
 
   Future<void> login(String email, String password) async {
     await authData.login(email, password);
@@ -14,8 +17,9 @@ class AuthService {
     String email,
     String password,
   ) async {
-    await authData.register(email, password);
-    // TODO: register User in firestore
+    final UID uid = await authData.register(email, password);
+
+    await userService.createUser(uid, name, surname);
   }
 
   Future<void> logOut() async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ser_manos/controllers/profile_controller.dart';
+import 'package:ser_manos/controllers/profile_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
@@ -44,11 +44,16 @@ class VolunteeringDetailPage extends ConsumerWidget {
     bool hasVoluntering = isLoggedIn && profile.hasVolunteering();
     bool appliedToCurrentVolunteering =
         hasVoluntering && profile.getAppliedVolunteeringId() == id;
-    leaveCurrentVolunteering() => {
-          ref
-              .read(profileControllerProvider.notifier)
-              .leaveCurrentVolunteering()
-        };
+    leaveCurrentVolunteering() => showSerManosModal(
+          context,
+          title: "¿Estás seguro que querés abandonar tu voluntariado?",
+          subtitle: data.name,
+          onConfirm: () => {
+            ref
+                .read(profileControllerProvider.notifier)
+                .leaveCurrentVolunteering()
+          },
+        );
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -147,14 +152,17 @@ class VolunteeringDetailPage extends ConsumerWidget {
                             context: context,
                             builder: (context) {
                               return SerManosModal(
-                                  context: context,
-                                  title: data.name,
-                                  onConfirm: () {
-                                    ref
-                                        .read(
-                                            profileControllerProvider.notifier)
-                                        .apply(id);
-                                  });
+                                context: context,
+                                subtitle: data.name,
+                                onConfirm: () {
+                                  ref
+                                      .read(profileControllerProvider.notifier)
+                                      .apply(id);
+                                },
+                                cancelText: "Cancelar",
+                                confirmText: "Confirmar",
+                                title: "Te estas por postular a",
+                              );
                             });
                       },
                           fill: true,

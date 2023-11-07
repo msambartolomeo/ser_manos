@@ -11,14 +11,16 @@ part 'generated/servicies_providers.g.dart';
 AuthService authService(AuthServiceRef ref) {
   return AuthService(
     authData: ref.read(authDataProvider),
+    userService: ref.read(userServiceProvider),
   );
 }
 
 @Riverpod(keepAlive: true)
 UserService userService(UserServiceRef ref) {
   return UserService(
-      userData: ref.read(userDataProvider),
-      volunteeringService: ref.read(volunteeringServiceProvider));
+    userData: ref.read(userDataProvider),
+    imageData: ref.read(imageDataProvider),
+  );
 }
 
 @Riverpod(keepAlive: true)
