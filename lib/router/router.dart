@@ -67,7 +67,7 @@ class RouterBuilder {
                     case "news":
                       // TODO: pass path param state.pathParameters["id"]!
                       final Map map = state.extra! as Map;
-                      page = NewDetailPage(news: map["news"]);
+                      page = NewDetailPage(news: map["news"], id: param);
                       break;
                     default:
                       // TODO: page = errorPage

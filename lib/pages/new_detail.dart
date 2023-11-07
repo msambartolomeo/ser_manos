@@ -5,19 +5,16 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
+import 'package:share/share.dart';
 
-class NewDetailPage extends StatefulWidget {
+class NewDetailPage extends StatelessWidget {
   final News news;
-  const NewDetailPage({super.key, required this.news});
+  final String id;
+  const NewDetailPage({super.key, required this.news, required this.id});
 
-  @override
-  State<StatefulWidget> createState() => _NewDetailState();
-}
-
-class _NewDetailState extends State<NewDetailPage> {
   @override
   Widget build(BuildContext context) {
-    News anew = widget.news;
+    News anew = news;
     return Scaffold(
       appBar: SerManosHeader.section(title: "Novedades"),
       body: SerManosGrid(
@@ -59,7 +56,9 @@ class _NewDetailState extends State<NewDetailPage> {
                 ),
                 SerManosButton.cta(
                   "Compartir",
-                  onPressed: () {},
+                  onPressed: () {
+                    Share.share("https://sermanos.itba.edu.ar/home/news/$id");
+                  },
                   fill: true,
                 )
               ],
