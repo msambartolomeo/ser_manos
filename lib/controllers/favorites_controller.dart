@@ -21,7 +21,7 @@ class FavoritesController extends _$FavoritesController {
     return await service.getFavorites(uid);
   }
 
-  FutureOr<void> addFavorite(String volunteeringId) {
+  Future<void> addFavorite(String volunteeringId) async {
     final UID? uid = _getUserId();
 
     if (uid == null) {
@@ -37,7 +37,7 @@ class FavoritesController extends _$FavoritesController {
     });
   }
 
-  FutureOr<void> removeFavorite(String volunteeringId) {
+  Future<void> removeFavorite(String volunteeringId) async {
     final UID? uid = _getUserId();
 
     if (uid == null) {

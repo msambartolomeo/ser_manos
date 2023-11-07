@@ -44,16 +44,18 @@ class VolunteeringDetailPage extends ConsumerWidget {
     bool hasVoluntering = isLoggedIn && profile.hasVolunteering();
     bool appliedToCurrentVolunteering =
         hasVoluntering && profile.getAppliedVolunteeringId() == id;
-    leaveCurrentVolunteering() => showSerManosModal(
-          context,
-          title: "¿Estás seguro que querés abandonar tu voluntariado?",
-          subtitle: data.name,
-          onConfirm: () => {
-            ref
-                .read(profileControllerProvider.notifier)
-                .leaveCurrentVolunteering()
-          },
-        );
+
+    void leaveCurrentVolunteering() {
+      showSerManosModal(
+        context,
+        title: "¿Estás seguro que querés abandonar tu voluntariado?",
+        subtitle: data.name,
+        onConfirm: () => ref
+            .read(profileControllerProvider.notifier)
+            .leaveCurrentVolunteering()
+            .then((_) => context.pop()),
+      );
+    }
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -141,34 +143,35 @@ class VolunteeringDetailPage extends ConsumerWidget {
                                   onPressed: leaveCurrentVolunteering,
                                 )
                           : VolunteeringApply.alreadyAppliedToOtherVolunteering(
-                              onPressed: leaveCurrentVolunteering,
+                              onPressed: () => context.go(
+                                "/home/volunteerings/${profile!.application!["volunteering"]}",
+                              ),
                             )),
                   Visibility(
-                      visible: (isLoggedIn && !profile.hasVolunteering()) ||
+                    visible: (isLoggedIn && !profile.hasVolunteering()) ||
+                        (hasVoluntering &&
+                            profile.getAppliedVolunteeringId() != id),
+                    child: SerManosButton.cta(
+                      "Postularme",
+                      onPressed: () {
+                        showSerManosModal(
+                          context,
+                          title: "Te estas por postular a",
+                          subtitle: data.name,
+                          onConfirm: () {
+                            ref
+                                .read(profileControllerProvider.notifier)
+                                .apply(id)
+                                .then((_) => context.pop());
+                          },
+                        );
+                      },
+                      fill: true,
+                      disabled: !data.hasVacancies() ||
                           (hasVoluntering &&
                               profile.getAppliedVolunteeringId() != id),
-                      child: SerManosButton.cta("Postularme", onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return SerManosModal(
-                                context: context,
-                                subtitle: data.name,
-                                onConfirm: () {
-                                  ref
-                                      .read(profileControllerProvider.notifier)
-                                      .apply(id);
-                                },
-                                cancelText: "Cancelar",
-                                confirmText: "Confirmar",
-                                title: "Te estas por postular a",
-                              );
-                            });
-                      },
-                          fill: true,
-                          disabled: !data.hasVacancies() ||
-                              (hasVoluntering &&
-                                  profile.getAppliedVolunteeringId() != id)))
+                    ),
+                  )
                 ],
               ),
             ),

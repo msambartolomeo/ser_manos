@@ -56,7 +56,7 @@ class ProfileController extends _$ProfileController {
     return await service.getUser(uid);
   }
 
-  FutureOr<void> leaveCurrentVolunteering() async {
+  Future<void> leaveCurrentVolunteering() async {
     final UID? uid = _getUserId();
 
     if (uid == null) {
@@ -72,7 +72,7 @@ class ProfileController extends _$ProfileController {
     });
   }
 
-  FutureOr<void> apply(String volunteeringId) async {
+  Future<void> apply(String volunteeringId) async {
     final UID? uid = _getUserId();
 
     if (uid == null) {
