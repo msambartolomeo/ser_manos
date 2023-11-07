@@ -33,7 +33,7 @@ class NewsTab extends ConsumerWidget {
                     title: newsList[index].title,
                     subtitle: newsList[index].subtitle,
                     onPressedFunction: () => context
-                        .go("/home/news/id", extra: {"news": newsList[index]}),
+                        .go("/home/news/${news.keys.elementAt(index)}", extra: {"news": newsList[index]}),
                   );
                 },
                 separatorBuilder: ((context, index) => const SizedBox(
