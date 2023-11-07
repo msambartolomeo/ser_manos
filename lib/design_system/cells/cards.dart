@@ -113,37 +113,40 @@ class NewsCard extends Container {
             ));
 }
 
-class CurrentVolunteerCard extends Container {
+class CurrentVolunteerCard extends InkWell {
   CurrentVolunteerCard({
     super.key,
     required String overline,
     required String title,
+    required dynamic onPress,
   }) : super(
-            decoration: BoxDecoration(
-                color: SerManosColor.primary5,
-                borderRadius: const BorderRadius.all(Radius.circular(2.0)),
-                boxShadow: SerManosShadows.shadow2,
-                border: const Border.fromBorderSide(
-                    BorderSide(color: SerManosColor.primary100, width: 2))),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            onTap: onPress,
+            child: Container(
+                decoration: BoxDecoration(
+                    color: SerManosColor.primary5,
+                    borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                    boxShadow: SerManosShadows.shadow2,
+                    border: const Border.fromBorderSide(
+                        BorderSide(color: SerManosColor.primary100, width: 2))),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
                     children: [
-                      SerManosTypography.overline(overline,
-                          color: SerManosColor.neutral75),
-                      SerManosTypography.subtitle1(title,
-                          color: SerManosColor.neutral100)
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SerManosTypography.overline(overline,
+                              color: SerManosColor.neutral75),
+                          SerManosTypography.subtitle1(title,
+                              color: SerManosColor.neutral100)
+                        ],
+                      )),
+                      const SerManosIcon.primary(SerManosIconData.location,
+                          active: true)
                     ],
-                  )),
-                  const SerManosIcon.primary(SerManosIconData.location,
-                      active: true)
-                ],
-              ),
-            ));
+                  ),
+                )));
 }
 
 class ProfilePicture extends StatelessWidget {
