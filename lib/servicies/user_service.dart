@@ -39,4 +39,32 @@ class UserService {
 
     await userData.updateUser(uid, update);
   }
+
+  Future<void> apply(String uid, String volunteeringId) async {
+    User user = (await userData.getUser(uid))!;
+
+    if (user.hasVolunteering()) {
+      throw Exception("User already applied to a volunteering.");
+    }
+    // TODO add vacancies check
+    // if (!(await volunteeringService.hasVacancies(volunteeringId))) {
+    //   throw Exception("Applied to volunteerings with no vacants.");
+    // }
+
+    return userData.apply(uid, volunteeringId);
+  }
+
+  Future<void> leaveCurrentVolunteering(String uid) async {
+    User? user = (await userData.getUser(uid));
+
+    if (user == null) {
+      throw Exception("User not logged in.");
+    }
+
+    if (!user.hasVolunteering()) {
+      throw Exception("User doesn't have a volunteering.");
+    }
+
+    return userData.leaveCurrentVolunteering(uid);
+  }
 }

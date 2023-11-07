@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/profile_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/cells/modal.dart';
+import 'package:ser_manos/design_system/cells/volunteering_apply.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -28,8 +30,31 @@ class VolunteeringDetailPage extends ConsumerWidget {
               loading: () => null,
             );
 
+    final profile = ref.watch(profileControllerProvider).when(
+          data: (profile) => profile,
+          error: (e, _) => null,
+          loading: () => null,
+        );
+
     if (data == null) {
       return const CircularProgressIndicator();
+    }
+
+    bool isLoggedIn = profile != null;
+    bool hasVoluntering = isLoggedIn && profile.hasVolunteering();
+    bool appliedToCurrentVolunteering =
+        hasVoluntering && profile.getAppliedVolunteeringId() == id;
+
+    void leaveCurrentVolunteering() {
+      showSerManosModal(
+        context,
+        title: "¿Estás seguro que querés abandonar tu voluntariado?",
+        subtitle: data.name,
+        onConfirm: () => ref
+            .read(profileControllerProvider.notifier)
+            .leaveCurrentVolunteering()
+            .then((_) => context.pop()),
+      );
     }
 
     return Scaffold(
@@ -104,16 +129,48 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  SerManosButton.cta(
-                    "Postularme",
-                    onPressed: () => showSerManosModal(
-                      context,
-                      title:
-                          "¿Estás seguro que querés abandonar tu voluntariado?",
-                      subtitle: data.name,
-                      onConfirm: () {},
+                  Visibility(
+                    visible: !isLoggedIn,
+                    child: const CircularProgressIndicator(),
+                  ),
+                  Visibility(
+                      visible: hasVoluntering,
+                      child: appliedToCurrentVolunteering
+                          ? profile.isAproved()
+                              ? VolunteeringApply.alreadyAppliedAndAproved(
+                                  onPressed: leaveCurrentVolunteering)
+                              : VolunteeringApply.alreadyApplied(
+                                  onPressed: leaveCurrentVolunteering,
+                                )
+                          : VolunteeringApply.alreadyAppliedToOtherVolunteering(
+                              onPressed: () => context.go(
+                                "/home/volunteerings/${profile!.application!["volunteering"]}",
+                              ),
+                            )),
+                  Visibility(
+                    visible: (isLoggedIn && !profile.hasVolunteering()) ||
+                        (hasVoluntering &&
+                            profile.getAppliedVolunteeringId() != id),
+                    child: SerManosButton.cta(
+                      "Postularme",
+                      onPressed: () {
+                        showSerManosModal(
+                          context,
+                          title: "Te estas por postular a",
+                          subtitle: data.name,
+                          onConfirm: () {
+                            ref
+                                .read(profileControllerProvider.notifier)
+                                .apply(id)
+                                .then((_) => context.pop());
+                          },
+                        );
+                      },
+                      fill: true,
+                      disabled: !data.hasVacancies() ||
+                          (hasVoluntering &&
+                              profile.getAppliedVolunteeringId() != id),
                     ),
-                    fill: true,
                   )
                 ],
               ),

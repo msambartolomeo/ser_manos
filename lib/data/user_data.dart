@@ -15,6 +15,22 @@ class UserData {
     return User.fromJson(map);
   }
 
+  Future<void> apply(String uid, String volunteeringId) async {
+    final documentReference = firebaseFirestore.collection("users").doc(uid);
+
+    await documentReference.update({
+      "application": {"volunteering": volunteeringId, "approved": false}
+    }).then((value) => value,
+        onError: (e) => throw Exception("Cuold not apply to volunteering."));
+  }
+
+  Future<void> leaveCurrentVolunteering(String uid) async {
+    final documentReference = firebaseFirestore.collection("users").doc(uid);
+
+    await documentReference.update({"application": null}).then((value) => value,
+        onError: (e) => throw Exception("Cuold not apply to volunteering."));
+  }
+
   Future<void> createUser(String uid, String name, String surname) async {
     final userRef = firebaseFirestore.collection("users").doc(uid);
 

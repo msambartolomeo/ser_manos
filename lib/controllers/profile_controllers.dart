@@ -39,24 +39,58 @@ class UpdateUserController extends _$UpdateUserController {
   }
 }
 
+typedef UID = String;
+
 @riverpod
 class ProfileController extends _$ProfileController {
   @override
   FutureOr<User> build() async {
-    final AuthUser? user = ref.read(currentAuthUserProvider);
+    final UID? uid = _getUserId();
 
-    if (user == null) {
+    if (uid == null) {
       throw Exception("User not logged in.");
     }
 
     final service = ref.read(userServiceProvider);
 
-    return await service.getUser(user.uid);
+    return await service.getUser(uid);
   }
 
-  FutureOr<void> updateVolunteering(String volunteeringId) {}
+  Future<void> leaveCurrentVolunteering() async {
+    final UID? uid = _getUserId();
 
-  FutureOr<void> addFavorite(String volunteeringId) {}
+    if (uid == null) {
+      throw Exception("User not logged in.");
+    }
 
-  FutureOr<void> removeFavorite(String volunteeringId) {}
+    final service = ref.read(userServiceProvider);
+
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await service.leaveCurrentVolunteering(uid);
+      return await service.getUser(uid);
+    });
+  }
+
+  Future<void> apply(String volunteeringId) async {
+    final UID? uid = _getUserId();
+
+    if (uid == null) {
+      throw Exception("User not logged in.");
+    }
+
+    final service = ref.read(userServiceProvider);
+
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await service.apply(uid, volunteeringId);
+      return await service.getUser(uid);
+    });
+  }
+
+  UID? _getUserId() {
+    final user = ref.read(currentAuthUserProvider);
+
+    return user?.uid;
+  }
 }

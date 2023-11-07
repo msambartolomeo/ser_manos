@@ -16,6 +16,12 @@ class Volunteering with _$Volunteering {
 
   factory Volunteering.fromJson(Map<String, dynamic> json) =>
       _$VolunteeringFromJson(json);
+
+  const Volunteering._();
+
+  bool hasVacancies() {
+    return vacants > 0;
+  }
 }
 
 @freezed
@@ -45,14 +51,26 @@ class User with _$User {
     Gender? gender,
     String? phone,
     @Default([]) List<String> favorites,
-    String? myVolunteering,
-    @Default(false) bool aproved,
+    @Default(null) Map? application,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 
   String fullName() {
     return "$name $surname";
+  }
+
+  bool hasVolunteering() {
+    return application != null;
+  }
+
+  bool isAproved() {
+    if (!hasVolunteering()) throw Exception("User with no volunteering.");
+    return application!["approved"];
+  }
+
+  String getAppliedVolunteeringId() {
+    return hasVolunteering() ? application!["volunteering"] : null;
   }
 }
 

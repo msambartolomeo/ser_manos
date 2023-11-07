@@ -13,4 +13,9 @@ class VolunteeringService {
   Future<Volunteering> get(String id) async {
     return await volunteeringData.get(id);
   }
+
+  Future<bool> hasVacancies(String id) async {
+    Volunteering volunteering = await get(id);
+    return volunteering.vacants > 0;
+  }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ser_manos/controllers/favorites_controller.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/shadows.dart';
@@ -109,4 +111,39 @@ class SerManosButton extends Container {
             ),
           ),
         );
+}
+
+class FavoriteButton extends ConsumerWidget {
+  const FavoriteButton({
+    required this.volunteering,
+    super.key,
+  });
+
+  final String volunteering;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isFavorite = ref.watch(favoritesControllerProvider.select(
+        (favorites) =>
+            favorites.value != null &&
+            favorites.value!.contains(volunteering)));
+
+    return InkWell(
+        onTap: () async {
+          if (isFavorite) {
+            await ref
+                .read(favoritesControllerProvider.notifier)
+                .removeFavorite(volunteering);
+          } else {
+            await ref
+                .read(favoritesControllerProvider.notifier)
+                .addFavorite(volunteering);
+          }
+        },
+        child: isFavorite
+            ? const SerManosIcon.primary(SerManosIconData.favorite,
+                active: true)
+            : const SerManosIcon.primary(SerManosIconData.favoriteOutline,
+                active: true));
+  }
 }
