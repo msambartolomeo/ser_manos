@@ -1,6 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geolocator/geolocator.dart';
 part 'generated/models.freezed.dart';
 part 'generated/models.g.dart';
+
+class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
+  const GeoPointConverter();
+
+  @override
+  GeoPoint fromJson(GeoPoint geoPoint) {
+    return geoPoint;
+  }
+
+  @override
+  GeoPoint toJson(GeoPoint geoPoint) => geoPoint;
+}
 
 @freezed
 class Volunteering with _$Volunteering {
@@ -12,7 +26,8 @@ class Volunteering with _$Volunteering {
       required List<String> requirements,
       required List<String> disponibility,
       required int vacants,
-      required String address}) = _Volunteering;
+      required String address,
+      @GeoPointConverter() required GeoPoint geolocation}) = _Volunteering;
 
   factory Volunteering.fromJson(Map<String, dynamic> json) =>
       _$VolunteeringFromJson(json);
@@ -21,6 +36,15 @@ class Volunteering with _$Volunteering {
 
   bool hasVacancies() {
     return vacants > 0;
+  }
+
+  double distanceToVolunteering(Volunteering other) {
+    return distanceTo(other.geolocation);
+  }
+
+  double distanceTo(GeoPoint other) {
+    return Geolocator.distanceBetween(geolocation.latitude,
+        geolocation.longitude, other.latitude, other.longitude);
   }
 }
 
