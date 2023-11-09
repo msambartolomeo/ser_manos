@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/pages/profile/edit_profile.dart';
-import 'package:ser_manos/pages/entry.dart';
+import 'package:ser_manos/pages/login/entry.dart';
 import 'package:ser_manos/pages/home.dart';
-import 'package:ser_manos/pages/login.dart';
+import 'package:ser_manos/pages/login/login.dart';
 import 'package:ser_manos/pages/new_detail.dart';
-import 'package:ser_manos/pages/register.dart';
+import 'package:ser_manos/pages/login/register.dart';
 import 'package:ser_manos/pages/volunteering_detail.dart';
-import 'package:ser_manos/pages/welcome.dart';
+import 'package:ser_manos/pages/login/welcome.dart';
 
 /// The route configuration.
 class RouterBuilder {
