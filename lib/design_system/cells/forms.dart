@@ -33,6 +33,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              keyboardType: TextInputType.emailAddress,
               validator: validateEmail,
               controller: emailController,
               enabled: enabled,
@@ -59,6 +60,7 @@ class SerManosForm extends Column {
   }) : super(
           children: [
             SerManosTextInput(
+              keyboardType: TextInputType.emailAddress,
               validator: validateEmail,
               controller: emailController,
               enabled: enabled,
@@ -95,6 +97,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput.calendar(
+              keyboardType: TextInputType.none,
               validator: requiredValidator,
               context: context,
               enabled: enabled,
@@ -137,6 +140,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              keyboardType: TextInputType.phone,
               validator: validatePhone,
               controller: phoneController,
               enabled: enabled,
@@ -145,6 +149,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              keyboardType: TextInputType.emailAddress,
               validator: validateEmail,
               controller: emailController,
               enabled: enabled,
