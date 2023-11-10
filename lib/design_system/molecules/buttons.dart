@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ser_manos/controllers/favorites_controller.dart';
@@ -5,6 +6,7 @@ import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/shadows.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
+import 'package:ser_manos/servicies/utils.dart';
 
 const EdgeInsets paddingBig = EdgeInsets.all(12);
 const EdgeInsets paddingSmall = EdgeInsets.fromLTRB(12, 8, 12, 8);
@@ -145,5 +147,28 @@ class FavoriteButton extends ConsumerWidget {
                 active: true)
             : const SerManosIcon.primary(SerManosIconData.favoriteOutline,
                 active: true));
+  }
+}
+
+class LocationButton extends ConsumerWidget {
+  const LocationButton({
+    required this.geolocation,
+    super.key,
+  });
+
+  final GeoPoint geolocation;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return InkWell(
+        onTap: () async {
+          try {
+            Utils.openMap(geolocation);
+          } catch (e) {
+            // TODO Handle error
+          }
+        },
+        child: const SerManosIcon.primary(SerManosIconData.location,
+            active: true));
   }
 }

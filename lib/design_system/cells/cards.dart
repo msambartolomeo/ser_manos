@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/design_system/atoms/icons.dart';
@@ -16,6 +17,7 @@ class VolunteerCard extends InkWell {
       required String name,
       required int vacant,
       required String volunteering,
+      required GeoPoint geolocation,
       required void Function() onTapFunction})
       : super(
             onTap: onTapFunction,
@@ -52,9 +54,7 @@ class VolunteerCard extends InkWell {
                             Row(children: [
                               FavoriteButton(volunteering: volunteering),
                               const SizedBox(width: 16),
-                              const SerManosIcon.primary(
-                                  SerManosIconData.location,
-                                  active: true)
+                              LocationButton(geolocation: geolocation)
                             ])
                           ],
                         ))
@@ -114,12 +114,13 @@ class NewsCard extends Container {
 }
 
 class CurrentVolunteerCard extends InkWell {
-  CurrentVolunteerCard({
-    super.key,
-    required String overline,
-    required String title,
-    required dynamic onPress,
-  }) : super(
+  CurrentVolunteerCard(
+      {super.key,
+      required String overline,
+      required String title,
+      required dynamic onPress,
+      required GeoPoint geolocation})
+      : super(
             onTap: onPress,
             child: Container(
                 decoration: BoxDecoration(
@@ -142,8 +143,7 @@ class CurrentVolunteerCard extends InkWell {
                               color: SerManosColor.neutral100)
                         ],
                       )),
-                      const SerManosIcon.primary(SerManosIconData.location,
-                          active: true)
+                      LocationButton(geolocation: geolocation)
                     ],
                   ),
                 )));
