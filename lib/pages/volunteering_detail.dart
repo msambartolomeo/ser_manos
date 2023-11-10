@@ -66,6 +66,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: SerManosHeader.opacity(
           button: IconButton(
@@ -109,7 +110,10 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  LocationCardWithoutMap(location: data.address),
+                  LocationCardWithoutMap(
+                    location: data.address,
+                    geolocation: data.geolocation,
+                  ),
                   const SizedBox(
                     height: 24,
                   ),

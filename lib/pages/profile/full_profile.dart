@@ -10,6 +10,7 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
+import 'package:ser_manos/design_system/atoms/icons.dart' as Icon;
 
 class FullProfileTab extends ConsumerWidget {
   const FullProfileTab({super.key, required this.user});
@@ -38,7 +39,9 @@ class FullProfileTab extends ConsumerWidget {
             padding: const EdgeInsets.only(bottom: 32, top: 32),
             child: Column(
               children: [
-                SerManosProfilePicture.big(user.image!),
+                user.image != null
+                    ? SerManosProfilePicture.big(user.image!)
+                    : const Icon.ProfilePicture(),
                 const SizedBox(height: 16),
                 SerManosTypography.overline(
                   "Voluntario",

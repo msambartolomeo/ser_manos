@@ -16,6 +16,7 @@ class NewDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     News anew = news;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: SerManosHeader.section(title: "Novedades"),
       body: SerManosGrid(
         child: SingleChildScrollView(

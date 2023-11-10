@@ -15,9 +15,8 @@ class AuthData {
       );
 
       return response.user!.uid;
-    } on FirebaseAuthException catch (_) {
-      // TODO: Handle error
-      rethrow;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(generateAuthExceptionMessage(e));
     }
   }
 
@@ -29,18 +28,25 @@ class AuthData {
       );
 
       return response.user!.uid;
-    } on FirebaseAuthException catch (_) {
-      // TODO: Handle error
-      rethrow;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(generateAuthExceptionMessage(e));
     }
   }
 
   Future<void> logOut() async {
     try {
       await firebaseAuth.signOut();
-    } on FirebaseAuthException catch (_) {
-      // TODO: Handle error
-      rethrow;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(generateAuthExceptionMessage(e));
     }
   }
+}
+
+String generateAuthExceptionMessage(FirebaseAuthException e) {
+  return switch (e.code) {
+    "INVALID_LOGIN_CREDENTIALS" =>
+      "El usuario o contraseña ingresados son incorrectos",
+    "email-already-in-use" => "El usuario ya se encuentra registrado",
+    _ => "Se ha producido un error inesperado",
+  };
 }

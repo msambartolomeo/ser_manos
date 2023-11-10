@@ -23,7 +23,7 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: "Ser Manos",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: SerManosColor.primary100),
         useMaterial3: true,
