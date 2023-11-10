@@ -150,25 +150,18 @@ class FavoriteButton extends ConsumerWidget {
   }
 }
 
-class LocationButton extends ConsumerWidget {
-  const LocationButton({
-    required this.geolocation,
+class LocationButton extends InkWell {
+  LocationButton({
+    required geolocation,
     super.key,
-  });
-
-  final GeoPoint geolocation;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return InkWell(
-        onTap: () async {
-          try {
-            Utils.openMap(geolocation);
-          } catch (e) {
-            // TODO Handle error
-          }
-        },
-        child: const SerManosIcon.primary(SerManosIconData.location,
-            active: true));
-  }
+  }) : super(
+            onTap: () async {
+              try {
+                Utils.openMap(geolocation);
+              } catch (e) {
+                // TODO Handle error
+              }
+            },
+            child: const SerManosIcon.primary(SerManosIconData.location,
+                active: true));
 }
