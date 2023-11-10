@@ -6,23 +6,36 @@ import 'package:ser_manos/design_system/atoms/logos.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
+import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
+import 'package:ser_manos/design_system/tokens/text_style.dart';
 
-class RegisterPage extends ConsumerWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final name = TextEditingController();
-    final surname = TextEditingController();
-    final email = TextEditingController();
-    final password = TextEditingController();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends ConsumerState<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
+  final name = TextEditingController();
+  final surname = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     bool isLoading = false;
+
+    String? errorText;
 
     ref.watch(registerControllerProvider).maybeWhen(
           orElse: () => {},
           loading: () => isLoading = true,
-          error: (e, _) => {}, // TODO: Handle error
+          error: (e, _) {
+            errorText = e.toString().split(":")[1];
+          },
         );
 
     final RegisterController registerController =
@@ -32,46 +45,55 @@ class RegisterPage extends ConsumerWidget {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: SerManosHeader.white(),
-        body: SerManosGrid(
-          child: Flexible(
+        body: Form(
+          key: _formKey,
+          child: SerManosGrid(
             child: ListView(
               children: [
                 const SquaredLogo(),
-                const SizedBox(
-                  height: 31,
-                ),
+                const SizedBox(height: 32),
                 SerManosForm.register(
                   nameController: name,
                   surnameController: surname,
                   emailController: email,
                   passwordController: password,
                 ),
-                const SizedBox(height: 24.0),
+                if (errorText != null)
+                  Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Text(
+                        errorText!,
+                        style: const SerManosTextStyle.caption(
+                          color: SerManosColor.error100,
+                        ),
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 24),
                 SerManosButton.cta(
                   "Registrarse",
                   onPressed: () async {
-                    await registerController.register(
-                      name.text,
-                      surname.text,
-                      email.text,
-                      password.text,
-                    );
+                    if (_formKey.currentState!.validate()) {
+                      await registerController.register(
+                        name.text,
+                        surname.text,
+                        email.text,
+                        password.text,
+                      );
+                    }
                   },
                   disabled: isLoading,
                   fill: true,
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 SerManosButton.ctaText(
                   "Ya tengo cuenta",
                   onPressed: () => context.go("/login"),
                   fill: true,
                   disabled: isLoading,
                 ),
-                const SizedBox(
-                  height: 32,
-                )
+                const SizedBox(height: 32)
               ],
             ),
           ),
