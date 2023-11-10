@@ -6,8 +6,8 @@ import 'package:ser_manos/models/models.dart';
 class VolunteeringData {
   final FirebaseFirestore firebaseFirestore;
 
-  StreamController<Map<String, int>> _controller =
-  StreamController<Map<String, int>>();
+  StreamController<Map<String, int>> _volunteeringsController =
+  StreamController<Map<String, int>>.broadcast();
 
   VolunteeringData({required this.firebaseFirestore});
 
@@ -36,6 +36,25 @@ class VolunteeringData {
     return Volunteering.fromJson(documentSnapshot.data()!);
   }
 
+  void listenToSpecificVacantChanges(String id) {
+    final collection = firebaseFirestore.collection("volunteering");
+
+    collection.doc(id).snapshots().listen(
+          (DocumentSnapshot<Map<String, dynamic>> event) async {
+        final data = await _volunteeringsController.stream.last;
+
+
+        final fieldValue = event.get("vacants");
+        if (fieldValue != null) {
+          data[id] = fieldValue;
+          _volunteeringsController.add(data);
+        }
+      },
+      onError: (error) {
+        print("Error fetching data: $error");
+      },
+    );
+  }
 
   void listenToVacantChanges() {
     final collection = firebaseFirestore.collection("volunteering");
@@ -53,22 +72,19 @@ class VolunteeringData {
           },
         );
 
-        _controller.add(data);
+        _volunteeringsController.add(data);
       },
       onError: (error) {
-        // Handle errors appropriately
         print("Error fetching data: $error");
       },
     );
   }
 
-  void dispose() {
-    _controller.close();
-  }
 
   Stream<Map<String, int>> getVacantStream() {
-    return _controller.stream;
+    return _volunteeringsController.stream;
   }
+
 
 
 }

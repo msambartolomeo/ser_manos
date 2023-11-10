@@ -21,9 +21,16 @@ StreamProvider<Map<String, int>>((ref) {
   final serviceProvider = ref.read(volunteeringServiceProvider);
   serviceProvider.listenToVacantChanges();
 
-  ref.onDispose(() {
-    serviceProvider.dispose();
-  });
-
   return serviceProvider.getVacantStream();
 });
+
+
+final specificVolunteeringStreamProvider =
+StreamProvider.autoDispose.family<Map<String, int>, String>(
+      (ref, id) {
+    final serviceProvider = ref.read(volunteeringServiceProvider);
+    serviceProvider.listenToSpecificVacantChanges(id);
+
+    return serviceProvider.getVacantStream();
+  },
+);

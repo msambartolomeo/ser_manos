@@ -23,11 +23,12 @@ class VolunteeringService {
     volunteeringData.listenToVacantChanges();
   }
 
-  void dispose() {
-    volunteeringData.dispose();
-  }
-
   Stream<Map<String, int>> getVacantStream() {
     return volunteeringData.getVacantStream();
   }
+
+  void listenToSpecificVacantChanges(String id) {
+    volunteeringData.listenToSpecificVacantChanges(id);
+  }
+
 }

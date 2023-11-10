@@ -52,10 +52,10 @@ class RouterBuilder {
                   Widget page;
                   switch (state.pathParameters["tab"]!) {
                     case "volunteerings":
+                      final Map map = state.extra! as Map;
                       page = VolunteeringDetailPage(
-                          volunteering: state.extra == null
-                              ? null
-                              : (state.extra as Map)["volunteering"],
+                          volunteering: map["volunteering"],
+                          vacantsParam: map["vacants"],
                           id: param);
                       break;
                     case "profile":
@@ -73,7 +73,7 @@ class RouterBuilder {
                       // TODO: page = errorPage
                       final Map map = state.extra! as Map;
                       page = VolunteeringDetailPage(
-                          volunteering: map["volunteering"], id: map["id"]);
+                          volunteering: map["volunteering"], id: map["id"], vacantsParam: map["vacants"],);
                   }
                   return page;
                 },

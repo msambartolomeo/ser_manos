@@ -18,8 +18,9 @@ import 'package:ser_manos/models/models.dart';
 class VolunteeringDetailPage extends ConsumerWidget {
   final Volunteering? volunteering;
   final String id;
+  final int vacantsParam;
   const VolunteeringDetailPage(
-      {super.key, required this.volunteering, required this.id});
+      {super.key, required this.volunteering, required this.id, required this.vacantsParam});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,6 +30,13 @@ class VolunteeringDetailPage extends ConsumerWidget {
               error: (e, _) => null,
               loading: () => null,
             );
+
+    final vacants = ref.watch(specificVolunteeringStreamProvider(id)).when(
+          data: (data) => data[id] ?? vacantsParam,
+          error: (e, _) => null,
+          loading: () => vacantsParam,
+        );
+
 
     final profile = ref.watch(profileControllerProvider).when(
           data: (profile) => profile,
@@ -125,7 +133,10 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  SerManosVacantComponent.enabled(data.vacants),
+                  vacants! ==
+                      0 //habria que ver si se deshabilita con 0 o con otra condicion
+                      ? SerManosVacantComponent.disabled(vacants)
+                      : SerManosVacantComponent.enabled(vacants),
                   const SizedBox(
                     height: 24,
                   ),
@@ -167,7 +178,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
                         );
                       },
                       fill: true,
-                      disabled: !data.hasVacancies() ||
+                      disabled: vacants <= 0 ||
                           (hasVoluntering &&
                               profile.getAppliedVolunteeringId() != id),
                     ),

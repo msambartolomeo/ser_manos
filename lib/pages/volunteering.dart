@@ -79,7 +79,8 @@ class VolunteeringTab extends ConsumerWidget {
                                       volunteering: volunteering.keys.elementAt(index),
                                       onTapFunction: () => context.go(
                                           "/home/volunteerings/${volunteering.keys.elementAt(index)}",
-                                          extra: {"volunteering": volunteeringList[index]})),
+                                          extra: {"volunteering": volunteeringList[index],
+                                          "vacants": vacantsList[index]})),
                                 );
                               },
                               separatorBuilder: ((context, index) => const SizedBox(
