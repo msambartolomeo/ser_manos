@@ -26,63 +26,46 @@ class LoginPage extends ConsumerWidget {
     final LoginController loginController =
         ref.watch(loginControllerProvider.notifier);
 
-    return Scaffold(
-      appBar: SerManosHeader.white(),
-      body: SerManosGrid(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      const Spacer(),
-                      Column(
-                        children: [
-                          const SquaredLogo(),
-                          const SizedBox(height: 32),
-                          SerManosForm.login(
-                            emailController: email,
-                            passwordController: password,
-                          ),
-                          const SizedBox(height: 24.0),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        children: [
-                          SerManosButton.cta(
-                            "Iniciar Sesión",
-                            onPressed: () async {
-                              await loginController.login(
-                                email.text,
-                                password.text,
-                              );
-                            },
-                            disabled: isLoading,
-                            fill: true,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          SerManosButton.ctaText(
-                            "No tengo cuenta",
-                            onPressed: () => context.go("/register"),
-                            fill: true,
-                            disabled: isLoading,
-                          ),
-                          const SizedBox(
-                            height: 32,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: SerManosHeader.white(),
+        body: SerManosGrid(
+          child: Column(
+            children: [
+              const Spacer(),
+              const SquaredLogo(),
+              const SizedBox(height: 32),
+              SerManosForm.login(
+                emailController: email,
+                passwordController: password,
               ),
-            );
-          },
+              const Spacer(),
+              const SizedBox(height: 24),
+              SerManosButton.cta(
+                "Iniciar Sesión",
+                onPressed: () async {
+                  await loginController.login(
+                    email.text,
+                    password.text,
+                  );
+                },
+                disabled: isLoading,
+                fill: true,
+              ),
+              const SizedBox(height: 16),
+              SerManosButton.ctaText(
+                "No tengo cuenta",
+                onPressed: () => context.go("/register"),
+                fill: true,
+                disabled: isLoading,
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+            ],
+          ),
         ),
       ),
     );

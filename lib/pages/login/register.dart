@@ -28,67 +28,53 @@ class RegisterPage extends ConsumerWidget {
     final RegisterController registerController =
         ref.watch(registerControllerProvider.notifier);
 
-    return Scaffold(
-      appBar: SerManosHeader.white(),
-      body: SerManosGrid(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(children: [
-                        const SquaredLogo(),
-                        const SizedBox(
-                          height: 31,
-                        ),
-                        SerManosForm.register(
-                          nameController: name,
-                          surnameController: surname,
-                          emailController: email,
-                          passwordController: password,
-                        ),
-                        const SizedBox(height: 24.0),
-                      ]),
-                      const Spacer(),
-                      Column(
-                        children: [
-                          SerManosButton.cta(
-                            "Registrarse",
-                            onPressed: () async {
-                              await registerController.register(
-                                name.text,
-                                surname.text,
-                                email.text,
-                                password.text,
-                              );
-                            },
-                            disabled: isLoading,
-                            fill: true,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          SerManosButton.ctaText(
-                            "Ya tengo cuenta",
-                            onPressed: () => context.go("/login"),
-                            fill: true,
-                            disabled: isLoading,
-                          ),
-                          const SizedBox(
-                            height: 32,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: SerManosHeader.white(),
+        body: SerManosGrid(
+          child: Flexible(
+            child: ListView(
+              children: [
+                const SquaredLogo(),
+                const SizedBox(
+                  height: 31,
                 ),
-              ),
-            );
-          },
+                SerManosForm.register(
+                  nameController: name,
+                  surnameController: surname,
+                  emailController: email,
+                  passwordController: password,
+                ),
+                const SizedBox(height: 24.0),
+                SerManosButton.cta(
+                  "Registrarse",
+                  onPressed: () async {
+                    await registerController.register(
+                      name.text,
+                      surname.text,
+                      email.text,
+                      password.text,
+                    );
+                  },
+                  disabled: isLoading,
+                  fill: true,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                SerManosButton.ctaText(
+                  "Ya tengo cuenta",
+                  onPressed: () => context.go("/login"),
+                  fill: true,
+                  disabled: isLoading,
+                ),
+                const SizedBox(
+                  height: 32,
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

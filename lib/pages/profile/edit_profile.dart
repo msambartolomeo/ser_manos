@@ -85,56 +85,60 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
     final UpdateUserController updateUserController =
         ref.watch(updateUserControllerProvider.notifier);
 
-    return Scaffold(
-      appBar: SerManosHeader.modal(),
-      body: Form(
-        key: _formKey,
-        child: SerManosGrid(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 32),
-            child: Column(
-              children: [
-                Flexible(
-                  child: ListView(
-                    children: [
-                      SerManosForm.personalData(
-                        enabled: !isLoading,
-                        context: context,
-                        birthdateController: birthdate,
-                        selectedGender: gender,
-                        onGenderChange: setGender,
-                        onImageChange: setImage,
-                        image: imageUrl,
-                        imageType: imageType,
-                      ),
-                      const SizedBox(height: 32),
-                      SerManosForm.contactData(
-                        enabled: !isLoading,
-                        phoneController: phone,
-                        emailController: email,
-                      ),
-                    ],
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: SerManosHeader.modal(),
+        body: Form(
+          key: _formKey,
+          child: SerManosGrid(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 32),
+              child: Column(
+                children: [
+                  Flexible(
+                    child: ListView(
+                      children: [
+                        SerManosForm.personalData(
+                          enabled: !isLoading,
+                          context: context,
+                          birthdateController: birthdate,
+                          selectedGender: gender,
+                          onGenderChange: setGender,
+                          onImageChange: setImage,
+                          image: imageUrl,
+                          imageType: imageType,
+                        ),
+                        const SizedBox(height: 32),
+                        SerManosForm.contactData(
+                          enabled: !isLoading,
+                          phoneController: phone,
+                          emailController: email,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 32),
-                SerManosButton.cta(
-                  disabled: isLoading,
-                  "Guardar datos",
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await updateUserController.updateUser(
-                        user!.uid,
-                        image,
-                        birthdate.text,
-                        gender,
-                        phone.text,
-                        email.text,
-                      );
-                    }
-                  },
-                  fill: true,
-                ),
-              ],
+                  const SizedBox(height: 32),
+                  SerManosButton.cta(
+                    disabled: isLoading,
+                    "Guardar datos",
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await updateUserController.updateUser(
+                          user!.uid,
+                          image,
+                          birthdate.text,
+                          gender,
+                          phone.text,
+                          email.text,
+                        );
+                      }
+                    },
+                    fill: true,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
