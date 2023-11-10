@@ -18,4 +18,16 @@ class VolunteeringService {
     Volunteering volunteering = await get(id);
     return volunteering.vacants > 0;
   }
+
+  void listenToVacantChanges() {
+    volunteeringData.listenToVacantChanges();
+  }
+
+  void dispose() {
+    volunteeringData.dispose();
+  }
+
+  Stream<Map<String, int>> getVacantStream() {
+    return volunteeringData.getVacantStream();
+  }
 }

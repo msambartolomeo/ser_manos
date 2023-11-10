@@ -15,3 +15,15 @@ Future<Volunteering> volunteeringGetByIdController(
     VolunteeringGetByIdControllerRef ref, String id) {
   return ref.read(volunteeringServiceProvider).get(id);
 }
+
+final volunteeringStreamProvider =
+StreamProvider<Map<String, int>>((ref) {
+  final serviceProvider = ref.read(volunteeringServiceProvider);
+  serviceProvider.listenToVacantChanges();
+
+  ref.onDispose(() {
+    serviceProvider.dispose();
+  });
+
+  return serviceProvider.getVacantStream();
+});
