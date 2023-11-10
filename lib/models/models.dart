@@ -67,15 +67,28 @@ class Volunteering with _$Volunteering {
 }
 
 @freezed
-class News with _$News {
-  const factory News(
-      {required String image,
-      required String overline,
-      required String title,
-      required String subtitle,
-      required String body}) = _News;
+class News with _$News implements Comparable {
+  const factory News({
+    required String image,
+    required String overline,
+    required String title,
+    required String subtitle,
+    required String body,
+    @TimestampConverter() required Timestamp creation,
+  }) = _News;
 
   factory News.fromJson(Map<String, Object?> json) => _$NewsFromJson(json);
+
+  const News._();
+
+  @override
+  int compareTo(other) {
+    if (other is News) {
+      return other.creation.compareTo(creation);
+    } else {
+      throw ArgumentError('Se esperaba un objeto de tipo News');
+    }
+  }
 }
 
 @freezed

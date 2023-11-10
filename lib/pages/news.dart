@@ -19,6 +19,7 @@ class NewsTab extends ConsumerWidget {
       error: (err, stack) => Text('Error: $err'),
       data: (news) {
         final newsList = news.values.toList();
+        newsList.sort();
         return Container(
           color: SerManosColor.secondary10,
           child: SerManosGrid(
