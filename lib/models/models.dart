@@ -16,18 +16,32 @@ class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
   GeoPoint toJson(GeoPoint geoPoint) => geoPoint;
 }
 
+class TimestampConverter implements JsonConverter<Timestamp, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  Timestamp fromJson(Timestamp time) {
+    return time;
+  }
+
+  @override
+  Timestamp toJson(Timestamp time) => time;
+}
+
 @freezed
 class Volunteering with _$Volunteering {
-  const factory Volunteering(
-      {required String image,
-      required String name,
-      required String purpose,
-      required String description,
-      required List<String> requirements,
-      required List<String> disponibility,
-      required int vacants,
-      required String address,
-      @GeoPointConverter() required GeoPoint geolocation}) = _Volunteering;
+  const factory Volunteering({
+    required String image,
+    required String name,
+    required String purpose,
+    required String description,
+    required List<String> requirements,
+    required List<String> disponibility,
+    required int vacants,
+    required String address,
+    @GeoPointConverter() required GeoPoint geolocation,
+    @TimestampConverter() required Timestamp creation,
+  }) = _Volunteering;
 
   factory Volunteering.fromJson(Map<String, dynamic> json) =>
       _$VolunteeringFromJson(json);
@@ -45,6 +59,10 @@ class Volunteering with _$Volunteering {
   double distanceTo(GeoPoint other) {
     return Geolocator.distanceBetween(geolocation.latitude,
         geolocation.longitude, other.latitude, other.longitude);
+  }
+
+  int compareCreationDate(Volunteering other) {
+    return creation.compareTo(other.creation);
   }
 }
 

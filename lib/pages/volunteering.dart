@@ -26,25 +26,23 @@ class VolunteeringTab extends ConsumerWidget {
           loading: () => null,
         );
 
-    // TODO Fix constant permission request
     final geolocation = ref.watch(determineGeolocationProvider).when(
           data: (geolocation) => geolocation,
           error: (e, _) => null,
           loading: () => null,
         );
 
-    // TODO Esto es lógica de front o back?
     final int Function(Volunteering, Volunteering) comparator =
         geolocation == null
             ? (Volunteering v1, Volunteering v2) {
-                return 0;
+                return v2.compareCreationDate(v1);
               }
             : (Volunteering v1, Volunteering v2) {
                 int distance = v1
                     .distanceTo(geolocation)
                     .compareTo(v2.distanceTo(geolocation));
                 if (distance == 0) {
-                  return 0;
+                  return v2.compareCreationDate(v1);
                 }
                 return distance;
               };
