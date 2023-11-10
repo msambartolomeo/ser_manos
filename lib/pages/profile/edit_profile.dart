@@ -88,7 +88,6 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: SerManosHeader.modal(),
         body: Form(
           key: _formKey,
