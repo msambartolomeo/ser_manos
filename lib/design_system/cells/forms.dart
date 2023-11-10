@@ -42,7 +42,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
-              validator: requiredValidator,
+              validator: validatePassword,
               controller: passwordController,
               enabled: enabled,
               obscureText: true,
@@ -69,7 +69,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
-              validator: requiredValidator,
+              validator: validatePassword,
               controller: passwordController,
               enabled: enabled,
               obscureText: true,
@@ -162,6 +162,13 @@ class SerManosForm extends Column {
   static String? requiredValidator(String? value) {
     if (value == null || value == "") return "Este campo es obligatorio";
     return null;
+  }
+
+  static String? validatePassword(String? value) {
+    if (value == null || value == "") return "Este campo es obligatorio";
+    return value.length >= 6
+        ? null
+        : "La contraseña debe tener al menos 6 caracteres";
   }
 
   static String? validateEmail(String? value) {
