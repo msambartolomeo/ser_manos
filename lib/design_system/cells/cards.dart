@@ -371,7 +371,8 @@ class GenderCard extends _BaseCardInformation {
 }
 
 class LocationCardWithoutMap extends _BaseCardInformation {
-  LocationCardWithoutMap({super.key, required String location})
+  LocationCardWithoutMap(
+      {super.key, required String location, required GeoPoint geolocation})
       : super(
             title: "Ubicación",
             information: Row(
@@ -386,8 +387,7 @@ class LocationCardWithoutMap extends _BaseCardInformation {
                     SerManosTypography.body1(location)
                   ],
                 )),
-                const SerManosIcon.primary(SerManosIconData.location,
-                    active: true)
+                LocationButton(geolocation: geolocation)
               ],
             ));
 }
