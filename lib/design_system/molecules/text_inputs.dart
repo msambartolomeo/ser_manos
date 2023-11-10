@@ -39,6 +39,7 @@ class SerManosTextInput extends TextFormField {
     super.validator,
     super.enabled,
     super.obscureText,
+    super.keyboardType,
   }) : super(
           decoration: _baseInputDecoration.copyWith(
             hintText: hintText,
@@ -60,6 +61,7 @@ class SerManosTextInput extends TextFormField {
     super.onSaved,
     super.validator,
     super.enabled,
+    super.keyboardType,
     required BuildContext context,
   }) : super(
           onTap: () async {

@@ -58,6 +58,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: SerManosHeader.opacity(
           button: IconButton(

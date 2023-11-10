@@ -12,6 +12,7 @@ class EntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: SerManosHeader.white(),
       body: SerManosGrid(
         child: Center(
