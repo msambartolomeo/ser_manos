@@ -10,6 +10,7 @@ import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/pages/my_activity_section.dart';
+import 'package:ser_manos/providers/geolocation_provider.dart';
 
 class VolunteeringTab extends ConsumerWidget {
   const VolunteeringTab({super.key});
@@ -25,11 +26,33 @@ class VolunteeringTab extends ConsumerWidget {
           loading: () => null,
         );
 
+    final geolocation = ref.watch(determineGeolocationProvider).when(
+          data: (geolocation) => geolocation,
+          error: (e, _) => null,
+          loading: () => null,
+        );
+
+    final int Function(Volunteering, Volunteering) comparator =
+        geolocation == null
+            ? (Volunteering v1, Volunteering v2) {
+                return v2.compareCreationDate(v1);
+              }
+            : (Volunteering v1, Volunteering v2) {
+                int distance = v1
+                    .distanceTo(geolocation)
+                    .compareTo(v2.distanceTo(geolocation));
+                if (distance == 0) {
+                  return v2.compareCreationDate(v1);
+                }
+                return distance;
+              };
+
     return volunteering.when(
       loading: () => const CircularProgressIndicator(),
       error: (err, stack) => Text('Error: $err'),
       data: (volunteering) {
         final volunteeringList = volunteering.values.toList();
+        volunteeringList.sort(comparator);
         return Container(
           color: SerManosColor.secondary10,
           child: Column(
@@ -50,6 +73,9 @@ class VolunteeringTab extends ConsumerWidget {
                       }),
                   volunteeringName:
                       volunteering[profile?.application?["volunteering"]]?.name,
+                  geolocation:
+                      volunteering[profile?.application?["volunteering"]]
+                          ?.geolocation,
                 ),
               ),
               SerManosGrid(
@@ -68,6 +94,7 @@ class VolunteeringTab extends ConsumerWidget {
                             image: volunteeringList[index].image,
                             name: volunteeringList[index].name,
                             vacant: volunteeringList[index].vacants,
+                            geolocation: volunteeringList[index].geolocation,
                             volunteering: volunteering.keys.elementAt(index),
                             onTapFunction: () => context.go(
                                 "/home/volunteerings/${volunteering.keys.elementAt(index)}",

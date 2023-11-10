@@ -102,7 +102,10 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  LocationCardWithoutMap(location: data.address),
+                  LocationCardWithoutMap(
+                    location: data.address,
+                    geolocation: data.geolocation,
+                  ),
                   const SizedBox(
                     height: 24,
                   ),
