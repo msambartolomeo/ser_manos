@@ -50,6 +50,7 @@ dependencies:
   geolocator: ^10.1.0
   map_launcher: ^3.0.1
   url_launcher: ^6.2.1
+  firebase_crashlytics: ^3.4.4
 
 dev_dependencies:
   flutter_test:
