@@ -33,6 +33,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              keyboardType: TextInputType.emailAddress,
               validator: validateEmail,
               controller: emailController,
               enabled: enabled,
@@ -41,7 +42,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
-              validator: requiredValidator,
+              validator: validatePassword,
               controller: passwordController,
               enabled: enabled,
               obscureText: true,
@@ -59,6 +60,7 @@ class SerManosForm extends Column {
   }) : super(
           children: [
             SerManosTextInput(
+              keyboardType: TextInputType.emailAddress,
               validator: validateEmail,
               controller: emailController,
               enabled: enabled,
@@ -67,7 +69,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
-              validator: requiredValidator,
+              validator: validatePassword,
               controller: passwordController,
               enabled: enabled,
               obscureText: true,
@@ -95,6 +97,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput.calendar(
+              keyboardType: TextInputType.none,
               validator: requiredValidator,
               context: context,
               enabled: enabled,
@@ -137,6 +140,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              keyboardType: TextInputType.phone,
               validator: validatePhone,
               controller: phoneController,
               enabled: enabled,
@@ -145,6 +149,7 @@ class SerManosForm extends Column {
             ),
             const SizedBox(height: 24.0),
             SerManosTextInput(
+              keyboardType: TextInputType.emailAddress,
               validator: validateEmail,
               controller: emailController,
               enabled: enabled,
@@ -157,6 +162,13 @@ class SerManosForm extends Column {
   static String? requiredValidator(String? value) {
     if (value == null || value == "") return "Este campo es obligatorio";
     return null;
+  }
+
+  static String? validatePassword(String? value) {
+    if (value == null || value == "") return "Este campo es obligatorio";
+    return value.length >= 6
+        ? null
+        : "La contraseña debe tener al menos 6 caracteres";
   }
 
   static String? validateEmail(String? value) {

@@ -56,6 +56,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: SerManosHeader.tabs(controller: _controller, onTap: tap),
         body: TabBarView(
           controller: _controller,
