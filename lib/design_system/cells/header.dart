@@ -71,20 +71,19 @@ class SerManosHeader extends AppBar {
           ),
         );
 
-  SerManosHeader.opacity({
-    super.key,
-    required Widget button,
-  }) : super(
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: <Color>[Colors.black, Colors.black.withOpacity(0.0)],
-                ),
+  SerManosHeader.opacity({super.key})
+      : super(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: <Color>[Colors.black, Colors.black.withOpacity(0.0)],
               ),
             ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: button);
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: const BackButton(color: SerManosColor.neutral0),
+        );
 }
