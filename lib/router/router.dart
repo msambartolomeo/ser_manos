@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/pages/profile/edit_profile.dart';
 import 'package:ser_manos/pages/login/entry.dart';
 import 'package:ser_manos/pages/home.dart';
@@ -8,12 +9,14 @@ import 'package:ser_manos/pages/new_detail.dart';
 import 'package:ser_manos/pages/login/register.dart';
 import 'package:ser_manos/pages/volunteering_detail.dart';
 import 'package:ser_manos/pages/login/welcome.dart';
+import 'package:ser_manos/servicies/logging_service.dart';
 
 /// The route configuration.
 class RouterBuilder {
   final bool loggedIn;
+  final LoggingService? loggingService;
 
-  const RouterBuilder(this.loggedIn);
+  const RouterBuilder(this.loggedIn, {this.loggingService});
 
   GoRouter build() {
     return GoRouter(
@@ -52,11 +55,13 @@ class RouterBuilder {
                   Widget page;
                   switch (state.pathParameters["tab"]!) {
                     case "volunteerings":
+                      Volunteering? volunteering = state.extra == null
+                          ? null
+                          : (state.extra as Map)["volunteering"];
+
+                      loggingService?.logOpenVolunteering(param, volunteering);
                       page = VolunteeringDetailPage(
-                          volunteering: state.extra == null
-                              ? null
-                              : (state.extra as Map)["volunteering"],
-                          id: param);
+                          volunteering: volunteering, id: param);
                       break;
                     case "profile":
                       if (param != "edit") {
@@ -66,6 +71,7 @@ class RouterBuilder {
                       break;
                     case "news":
                       // TODO: pass path param state.pathParameters["id"]!
+                      loggingService?.logOpenNews(param);
                       final Map map = state.extra! as Map;
                       page = NewDetailPage(news: map["news"], id: param);
                       break;

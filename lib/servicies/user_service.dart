@@ -3,18 +3,22 @@ import 'package:ser_manos/data/auth_data.dart';
 import 'package:ser_manos/data/image_data.dart';
 import 'package:ser_manos/data/user_data.dart';
 import 'package:ser_manos/models/models.dart';
+import 'package:ser_manos/servicies/logging_service.dart';
 
 class UserService {
   final UserData userData;
   final ImageData imageData;
+  final LoggingService? loggingService;
 
-  UserService({required this.userData, required this.imageData});
+  UserService(
+      {required this.userData, required this.imageData, this.loggingService});
 
   Future<User> getUser(UID uid) async {
     return await userData.getUser(uid);
   }
 
   Future<void> createUser(UID uid, String name, String surname) async {
+    loggingService?.logCreateUser(uid);
     return await userData.createUser(uid, name, surname);
   }
 
@@ -51,6 +55,8 @@ class UserService {
     //   throw Exception("Applied to volunteerings with no vacants.");
     // }
 
+    loggingService?.logApply(volunteeringId);
+
     return userData.apply(uid, volunteeringId);
   }
 
@@ -64,6 +70,8 @@ class UserService {
     if (!user.hasVolunteering()) {
       throw Exception("User doesn't have a volunteering.");
     }
+
+    loggingService?.logDropout(user.application!["volunteering"]);
 
     return userData.leaveCurrentVolunteering(uid);
   }

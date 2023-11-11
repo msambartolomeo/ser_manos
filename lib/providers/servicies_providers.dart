@@ -1,7 +1,9 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/providers/data_providers.dart';
 import 'package:ser_manos/servicies/auth_service.dart';
 import 'package:ser_manos/servicies/favorites_service.dart';
+import 'package:ser_manos/servicies/logging_service.dart';
 import 'package:ser_manos/servicies/user_service.dart';
 import 'package:ser_manos/servicies/volunteering_service.dart';
 
@@ -20,6 +22,7 @@ UserService userService(UserServiceRef ref) {
   return UserService(
     userData: ref.read(userDataProvider),
     imageData: ref.read(imageDataProvider),
+    loggingService: ref.read(loggingServiceProvider),
   );
 }
 
@@ -32,4 +35,9 @@ FavoritesService favoritesService(FavoritesServiceRef ref) {
 VolunteeringService volunteeringService(VolunteeringServiceRef ref) {
   return VolunteeringService(
       volunteeringData: ref.read(volunteeringDataProvider));
+}
+
+@Riverpod(keepAlive: true)
+LoggingService loggingService(LoggingServiceRef ref) {
+  return LoggingService(firebaseAnalytics: FirebaseAnalytics.instance);
 }
