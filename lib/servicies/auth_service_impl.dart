@@ -1,6 +1,6 @@
 import 'package:ser_manos/data/auth_data.dart';
 import 'package:ser_manos/servicies/interfaces/auth_service.dart';
-import 'package:ser_manos/servicies/user_service.dart';
+import 'package:ser_manos/servicies/interfaces/user_service.dart';
 
 class AuthServiceImplementation implements AuthService {
   final AuthData authData;

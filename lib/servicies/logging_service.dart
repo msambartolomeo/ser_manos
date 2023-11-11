@@ -1,5 +1,4 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:ser_manos/models/models.dart';
 
 class LoggingService {
   //**

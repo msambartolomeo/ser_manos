@@ -6,7 +6,7 @@ import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
 import 'package:ser_manos/providers/router_provider.dart';
 import 'package:ser_manos/providers/servicies_providers.dart';
-import 'package:ser_manos/servicies/user_service.dart';
+import 'package:ser_manos/servicies/interfaces/user_service.dart';
 
 part 'generated/profile_controllers.g.dart';
 

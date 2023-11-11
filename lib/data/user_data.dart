@@ -48,4 +48,25 @@ class UserData {
 
     userRef.update(json);
   }
+
+  Future<List<String>> getFavorites(String uid) async {
+    final documentReference =
+        await firebaseFirestore.collection("users").doc(uid).get();
+
+    final map = documentReference.data()!;
+
+    return User.fromJson(map).favorites;
+  }
+
+  Future<void> addFavorite(String uid, String volunteering) async {
+    firebaseFirestore.collection("users").doc(uid).update({
+      'favorites': FieldValue.arrayUnion([volunteering]),
+    });
+  }
+
+  Future<void> removeFavorite(String uid, String volunteering) async {
+    firebaseFirestore.collection("users").doc(uid).update({
+      'favorites': FieldValue.arrayRemove([volunteering]),
+    });
+  }
 }

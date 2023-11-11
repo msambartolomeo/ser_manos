@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
 import 'package:ser_manos/providers/servicies_providers.dart';
+import 'package:ser_manos/servicies/interfaces/user_service.dart';
 
 part 'generated/favorites_controller.g.dart';
 
@@ -16,7 +17,7 @@ class FavoritesController extends _$FavoritesController {
       throw Exception("User not logged in.");
     }
 
-    final service = ref.read(favoritesServiceProvider);
+    final UserService service = ref.read(userServiceProvider);
 
     return await service.getFavorites(uid);
   }
@@ -28,7 +29,7 @@ class FavoritesController extends _$FavoritesController {
       throw Exception("User not logged in.");
     }
 
-    final service = ref.read(favoritesServiceProvider);
+    final UserService service = ref.read(userServiceProvider);
 
     service.addFavorite(uid, volunteeringId);
 
@@ -44,7 +45,7 @@ class FavoritesController extends _$FavoritesController {
       throw Exception("User not logged in.");
     }
 
-    final service = ref.read(favoritesServiceProvider);
+    final UserService service = ref.read(userServiceProvider);
 
     service.removeFavorite(uid, volunteeringId);
 
