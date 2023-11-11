@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/providers/router_provider.dart';
 import 'package:ser_manos/providers/servicies_providers.dart';
-import 'package:ser_manos/servicies/auth_service.dart';
+import 'package:ser_manos/servicies/interfaces/auth_service.dart';
 
 part 'generated/auth_controllers.g.dart';
 
