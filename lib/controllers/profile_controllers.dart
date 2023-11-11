@@ -56,38 +56,6 @@ class ProfileController extends _$ProfileController {
     return await service.getUser(uid);
   }
 
-  Future<void> leaveCurrentVolunteering() async {
-    final UID? uid = _getUserId();
-
-    if (uid == null) {
-      throw Exception("User not logged in.");
-    }
-
-    final service = ref.read(userServiceProvider);
-
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      await service.leaveCurrentVolunteering(uid);
-      return await service.getUser(uid);
-    });
-  }
-
-  Future<void> apply(String volunteeringId) async {
-    final UID? uid = _getUserId();
-
-    if (uid == null) {
-      throw Exception("User not logged in.");
-    }
-
-    final service = ref.read(userServiceProvider);
-
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      await service.apply(uid, volunteeringId);
-      return await service.getUser(uid);
-    });
-  }
-
   UID? _getUserId() {
     final user = ref.read(currentAuthUserProvider);
 

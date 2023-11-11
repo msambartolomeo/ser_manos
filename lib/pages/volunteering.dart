@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ser_manos/controllers/profile_controllers.dart';
+import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/searchbars.dart';
@@ -20,7 +20,7 @@ class VolunteeringTab extends ConsumerWidget {
     AsyncValue<Map<String, Volunteering>> volunteering =
         ref.watch(volunteeringGetAllControllerProvider);
 
-    final profile = ref.watch(profileControllerProvider).when(
+    final application = ref.watch(applicationControllerProvider).when(
           data: (profile) => profile,
           error: (e, _) => null,
           loading: () => null,
@@ -62,20 +62,18 @@ class VolunteeringTab extends ConsumerWidget {
               SerManosGrid(child: SerManosSearchBar.map()),
               const SizedBox(height: 24),
               Visibility(
-                visible: profile != null && profile.hasVolunteering(),
+                visible: application != null,
                 child: MyActivitySection(
                   // TODO Chequear que el voluntariado existe en la lista?
                   onPress: () => context.go(
-                      "/home/volunteerings/${profile?.application?["volunteering"] ?? ""}",
+                      "/home/volunteerings/${application?.volunteering ?? ""}",
                       extra: {
-                        "volunteering":
-                            volunteering[profile?.application?["volunteering"]]
+                        "volunteering": volunteering[application?.volunteering]
                       }),
                   volunteeringName:
-                      volunteering[profile?.application?["volunteering"]]?.name,
+                      volunteering[application?.volunteering]?.name,
                   geolocation:
-                      volunteering[profile?.application?["volunteering"]]
-                          ?.geolocation,
+                      volunteering[application?.volunteering]?.geolocation,
                 ),
               ),
               SerManosGrid(

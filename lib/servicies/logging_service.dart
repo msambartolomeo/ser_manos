@@ -28,12 +28,7 @@ class LoggingService {
     await firebaseAnalytics.logEvent(name: name, parameters: params);
   }
 
-  Future<void> logOpenVolunteering(
-      String volunteeringId, Volunteering? volunteering) async {
-    if (volunteering == null) {
-      throw Exception("Null volunteering when opening volunteering.");
-    }
-
+  Future<void> logOpenVolunteering(String volunteeringId) async {
     await log("select_content",
         {"content_type": "volunteering", "content_id": volunteeringId});
   }

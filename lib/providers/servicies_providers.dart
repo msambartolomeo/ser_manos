@@ -6,7 +6,8 @@ import 'package:ser_manos/servicies/interfaces/auth_service.dart';
 import 'package:ser_manos/servicies/favorites_service.dart';
 import 'package:ser_manos/servicies/logging_service.dart';
 import 'package:ser_manos/servicies/user_service.dart';
-import 'package:ser_manos/servicies/volunteering_service.dart';
+import 'package:ser_manos/servicies/interfaces/volunteering_service.dart';
+import 'package:ser_manos/servicies/volunteering_service_impl.dart';
 
 part 'generated/servicies_providers.g.dart';
 
@@ -34,8 +35,10 @@ FavoritesService favoritesService(FavoritesServiceRef ref) {
 
 @Riverpod(keepAlive: true)
 VolunteeringService volunteeringService(VolunteeringServiceRef ref) {
-  return VolunteeringService(
-      volunteeringData: ref.read(volunteeringDataProvider));
+  return VolunteeringServiceImplentation(
+    volunteeringData: ref.read(volunteeringDataProvider),
+    userService: ref.read(userServiceProvider),
+  );
 }
 
 @Riverpod(keepAlive: true)
