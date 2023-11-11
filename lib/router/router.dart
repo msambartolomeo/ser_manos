@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/models/models.dart';
+import 'package:ser_manos/pages/error.dart';
 import 'package:ser_manos/pages/profile/edit_profile.dart';
 import 'package:ser_manos/pages/login/entry.dart';
 import 'package:ser_manos/pages/home.dart';
@@ -20,6 +21,9 @@ class RouterBuilder {
 
   GoRouter build() {
     return GoRouter(
+      onException: (_, GoRouterState state, GoRouter router) {
+        router.go('/404');
+      },
       routes: <RouteBase>[
         GoRoute(
           path: "/",
@@ -38,12 +42,17 @@ class RouterBuilder {
         GoRoute(
             path: "/home/:tab",
             builder: (context, state) {
-              final index = switch (state.pathParameters["tab"]!) {
-                "volunterings" => 0,
+              int index = switch (state.pathParameters["tab"]!) {
+                "volunteerings" => 0,
                 "profile" => 1,
                 "news" => 2,
-                _ => 0,
+                _ => -1,
               };
+
+              if (index == -1) {
+                context.go("/404");
+                return const ErrorPage(message: "Error");
+              }
 
               return HomePage(index: index);
             },
@@ -65,21 +74,18 @@ class RouterBuilder {
                       break;
                     case "profile":
                       if (param != "edit") {
-                        // TODO: page = errorPage
+                        context.go("/404");
                       }
                       page = const EditProfileModal();
                       break;
                     case "news":
-                      // TODO: pass path param state.pathParameters["id"]!
                       loggingService?.logOpenNews(param);
                       final Map map = state.extra! as Map;
                       page = NewDetailPage(news: map["news"], id: param);
                       break;
                     default:
-                      // TODO: page = errorPage
-                      final Map map = state.extra! as Map;
-                      page = VolunteeringDetailPage(
-                          volunteering: map["volunteering"], id: map["id"]);
+                      context.go("/404");
+                      page = const ErrorPage(message: "Error");
                   }
                   return page;
                 },
@@ -89,6 +95,14 @@ class RouterBuilder {
           path: "/welcome",
           builder: (context, state) => const WelcomePage(),
         ),
+        GoRoute(
+          path: "/404",
+          builder: (context, state) {
+            return ErrorPage(
+              message: state.extra as String? ?? "La página no fue encontrada",
+            );
+          },
+        )
       ],
       redirect: (context, state) {
         final location = state.matchedLocation;

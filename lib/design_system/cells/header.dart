@@ -58,11 +58,12 @@ class SerManosHeader extends AppBar {
   SerManosHeader.white({super.key})
       : super(systemOverlayStyle: const SerManosStatusBar.white());
 
-  SerManosHeader.section({super.key, required String title})
+  SerManosHeader.section({super.key, required String title, bool back = true})
       : super(
           systemOverlayStyle: const SerManosStatusBar.secondary(),
           backgroundColor: SerManosColor.secondary90,
-          leading: const BackButton(color: SerManosColor.neutral0),
+          leading:
+              back ? const BackButton(color: SerManosColor.neutral0) : null,
           centerTitle: true,
           title: SerManosTypography.subtitle1(
             title,
