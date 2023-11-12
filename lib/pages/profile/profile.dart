@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/pages/profile/empty_profile.dart';
 import 'package:ser_manos/pages/profile/full_profile.dart';
@@ -17,7 +18,7 @@ class ProfileTab extends ConsumerWidget {
         );
 
     if (user == null) {
-      return const CircularProgressIndicator();
+      return const SerManosLoading();
     }
 
     return switch (user.completed) {

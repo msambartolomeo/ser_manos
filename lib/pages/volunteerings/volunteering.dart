@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
+import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/design_system/molecules/searchbars.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
@@ -44,7 +45,7 @@ class VolunteeringTab extends ConsumerWidget {
         );
 
     if (volunteerings == null || vacants == null) {
-      return const CircularProgressIndicator();
+      return const SerManosLoading();
     }
 
     final Volunteering? activeVolunteering = volunteerings

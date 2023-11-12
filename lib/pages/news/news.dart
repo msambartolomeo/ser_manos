@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/controllers/news_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
+import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/models/models.dart';
@@ -19,7 +20,7 @@ class NewsTab extends ConsumerWidget {
         );
 
     if (news == null) {
-      return const CircularProgressIndicator();
+      return const SerManosLoading();
     }
 
     return Container(

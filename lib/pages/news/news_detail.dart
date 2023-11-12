@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ser_manos/controllers/news_controllers.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
+import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
@@ -24,7 +25,7 @@ class NewsDetailPage extends ConsumerWidget {
             );
 
     if (anew == null) {
-      return const CircularProgressIndicator();
+      return const SerManosLoading();
     }
 
     return Scaffold(

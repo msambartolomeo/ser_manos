@@ -9,6 +9,7 @@ import 'package:ser_manos/design_system/cells/modal.dart';
 import 'package:ser_manos/design_system/cells/volunteering_apply.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
+import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
@@ -48,7 +49,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
         );
 
     if (data == null) {
-      return const CircularProgressIndicator();
+      return const SerManosLoading();
     }
 
     bool hasVoluntering = application != null;
