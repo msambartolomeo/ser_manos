@@ -6,4 +6,10 @@ abstract class VolunteeringData {
   Future<List<Volunteering>> getAll();
 
   Future<Volunteering> get(String id);
+
+  void listenToVacantChanges();
+
+  Stream<Map<String, int>> getVacantStream();
+
+  // void listenToSpecificVacantChanges(String id);
 }

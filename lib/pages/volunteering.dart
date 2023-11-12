@@ -17,6 +17,13 @@ class VolunteeringTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final Map<String, int>? vacants =
+        ref.watch(volunteeringStreamProvider).when(
+              data: (vacants) => vacants,
+              error: (e, _) => null,
+              loading: () => null,
+            );
+
     final geolocation = ref.watch(determineGeolocationProvider).when(
           data: (geolocation) => geolocation,
           error: (e, _) => null,
@@ -36,7 +43,7 @@ class VolunteeringTab extends ConsumerWidget {
           loading: () => null,
         );
 
-    if (volunteerings == null) {
+    if (volunteerings == null || vacants == null) {
       return const CircularProgressIndicator();
     }
 
@@ -75,6 +82,7 @@ class VolunteeringTab extends ConsumerWidget {
                 return SerManosGrid(
                   child: VolunteerCard(
                     volunteering: volunteerings[index],
+                    vacants: vacants[volunteerings[index].id] ?? 0,
                     onTapFunction: () => context.go(
                       "/home/volunteerings/${volunteerings[index].id}",
                       extra: {"volunteering": volunteerings[index]},

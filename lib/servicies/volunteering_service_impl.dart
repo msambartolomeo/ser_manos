@@ -70,17 +70,32 @@ class VolunteeringServiceImplentation implements VolunteeringService {
 
     return;
   }
+
+  @override
+  void listenToVacantChanges() {
+    volunteeringData.listenToVacantChanges();
+  }
+
+  @override
+  Stream<Map<String, int>> getVacantStream() {
+    return volunteeringData.getVacantStream();
+  }
+
+  // @override
+  // void listenToSpecificVacantChanges(String id) {
+  //   volunteeringData.listenToSpecificVacantChanges(id);
+  // }
 }
 
 int Function(Volunteering, Volunteering) getCompareFunction(
-    GeoPoint? geolocation,
-    ) {
+  GeoPoint? geolocation,
+) {
   if (geolocation == null) {
     return (v1, v2) => v2.compareCreationDate(v1);
   } else {
     return (v1, v2) {
       int distance =
-      v1.distanceTo(geolocation).compareTo(v2.distanceTo(geolocation));
+          v1.distanceTo(geolocation).compareTo(v2.distanceTo(geolocation));
       if (distance == 0) {
         return v2.compareCreationDate(v1);
       }

@@ -17,12 +17,8 @@ import 'package:ser_manos/models/models.dart';
 class VolunteeringDetailPage extends ConsumerWidget {
   final Volunteering? volunteering;
   final String id;
-
-  const VolunteeringDetailPage({
-    super.key,
-    required this.volunteering,
-    required this.id,
-  });
+  const VolunteeringDetailPage(
+      {super.key, required this.volunteering, required this.id});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,6 +28,18 @@ class VolunteeringDetailPage extends ConsumerWidget {
               error: (e, _) => null,
               loading: () => null,
             );
+
+    // final vacants = ref.watch(specificVolunteeringStreamProvider(id)).when(
+    //       data: (data) => data[id] ?? 0,
+    //       error: (e, _) => null,
+    //       loading: () => 0,
+    //     );
+
+    final vacants = ref.watch(volunteeringStreamProvider).when(
+          data: (vacants) => vacants[id],
+          error: (e, _) => null,
+          loading: () => 0,
+        );
 
     final application = ref.watch(applicationControllerProvider).when(
           data: (application) => application,
@@ -124,7 +132,10 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  SerManosVacantComponent.enabled(data.vacants),
+                  vacants! ==
+                          0 //habria que ver si se deshabilita con 0 o con otra condicion
+                      ? SerManosVacantComponent.disabled(vacants)
+                      : SerManosVacantComponent.enabled(vacants),
                   const SizedBox(
                     height: 24,
                   ),
@@ -161,7 +172,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
                         );
                       },
                       fill: true,
-                      disabled: !data.hasVacancies() ||
+                      disabled: vacants <= 0 ||
                           (hasVoluntering && application.volunteering != id),
                     ),
                   )

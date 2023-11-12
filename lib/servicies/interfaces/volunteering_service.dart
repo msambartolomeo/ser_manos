@@ -13,4 +13,10 @@ abstract class VolunteeringService {
   Future<void> apply(String uid, String volunteeringId);
 
   Future<void> dropout(String uid);
+
+  void listenToVacantChanges();
+
+  Stream<Map<String, int>> getVacantStream();
+
+  // void listenToSpecificVacantChanges(String id);
 }

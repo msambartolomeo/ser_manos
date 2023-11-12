@@ -5,7 +5,7 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class NewDetailPage extends StatelessWidget {
   final News news;

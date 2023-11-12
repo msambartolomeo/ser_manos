@@ -20,3 +20,21 @@ Future<Volunteering> volunteeringGetByIdController(
 ) async {
   return await ref.read(volunteeringServiceProvider).get(id);
 }
+
+final volunteeringStreamProvider = StreamProvider<Map<String, int>>((ref) {
+  final serviceProvider = ref.read(volunteeringServiceProvider);
+  serviceProvider.listenToVacantChanges();
+
+  return serviceProvider.getVacantStream();
+});
+
+
+// final specificVolunteeringStreamProvider =
+// StreamProvider.autoDispose.family<Map<String, int>, String>(
+//       (ref, id) {
+//     final serviceProvider = ref.read(volunteeringServiceProvider);
+//     serviceProvider.listenToSpecificVacantChanges(id);
+
+//     return serviceProvider.getVacantStream();
+//   },
+// );

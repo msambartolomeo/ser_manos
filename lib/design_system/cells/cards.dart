@@ -13,6 +13,7 @@ class VolunteerCard extends InkWell {
   VolunteerCard({
     super.key,
     required Volunteering volunteering,
+    required int vacants,
     required void Function() onTapFunction,
   }) : super(
           onTap: onTapFunction,
@@ -48,13 +49,13 @@ class VolunteerCard extends InkWell {
                               color: SerManosColor.neutral100,
                             ),
                             const SizedBox(height: 4),
-                            volunteering.vacants == 0
+                            vacants == 0
                                 // habria que ver si se deshabilita con 0 o con otra condicion
                                 ? SerManosVacantComponent.disabled(
-                                    volunteering.vacants,
+                                    vacants,
                                   )
                                 : SerManosVacantComponent.enabled(
-                                    volunteering.vacants,
+                                    vacants,
                                   ),
                           ],
                         ),
