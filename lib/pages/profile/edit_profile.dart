@@ -37,10 +37,9 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   void initState() {
     super.initState();
     user = widget.user ??
-        ref.read(currentUserProvider).when(
+        ref.read(currentUserProvider).maybeWhen(
               data: (user) => user,
-              loading: () => null,
-              error: (e, _) => null, // TODO: Handle error
+              orElse: () => null,
             );
 
     if (user == null) {
@@ -79,7 +78,6 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
     ref.watch(updateUserControllerProvider).maybeWhen(
           orElse: () => {},
           loading: () => isLoading = true,
-          error: (e, _) => {}, // TODO: Handle error
         );
 
     final UpdateUserController updateUserController =

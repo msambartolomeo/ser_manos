@@ -26,22 +26,25 @@ class NewsTab extends ConsumerWidget {
     return Container(
       color: SerManosColor.secondary10,
       child: SerManosGrid(
-        child: ListView.separated(
-            padding: const EdgeInsets.only(top: 32, bottom: 24),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return NewsCard(
-                news: news[index],
-                onPressedFunction: () => context.go(
-                    "/home/news/${news[index].id}",
-                    extra: {"news": news[index]}),
-              );
-            },
-            separatorBuilder: ((context, index) => const SizedBox(
-                  height: 24,
-                )),
-            itemCount: news.length),
+        child: news.isEmpty
+            ? NoVolunteeringsCard()
+            : ListView.separated(
+                padding: const EdgeInsets.only(top: 32, bottom: 24),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return NewsCard(
+                    news: news[index],
+                    onPressedFunction: () => context.go(
+                      "/home/news/${news[index].id}",
+                      extra: {"news": news[index]},
+                    ),
+                  );
+                },
+                separatorBuilder: ((context, index) =>
+                    const SizedBox(height: 24)),
+                itemCount: news.length,
+              ),
       ),
     );
   }

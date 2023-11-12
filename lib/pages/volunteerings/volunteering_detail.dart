@@ -18,15 +18,21 @@ import 'package:ser_manos/models/models.dart';
 class VolunteeringDetailPage extends ConsumerWidget {
   final Volunteering? volunteering;
   final String id;
-  const VolunteeringDetailPage(
-      {super.key, required this.volunteering, required this.id});
+  const VolunteeringDetailPage({
+    super.key,
+    required this.volunteering,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = volunteering ??
+    final Volunteering? data = volunteering ??
         ref.watch(volunteeringGetByIdControllerProvider(id)).when(
               data: (volunteering) => volunteering,
-              error: (e, _) => null,
+              error: (e, _) {
+                context.go("/404");
+                return null;
+              },
               loading: () => null,
             );
 
@@ -36,17 +42,20 @@ class VolunteeringDetailPage extends ConsumerWidget {
     //       loading: () => 0,
     //     );
 
-    final vacants = ref.watch(volunteeringStreamProvider).when(
+    final int? vacants = ref.watch(volunteeringStreamProvider).when(
           data: (vacants) => vacants[id],
-          error: (e, _) => null,
+          error: (e, _) {
+            context.go("/404");
+            return null;
+          },
           loading: () => 0,
         );
 
-    final application = ref.watch(applicationControllerProvider).when(
-          data: (application) => application,
-          error: (e, _) => null,
-          loading: () => null,
-        );
+    final Application? application =
+        ref.watch(applicationControllerProvider).maybeWhen(
+              data: (application) => application,
+              orElse: () => null,
+            );
 
     if (data == null) {
       return const SerManosLoading();
@@ -121,19 +130,21 @@ class VolunteeringDetailPage extends ConsumerWidget {
                       : SerManosVacantComponent.enabled(vacants),
                   const SizedBox(height: 24),
                   Visibility(
-                      visible: hasVoluntering,
-                      child: appliedToCurrentVolunteering
-                          ? application.approved
-                              ? VolunteeringApply.alreadyAppliedAndAproved(
-                                  onPressed: leaveCurrentVolunteering)
-                              : VolunteeringApply.alreadyApplied(
-                                  onPressed: leaveCurrentVolunteering,
-                                )
-                          : VolunteeringApply.alreadyAppliedToOtherVolunteering(
-                              onPressed: () => context.go(
-                                "/home/volunteerings/${application!.volunteering}",
-                              ),
-                            )),
+                    visible: hasVoluntering,
+                    child: appliedToCurrentVolunteering
+                        ? application.approved
+                            ? VolunteeringApply.alreadyAppliedAndAproved(
+                                onPressed: leaveCurrentVolunteering,
+                              )
+                            : VolunteeringApply.alreadyApplied(
+                                onPressed: leaveCurrentVolunteering,
+                              )
+                        : VolunteeringApply.alreadyAppliedToOtherVolunteering(
+                            onPressed: () => context.go(
+                              "/home/volunteerings/${application!.volunteering}",
+                            ),
+                          ),
+                  ),
                   Visibility(
                     visible: (application == null) ||
                         (hasVoluntering && application.volunteering != id),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/pages/profile/empty_profile.dart';
@@ -14,7 +15,10 @@ class ProfileTab extends ConsumerWidget {
     final User? user = ref.watch(currentUserProvider).when(
           data: (user) => user,
           loading: () => null,
-          error: (e, _) => null, // TODO: Handle error
+          error: (e, _) {
+            context.go("/login");
+            return null;
+          },
         );
 
     if (user == null) {
