@@ -73,9 +73,11 @@ class VolunteeringDetailPage extends ConsumerWidget {
       appBar: SerManosHeader.opacity(),
       body: SingleChildScrollView(
         child: Column(children: [
-          const Row(
+          Row(
             children: [
-              // Expanded(child: Image.network(volunteering.image, fit: BoxFit.cover,))
+              Expanded(
+                child: Image.network(volunteering!.image, fit: BoxFit.cover),
+              )
             ],
           ),
           SerManosGrid(
