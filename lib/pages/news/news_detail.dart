@@ -9,10 +9,10 @@ import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:share_plus/share_plus.dart';
 
-class NewDetailPage extends ConsumerWidget {
+class NewsDetailPage extends ConsumerWidget {
   final News? news;
   final String id;
-  const NewDetailPage({super.key, required this.news, required this.id});
+  const NewsDetailPage({super.key, required this.news, required this.id});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

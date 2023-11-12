@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/models/models.dart';
 
-import '../design_system/cells/cards.dart';
-import '../design_system/tokens/typography.dart';
+import 'cards.dart';
+import '../tokens/typography.dart';
 
 class MyActivitySection extends Column {
   MyActivitySection({

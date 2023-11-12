@@ -9,7 +9,7 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
-import 'package:ser_manos/pages/my_activity_section.dart';
+import 'package:ser_manos/design_system/cells/my_activity_section.dart';
 import 'package:ser_manos/providers/geolocation_provider.dart';
 
 class VolunteeringTab extends ConsumerWidget {

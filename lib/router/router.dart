@@ -6,9 +6,9 @@ import 'package:ser_manos/pages/profile/edit_profile.dart';
 import 'package:ser_manos/pages/login/entry.dart';
 import 'package:ser_manos/pages/home.dart';
 import 'package:ser_manos/pages/login/login.dart';
-import 'package:ser_manos/pages/new_detail.dart';
+import 'package:ser_manos/pages/news/news_detail.dart';
 import 'package:ser_manos/pages/login/register.dart';
-import 'package:ser_manos/pages/volunteering_detail.dart';
+import 'package:ser_manos/pages/volunteerings/volunteering_detail.dart';
 import 'package:ser_manos/pages/login/welcome.dart';
 import 'package:ser_manos/servicies/logging_service.dart';
 
@@ -82,7 +82,7 @@ class RouterBuilder {
                       loggingService?.logOpenNews(param);
                       final Map? map =
                           state.extra != null ? state.extra as Map : null;
-                      page = NewDetailPage(news: map?["news"], id: param);
+                      page = NewsDetailPage(news: map?["news"], id: param);
                       break;
                     default:
                       context.go("/404");
