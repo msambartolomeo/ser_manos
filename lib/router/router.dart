@@ -80,8 +80,9 @@ class RouterBuilder {
                       break;
                     case "news":
                       loggingService?.logOpenNews(param);
-                      final Map map = state.extra! as Map;
-                      page = NewDetailPage(news: map["news"], id: param);
+                      final Map? map =
+                          state.extra != null ? state.extra as Map : null;
+                      page = NewDetailPage(news: map?["news"], id: param);
                       break;
                     default:
                       context.go("/404");

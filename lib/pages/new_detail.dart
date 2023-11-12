@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ser_manos/controllers/news_controllers.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -7,14 +9,24 @@ import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:share_plus/share_plus.dart';
 
-class NewDetailPage extends StatelessWidget {
-  final News news;
+class NewDetailPage extends ConsumerWidget {
+  final News? news;
   final String id;
   const NewDetailPage({super.key, required this.news, required this.id});
 
   @override
-  Widget build(BuildContext context) {
-    News anew = news;
+  Widget build(BuildContext context, WidgetRef ref) {
+    News? anew = news ??
+        ref.watch(newsGetByIdControllerProvider(id)).when(
+              data: (anew) => anew,
+              error: (e, _) => null,
+              loading: () => null,
+            );
+
+    if (anew == null) {
+      return const CircularProgressIndicator();
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: SerManosHeader.section(title: "Novedades"),

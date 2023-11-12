@@ -87,58 +87,36 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   SerManosTypography.overline("Acción social",
                       color: SerManosColor.neutral75),
                   SerManosTypography.heading1(data.name),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  const SizedBox(height: 16),
                   SerManosTypography.body1(
                     data.purpose,
                     color: SerManosColor.secondary200,
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   SerManosTypography.heading2("Sobre la actividad"),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   SerManosTypography.body1(data.description),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   LocationCardWithoutMap(
                     location: data.address,
                     geolocation: data.geolocation,
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   SerManosTypography.heading2("Participar del voluntariado"),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   SerManosTypography.subtitle1("Requisitos"),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   SerManosTypography.body1("• ${data.requirements}"),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   SerManosTypography.subtitle1("Disponibilidad"),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   SerManosTypography.body1("• ${data.disponibility}"),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   vacants! ==
                           0 //habria que ver si se deshabilita con 0 o con otra condicion
                       ? SerManosVacantComponent.disabled(vacants)
                       : SerManosVacantComponent.enabled(vacants),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   Visibility(
                       visible: hasVoluntering,
                       child: appliedToCurrentVolunteering

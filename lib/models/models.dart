@@ -75,6 +75,7 @@ class News with _$News implements Comparable {
     required String title,
     required String subtitle,
     required String body,
+    required String id,
     @TimestampConverter() required Timestamp creation,
   }) = _News;
 

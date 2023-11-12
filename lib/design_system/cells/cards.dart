@@ -77,14 +77,7 @@ class VolunteerCard extends InkWell {
 }
 
 class NewsCard extends Container {
-  NewsCard(
-      {super.key,
-//      required ImageProvider<Object> image,
-      required String image,
-      required String overline,
-      required String title,
-      required String subtitle,
-      required dynamic onPressedFunction})
+  NewsCard({super.key, required News news, required dynamic onPressedFunction})
       : super(
             decoration: BoxDecoration(
               color: SerManosColor.neutral0,
@@ -95,7 +88,7 @@ class NewsCard extends Container {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.network(image, width: 118, fit: BoxFit.cover),
+                  Image.network(news.image, width: 118, fit: BoxFit.cover),
                   Expanded(
                     child: Padding(
                         padding:
@@ -103,11 +96,11 @@ class NewsCard extends Container {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SerManosTypography.overline(overline,
+                            SerManosTypography.overline(news.overline,
                                 color: SerManosColor.neutral75),
-                            SerManosTypography.subtitle1(title,
+                            SerManosTypography.subtitle1(news.title,
                                 color: SerManosColor.neutral100),
-                            SerManosTypography.body2(subtitle,
+                            SerManosTypography.body2(news.subtitle,
                                 color: SerManosColor.neutral75,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis),
