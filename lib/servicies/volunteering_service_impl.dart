@@ -10,14 +10,18 @@ class VolunteeringServiceImplentation implements VolunteeringService {
   final UserService userService;
   final LoggingService? loggingService;
 
-  VolunteeringServiceImplentation(
-      {required this.volunteeringData,
-      this.loggingService,
-      required this.userService});
+  VolunteeringServiceImplentation({
+    required this.volunteeringData,
+    this.loggingService,
+    required this.userService,
+  });
 
   @override
-  Future<List<Volunteering>> getAll(GeoPoint? geolocation) async {
-    final volunteerings = await volunteeringData.getAll();
+  Future<List<Volunteering>> getAll(
+    GeoPoint? geolocation,
+    String? search,
+  ) async {
+    final volunteerings = await volunteeringData.getAll(search);
 
     final comparator = getCompareFunction(geolocation);
 
@@ -49,7 +53,7 @@ class VolunteeringServiceImplentation implements VolunteeringService {
 
     await userService.setApplication(uid, volunteeringId);
 
-    // TODO Handle volunteering collection changes
+    await volunteeringData.decreaseVacants(volunteeringId);
 
     return;
   }
@@ -66,7 +70,7 @@ class VolunteeringServiceImplentation implements VolunteeringService {
 
     await userService.deleteApplication(uid);
 
-    // TODO Handle volunteering collection changes
+    await volunteeringData.increaseVacants(user.getAppliedVolunteeringId());
 
     return;
   }

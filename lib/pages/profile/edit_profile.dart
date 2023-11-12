@@ -37,10 +37,9 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   @override
   void initState() {
     super.initState();
-    final user = ref.read(profileControllerProvider).when(
+    final user = ref.read(profileControllerProvider).maybeWhen(
           data: (user) => user,
-          loading: () => null,
-          error: (e, _) => null, // TODO: Handle error
+          orElse: () => null,
         );
 
     if (user == null) {

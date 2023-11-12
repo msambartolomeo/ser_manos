@@ -7,8 +7,10 @@ class AuthServiceImplementation implements AuthService {
   final AuthData authData;
   final UserService userService;
 
-  AuthServiceImplementation(
-      {required this.authData, required this.userService});
+  AuthServiceImplementation({
+    required this.authData,
+    required this.userService,
+  });
 
   @override
   Future<void> login(String email, String password) async {

@@ -10,6 +10,7 @@ import 'package:ser_manos/design_system/cells/modal.dart';
 import 'package:ser_manos/design_system/cells/volunteering_apply.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
+import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
@@ -18,15 +19,21 @@ import 'package:ser_manos/models/models.dart';
 class VolunteeringDetailPage extends ConsumerWidget {
   final Volunteering? volunteering;
   final String id;
-  const VolunteeringDetailPage(
-      {super.key, required this.volunteering, required this.id});
+  const VolunteeringDetailPage({
+    super.key,
+    required this.volunteering,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = volunteering ??
+    final Volunteering? data = volunteering ??
         ref.watch(volunteeringGetByIdControllerProvider(id)).when(
               data: (volunteering) => volunteering,
-              error: (e, _) => null,
+              error: (e, _) {
+                context.go("/404");
+                return null;
+              },
               loading: () => null,
             );
 
@@ -36,17 +43,20 @@ class VolunteeringDetailPage extends ConsumerWidget {
     //       loading: () => 0,
     //     );
 
-    final vacants = ref.watch(volunteeringStreamProvider).when(
+    final int? vacants = ref.watch(volunteeringStreamProvider).when(
           data: (vacants) => vacants[id],
-          error: (e, _) => null,
+          error: (e, _) {
+            context.go("/404");
+            return null;
+          },
           loading: () => 0,
         );
 
-    final application = ref.watch(applicationControllerProvider).when(
-          data: (application) => application,
-          error: (e, _) => null,
-          loading: () => null,
-        );
+    final Application? application =
+        ref.watch(applicationControllerProvider).maybeWhen(
+              data: (application) => application,
+              orElse: () => null,
+            );
 
     final profile = ref.watch(profileControllerProvider).when(
           data: (profile) => profile,
@@ -55,7 +65,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
         );
 
     if (data == null || profile == null) {
-      return const CircularProgressIndicator();
+      return const SerManosLoading();
     }
 
     bool hasVoluntering = application != null;
@@ -80,9 +90,11 @@ class VolunteeringDetailPage extends ConsumerWidget {
       appBar: SerManosHeader.opacity(),
       body: SingleChildScrollView(
         child: Column(children: [
-          const Row(
+          Row(
             children: [
-              // Expanded(child: Image.network(volunteering.image, fit: BoxFit.cover,))
+              Expanded(
+                child: Image.network(volunteering!.image, fit: BoxFit.cover),
+              )
             ],
           ),
           SerManosGrid(
@@ -125,19 +137,21 @@ class VolunteeringDetailPage extends ConsumerWidget {
                       : SerManosVacantComponent.enabled(vacants),
                   const SizedBox(height: 24),
                   Visibility(
-                      visible: hasVoluntering,
-                      child: appliedToCurrentVolunteering
-                          ? application.approved
-                              ? VolunteeringApply.alreadyAppliedAndAproved(
-                                  onPressed: leaveCurrentVolunteering)
-                              : VolunteeringApply.alreadyApplied(
-                                  onPressed: leaveCurrentVolunteering,
-                                )
-                          : VolunteeringApply.alreadyAppliedToOtherVolunteering(
-                              onPressed: () => context.go(
-                                "/home/volunteerings/${application!.volunteering}",
-                              ),
-                            )),
+                    visible: hasVoluntering,
+                    child: appliedToCurrentVolunteering
+                        ? application.approved
+                            ? VolunteeringApply.alreadyAppliedAndAproved(
+                                onPressed: leaveCurrentVolunteering,
+                              )
+                            : VolunteeringApply.alreadyApplied(
+                                onPressed: leaveCurrentVolunteering,
+                              )
+                        : VolunteeringApply.alreadyAppliedToOtherVolunteering(
+                            onPressed: () => context.go(
+                              "/home/volunteerings/${application!.volunteering}",
+                            ),
+                          ),
+                  ),
                   Visibility(
                     visible: (application == null) ||
                         (hasVoluntering && application.volunteering != id),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:ser_manos/data/interfaces/volunteering_data.dart';
 import 'package:ser_manos/models/models.dart';
 
@@ -13,9 +14,11 @@ class VolunteeringDataImplementation implements VolunteeringData {
   VolunteeringDataImplementation({required this.firebaseFirestore});
 
   @override
-  Future<List<Volunteering>> getAll() async {
+  Future<List<Volunteering>> getAll(String? search) async {
     final collection = firebaseFirestore.collection("volunteering");
     final querySnapshot = await collection.get();
+
+    search = search?.toLowerCase();
 
     return querySnapshot.docs.fold<List<Volunteering>>(
       [],
@@ -23,7 +26,14 @@ class VolunteeringDataImplementation implements VolunteeringData {
         final data = doc.data();
         data["id"] = doc.id;
 
-        list.add(Volunteering.fromJson(data));
+        final Volunteering volunteering = Volunteering.fromJson(data);
+
+        if (search == null ||
+            volunteering.name.toLowerCase().contains(search) ||
+            volunteering.description.toLowerCase().contains(search) ||
+            volunteering.purpose.toLowerCase().contains(search)) {
+          list.add(Volunteering.fromJson(data));
+        }
 
         return list;
       },
@@ -93,5 +103,37 @@ class VolunteeringDataImplementation implements VolunteeringData {
   @override
   Stream<Map<String, int>> getVacantStream() {
     return _vacantsStreamController.stream;
+  }
+
+  @override
+  Future<void> decreaseVacants(String uid) async {
+    final volunteeringRef =
+        firebaseFirestore.collection("volunteering").doc(uid);
+
+    final volunteering = await volunteeringRef.get();
+
+    if (volunteering.exists) {
+      final int vacants = volunteering.data()!["vacants"];
+
+      if (vacants == 0) {
+        throw Exception("No more vacants left!");
+      }
+
+      volunteeringRef.update({"vacants": vacants - 1});
+    }
+  }
+
+  @override
+  Future<void> increaseVacants(String uid) async {
+    final volunteeringRef =
+        firebaseFirestore.collection("volunteering").doc(uid);
+
+    final volunteering = await volunteeringRef.get();
+
+    if (volunteering.exists) {
+      final int vacants = volunteering.data()!["vacants"];
+
+      volunteeringRef.update({"vacants": vacants + 1});
+    }
   }
 }

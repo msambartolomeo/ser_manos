@@ -76,6 +76,26 @@ class VolunteerCard extends InkWell {
         );
 }
 
+class NoVolunteeringsCard extends Container {
+  NoVolunteeringsCard({super.key})
+      : super(
+          height: 72,
+          decoration: BoxDecoration(
+            color: SerManosColor.neutral0,
+            borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+            boxShadow: SerManosShadows.shadow2,
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: SerManosTypography.subtitle1(
+                "Actualmente no hay voluntariados vigentes. Pronto se irán ircorporando nuevos",
+              ),
+            ),
+          ),
+        );
+}
+
 class NewsCard extends Container {
   NewsCard({super.key, required News news, required dynamic onPressedFunction})
       : super(

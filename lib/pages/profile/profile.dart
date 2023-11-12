@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ser_manos/controllers/profile_controllers.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/pages/profile/empty_profile.dart';
 import 'package:ser_manos/pages/profile/full_profile.dart';
@@ -13,11 +15,14 @@ class ProfileTab extends ConsumerWidget {
     final User? user = ref.watch(profileControllerProvider).when(
           data: (user) => user,
           loading: () => null,
-          error: (e, _) => null, // TODO: Handle error
+          error: (e, _) {
+            context.go("/login");
+            return null;
+          },
         );
 
     if (user == null) {
-      return const CircularProgressIndicator();
+      return const SerManosLoading();
     }
 
     return switch (user.completed) {

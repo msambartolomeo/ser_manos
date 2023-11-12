@@ -6,11 +6,21 @@ import 'package:ser_manos/providers/servicies_providers.dart';
 part 'generated/volunteering_controllers.g.dart';
 
 @riverpod
-Future<List<Volunteering>> volunteeringGetAllController(
-  VolunteeringGetAllControllerRef ref,
-  GeoPoint? geolocation,
-) async {
-  return await ref.read(volunteeringServiceProvider).getAll(geolocation);
+class VolunteeringController extends _$VolunteeringController {
+  String? _search;
+
+  @override
+  FutureOr<List<Volunteering>> build(GeoPoint? geolocation) async {
+    return await ref
+        .read(volunteeringServiceProvider)
+        .getAll(geolocation, _search);
+  }
+
+  void setSearch(String? search) async {
+    _search = search;
+
+    ref.invalidateSelf();
+  }
 }
 
 @riverpod

@@ -4,7 +4,7 @@ import 'package:ser_manos/models/models.dart';
 abstract class VolunteeringService {
   VolunteeringService();
 
-  Future<List<Volunteering>> getAll(GeoPoint? geolocation);
+  Future<List<Volunteering>> getAll(GeoPoint? geolocation, String? search);
 
   Future<Volunteering> get(String id);
 
