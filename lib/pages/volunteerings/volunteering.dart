@@ -21,7 +21,7 @@ class VolunteeringTab extends ConsumerWidget {
     final Map<String, int>? vacants =
         ref.watch(volunteeringStreamProvider).when(
               data: (vacants) => vacants,
-              error: (e, _) => null,
+              error: (e, _) => {},
               loading: () => null,
             );
 
@@ -73,7 +73,7 @@ class VolunteeringTab extends ConsumerWidget {
               "Voluntariados",
               align: TextAlign.start,
             ),
-            volunteerings == []
+            volunteerings.isEmpty | vacants.isEmpty
                 ? NoVolunteeringsCard()
                 : Expanded(
                     child: ListView.separated(
