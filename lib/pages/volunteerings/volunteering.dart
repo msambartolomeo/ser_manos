@@ -54,49 +54,49 @@ class VolunteeringTab extends ConsumerWidget {
 
     return Container(
       color: SerManosColor.secondary10,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 24),
-          SerManosGrid(child: SerManosSearchBar.map()),
-          const SizedBox(height: 24),
-          if (application != null && activeVolunteering != null)
-            MyActivitySection(
-              onPress: () => context.go(
-                "/home/volunteerings/${application.volunteering}",
-                extra: {"volunteering": activeVolunteering},
+      child: SerManosGrid(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 24),
+            SerManosSearchBar.map(),
+            const SizedBox(height: 24),
+            if (application != null && activeVolunteering != null)
+              MyActivitySection(
+                onPress: () => context.go(
+                  "/home/volunteerings/${application.volunteering}",
+                  extra: {"volunteering": activeVolunteering},
+                ),
+                volunteering: activeVolunteering,
               ),
-              volunteering: activeVolunteering,
-            ),
-          SerManosGrid(
-            child: SerManosTypography.heading1(
+            SerManosTypography.heading1(
               "Voluntariados",
               align: TextAlign.start,
             ),
-          ),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.only(top: 24, bottom: 24),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return SerManosGrid(
-                  child: VolunteerCard(
-                    volunteering: volunteerings[index],
-                    vacants: vacants[volunteerings[index].id] ?? 0,
-                    onTapFunction: () => context.go(
-                      "/home/volunteerings/${volunteerings[index].id}",
-                      extra: {"volunteering": volunteerings[index]},
+            volunteerings == []
+                ? NoVolunteeringsCard()
+                : Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.only(top: 24, bottom: 24),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return VolunteerCard(
+                          volunteering: volunteerings[index],
+                          vacants: vacants[volunteerings[index].id] ?? 0,
+                          onTapFunction: () => context.go(
+                            "/home/volunteerings/${volunteerings[index].id}",
+                            extra: {"volunteering": volunteerings[index]},
+                          ),
+                        );
+                      },
+                      separatorBuilder: ((context, index) =>
+                          const SizedBox(height: 24)),
+                      itemCount: volunteerings.length,
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: ((context, index) =>
-                  const SizedBox(height: 24)),
-              itemCount: volunteerings.length,
-            ),
-          )
-        ],
+                  )
+          ],
+        ),
       ),
     );
   }
