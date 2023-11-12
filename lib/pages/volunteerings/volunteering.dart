@@ -5,7 +5,7 @@ import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/loading.dart';
-import 'package:ser_manos/design_system/molecules/searchbars.dart';
+import 'package:ser_manos/design_system/molecules/searchbar.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
@@ -32,11 +32,15 @@ class VolunteeringTab extends ConsumerWidget {
         );
 
     final List<Volunteering>? volunteerings =
-        ref.watch(volunteeringGetAllControllerProvider(geolocation)).when(
+        ref.watch(volunteeringControllerProvider(geolocation)).when(
               data: (vs) => vs,
               error: (_, __) => [],
               loading: () => null,
             );
+
+    final void Function(String?) onSearch = ref
+        .watch(volunteeringControllerProvider(geolocation).notifier)
+        .setSearch;
 
     final application = ref.watch(applicationControllerProvider).when(
           data: (profile) => profile,
@@ -59,7 +63,7 @@ class VolunteeringTab extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            SerManosSearchBar.map(),
+            SerManosSearchBar(onSearch: onSearch),
             const SizedBox(height: 24),
             if (application != null && activeVolunteering != null)
               MyActivitySection(

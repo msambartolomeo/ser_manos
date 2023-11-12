@@ -17,8 +17,11 @@ class VolunteeringServiceImplentation implements VolunteeringService {
   });
 
   @override
-  Future<List<Volunteering>> getAll(GeoPoint? geolocation) async {
-    final volunteerings = await volunteeringData.getAll();
+  Future<List<Volunteering>> getAll(
+    GeoPoint? geolocation,
+    String? search,
+  ) async {
+    final volunteerings = await volunteeringData.getAll(search);
 
     final comparator = getCompareFunction(geolocation);
 
