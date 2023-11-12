@@ -94,4 +94,36 @@ class VolunteeringDataImplementation implements VolunteeringData {
   Stream<Map<String, int>> getVacantStream() {
     return _vacantsStreamController.stream;
   }
+
+  @override
+  Future<void> decreaseVacants(String uid) async {
+    final volunteeringRef =
+        firebaseFirestore.collection("volunteering").doc(uid);
+
+    final volunteering = await volunteeringRef.get();
+
+    if (volunteering.exists) {
+      final int vacants = volunteering.data()!["vacants"];
+
+      if (vacants == 0) {
+        throw Exception("No more vacants left!");
+      }
+
+      volunteeringRef.update({"vacants": vacants - 1});
+    }
+  }
+
+  @override
+  Future<void> increaseVacants(String uid) async {
+    final volunteeringRef =
+        firebaseFirestore.collection("volunteering").doc(uid);
+
+    final volunteering = await volunteeringRef.get();
+
+    if (volunteering.exists) {
+      final int vacants = volunteering.data()!["vacants"];
+
+      volunteeringRef.update({"vacants": vacants + 1});
+    }
+  }
 }

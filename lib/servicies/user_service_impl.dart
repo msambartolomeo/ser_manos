@@ -12,8 +12,11 @@ class UserServiceImplementation implements UserService {
   final ImageData imageData;
   final LoggingService? loggingService;
 
-  UserServiceImplementation(
-      {required this.userData, required this.imageData, this.loggingService});
+  UserServiceImplementation({
+    required this.userData,
+    required this.imageData,
+    this.loggingService,
+  });
 
   @override
   Future<User> getUser(UID uid) async {

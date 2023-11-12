@@ -11,5 +11,9 @@ abstract class VolunteeringData {
 
   Stream<Map<String, int>> getVacantStream();
 
+  Future<void> decreaseVacants(String volunteeringId);
+
+  Future<void> increaseVacants(String volunteeringId);
+
   // void listenToSpecificVacantChanges(String id);
 }
