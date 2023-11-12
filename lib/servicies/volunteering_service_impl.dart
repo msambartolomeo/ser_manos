@@ -1,4 +1,4 @@
-import 'package:ser_manos/data/volunteering_data.dart';
+import 'package:ser_manos/data/interfaces/volunteering_data.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/servicies/interfaces/user_service.dart';
 import 'package:ser_manos/servicies/interfaces/volunteering_service.dart';

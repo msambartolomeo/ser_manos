@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ser_manos/data/auth_data.dart';
+import 'package:ser_manos/data/auth_data_impl.dart';
 import 'package:ser_manos/models/models.dart';
 
 abstract class UserService {

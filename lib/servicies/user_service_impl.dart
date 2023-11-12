@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:ser_manos/data/auth_data.dart';
-import 'package:ser_manos/data/image_data.dart';
-import 'package:ser_manos/data/user_data.dart';
+import 'package:ser_manos/data/interfaces/image_data.dart';
+import 'package:ser_manos/data/interfaces/user_data.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/servicies/interfaces/user_service.dart';
 import 'package:ser_manos/servicies/logging_service.dart';
+
+typedef UID = String;
 
 class UserServiceImplementation implements UserService {
   final UserData userData;

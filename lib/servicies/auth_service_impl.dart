@@ -1,4 +1,5 @@
-import 'package:ser_manos/data/auth_data.dart';
+import 'package:ser_manos/data/auth_data_impl.dart';
+import 'package:ser_manos/data/interfaces/auth_data.dart';
 import 'package:ser_manos/servicies/interfaces/auth_service.dart';
 import 'package:ser_manos/servicies/interfaces/user_service.dart';
 

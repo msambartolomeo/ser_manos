@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ser_manos/data/interfaces/volunteering_data.dart';
 import 'package:ser_manos/models/models.dart';
 
-class VolunteeringData {
+class VolunteeringDataImplementation implements VolunteeringData {
   final FirebaseFirestore firebaseFirestore;
 
-  VolunteeringData({required this.firebaseFirestore});
+  VolunteeringDataImplementation({required this.firebaseFirestore});
 
+  @override
   Future<Map<String, Volunteering>> getAll() async {
     final collection = firebaseFirestore.collection("volunteering");
     final querySnapshot = await collection.get();
@@ -20,6 +22,7 @@ class VolunteeringData {
     );
   }
 
+  @override
   Future<Volunteering> get(String id) async {
     final collection = firebaseFirestore.collection("volunteering");
     final documentSnapshot = await collection.doc(id).get();
