@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ser_manos/controllers/profile_controllers.dart';
+import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
-import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/cells/modal.dart';
@@ -30,8 +29,20 @@ class VolunteeringDetailPage extends ConsumerWidget {
               loading: () => null,
             );
 
-    final profile = ref.watch(profileControllerProvider).when(
-          data: (profile) => profile,
+    // final vacants = ref.watch(specificVolunteeringStreamProvider(id)).when(
+    //       data: (data) => data[id] ?? 0,
+    //       error: (e, _) => null,
+    //       loading: () => 0,
+    //     );
+
+    final vacants = ref.watch(volunteeringStreamProvider).when(
+          data: (vacants) => vacants[id],
+          error: (e, _) => null,
+          loading: () => 0,
+        );
+
+    final application = ref.watch(applicationControllerProvider).when(
+          data: (application) => application,
           error: (e, _) => null,
           loading: () => null,
         );
@@ -40,10 +51,9 @@ class VolunteeringDetailPage extends ConsumerWidget {
       return const CircularProgressIndicator();
     }
 
-    bool isLoggedIn = profile != null;
-    bool hasVoluntering = isLoggedIn && profile.hasVolunteering();
+    bool hasVoluntering = application != null;
     bool appliedToCurrentVolunteering =
-        hasVoluntering && profile.getAppliedVolunteeringId() == id;
+        hasVoluntering && application.volunteering == id;
 
     void leaveCurrentVolunteering() {
       showSerManosModal(
@@ -51,8 +61,8 @@ class VolunteeringDetailPage extends ConsumerWidget {
         title: "¿Estás seguro que querés abandonar tu voluntariado?",
         subtitle: data.name,
         onConfirm: () => ref
-            .read(profileControllerProvider.notifier)
-            .leaveCurrentVolunteering()
+            .read(applicationControllerProvider.notifier)
+            .dropout()
             .then((_) => context.pop()),
       );
     }
@@ -60,14 +70,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      appBar: SerManosHeader.opacity(
-          button: IconButton(
-        icon: const Icon(
-          SerManosIconData.back,
-          color: Colors.white,
-        ),
-        onPressed: () => context.pop(),
-      )),
+      appBar: SerManosHeader.opacity(),
       body: SingleChildScrollView(
         child: Column(children: [
           const Row(
@@ -129,18 +132,17 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  SerManosVacantComponent.enabled(data.vacants),
+                  vacants! ==
+                          0 //habria que ver si se deshabilita con 0 o con otra condicion
+                      ? SerManosVacantComponent.disabled(vacants)
+                      : SerManosVacantComponent.enabled(vacants),
                   const SizedBox(
                     height: 24,
                   ),
                   Visibility(
-                    visible: !isLoggedIn,
-                    child: const CircularProgressIndicator(),
-                  ),
-                  Visibility(
                       visible: hasVoluntering,
                       child: appliedToCurrentVolunteering
-                          ? profile.isAproved()
+                          ? application.approved
                               ? VolunteeringApply.alreadyAppliedAndAproved(
                                   onPressed: leaveCurrentVolunteering)
                               : VolunteeringApply.alreadyApplied(
@@ -148,13 +150,12 @@ class VolunteeringDetailPage extends ConsumerWidget {
                                 )
                           : VolunteeringApply.alreadyAppliedToOtherVolunteering(
                               onPressed: () => context.go(
-                                "/home/volunteerings/${profile!.application!["volunteering"]}",
+                                "/home/volunteerings/${application!.volunteering}",
                               ),
                             )),
                   Visibility(
-                    visible: (isLoggedIn && !profile.hasVolunteering()) ||
-                        (hasVoluntering &&
-                            profile.getAppliedVolunteeringId() != id),
+                    visible: (application == null) ||
+                        (hasVoluntering && application.volunteering != id),
                     child: SerManosButton.cta(
                       "Postularme",
                       onPressed: () {
@@ -164,16 +165,15 @@ class VolunteeringDetailPage extends ConsumerWidget {
                           subtitle: data.name,
                           onConfirm: () {
                             ref
-                                .read(profileControllerProvider.notifier)
+                                .read(applicationControllerProvider.notifier)
                                 .apply(id)
                                 .then((_) => context.pop());
                           },
                         );
                       },
                       fill: true,
-                      disabled: !data.hasVacancies() ||
-                          (hasVoluntering &&
-                              profile.getAppliedVolunteeringId() != id),
+                      disabled: vacants <= 0 ||
+                          (hasVoluntering && application.volunteering != id),
                     ),
                   )
                 ],

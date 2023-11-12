@@ -68,7 +68,7 @@ class RouterBuilder {
                           ? null
                           : (state.extra as Map)["volunteering"];
 
-                      loggingService?.logOpenVolunteering(param, volunteering);
+                      loggingService?.logOpenVolunteering(param);
                       page = VolunteeringDetailPage(
                           volunteering: volunteering, id: param);
                       break;

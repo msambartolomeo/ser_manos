@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ser_manos/data/interfaces/auth_data.dart';
 
 typedef UID = String;
 
-class AuthData {
+class AuthDataImplementation implements AuthData {
   final FirebaseAuth firebaseAuth;
 
-  AuthData({required this.firebaseAuth});
+  AuthDataImplementation({required this.firebaseAuth});
 
+  @override
   Future<UID> login(String email, String password) async {
     try {
       final response = await firebaseAuth.signInWithEmailAndPassword(
@@ -20,6 +22,7 @@ class AuthData {
     }
   }
 
+  @override
   Future<UID> register(String email, String password) async {
     try {
       final response = await firebaseAuth.createUserWithEmailAndPassword(
@@ -33,6 +36,7 @@ class AuthData {
     }
   }
 
+  @override
   Future<void> logOut() async {
     try {
       await firebaseAuth.signOut();

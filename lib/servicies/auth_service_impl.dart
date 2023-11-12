@@ -1,16 +1,21 @@
-import 'package:ser_manos/data/auth_data.dart';
-import 'package:ser_manos/servicies/user_service.dart';
+import 'package:ser_manos/data/auth_data_impl.dart';
+import 'package:ser_manos/data/interfaces/auth_data.dart';
+import 'package:ser_manos/servicies/interfaces/auth_service.dart';
+import 'package:ser_manos/servicies/interfaces/user_service.dart';
 
-class AuthService {
+class AuthServiceImplementation implements AuthService {
   final AuthData authData;
   final UserService userService;
 
-  AuthService({required this.authData, required this.userService});
+  AuthServiceImplementation(
+      {required this.authData, required this.userService});
 
+  @override
   Future<void> login(String email, String password) async {
     await authData.login(email, password);
   }
 
+  @override
   Future<void> register(
     String name,
     String surname,
@@ -22,6 +27,7 @@ class AuthService {
     await userService.createUser(uid, name, surname);
   }
 
+  @override
   Future<void> logOut() async {
     await authData.logOut();
   }

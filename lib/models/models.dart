@@ -31,6 +31,7 @@ class TimestampConverter implements JsonConverter<Timestamp, Timestamp> {
 @freezed
 class Volunteering with _$Volunteering {
   const factory Volunteering({
+    required String id,
     required String image,
     required String name,
     required String purpose,
@@ -92,6 +93,15 @@ class News with _$News implements Comparable {
 }
 
 @freezed
+class Application with _$Application {
+  const factory Application(
+      {required String volunteering, required bool approved}) = _Application;
+
+  factory Application.fromJson(Map<String, Object?> json) =>
+      _$ApplicationFromJson(json);
+}
+
+@freezed
 class User with _$User {
   const User._();
 
@@ -106,7 +116,7 @@ class User with _$User {
     Gender? gender,
     String? phone,
     @Default([]) List<String> favorites,
-    @Default(null) Map? application,
+    @Default(null) Application? application,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
@@ -121,11 +131,11 @@ class User with _$User {
 
   bool isAproved() {
     if (!hasVolunteering()) throw Exception("User with no volunteering.");
-    return application!["approved"];
+    return application!.approved;
   }
 
   String getAppliedVolunteeringId() {
-    return hasVolunteering() ? application!["volunteering"] : null;
+    return application!.volunteering;
   }
 }
 

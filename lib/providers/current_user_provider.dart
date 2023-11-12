@@ -3,7 +3,7 @@ import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/firebase_providers.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:ser_manos/providers/servicies_providers.dart';
-import 'package:ser_manos/servicies/user_service.dart';
+import 'package:ser_manos/servicies/interfaces/user_service.dart';
 
 part 'generated/current_user_provider.g.dart';
 
@@ -19,8 +19,6 @@ class CurrentAuthUser extends _$CurrentAuthUser {
   @override
   AuthUser? build() {
     final loginState = ref.watch(authStateChangeProvider);
-
-    print(loginState);
 
     return loginState.maybeWhen(
       data: (user) => user,

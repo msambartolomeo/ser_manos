@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ser_manos/data/interfaces/user_data.dart';
 import 'package:ser_manos/models/models.dart';
 
-class UserData {
+class UserDataImplementation implements UserData {
   final FirebaseFirestore firebaseFirestore;
 
-  UserData({required this.firebaseFirestore});
+  UserDataImplementation({required this.firebaseFirestore});
 
+  @override
   Future<User> getUser(String uid) async {
     final documentReference =
         await firebaseFirestore.collection("users").doc(uid).get();
@@ -15,7 +17,8 @@ class UserData {
     return User.fromJson(map);
   }
 
-  Future<void> apply(String uid, String volunteeringId) async {
+  @override
+  Future<void> setApplication(String uid, String volunteeringId) async {
     final documentReference = firebaseFirestore.collection("users").doc(uid);
 
     await documentReference.update({
@@ -24,13 +27,15 @@ class UserData {
         onError: (e) => throw Exception("Cuold not apply to volunteering."));
   }
 
-  Future<void> leaveCurrentVolunteering(String uid) async {
+  @override
+  Future<void> deleteApplication(String uid) async {
     final documentReference = firebaseFirestore.collection("users").doc(uid);
 
     await documentReference.update({"application": null}).then((value) => value,
         onError: (e) => throw Exception("Cuold not apply to volunteering."));
   }
 
+  @override
   Future<void> createUser(String uid, String name, String surname) async {
     final userRef = firebaseFirestore.collection("users").doc(uid);
 
@@ -39,6 +44,7 @@ class UserData {
     userRef.set(user.toJson());
   }
 
+  @override
   Future<void> updateUser(String uid, UserUpdate user) async {
     final userRef = firebaseFirestore.collection("users").doc(uid);
 
@@ -47,5 +53,29 @@ class UserData {
     json.removeWhere((_, value) => value == null);
 
     userRef.update(json);
+  }
+
+  @override
+  Future<List<String>> getFavorites(String uid) async {
+    final documentReference =
+        await firebaseFirestore.collection("users").doc(uid).get();
+
+    final map = documentReference.data()!;
+
+    return User.fromJson(map).favorites;
+  }
+
+  @override
+  Future<void> addFavorite(String uid, String volunteering) async {
+    firebaseFirestore.collection("users").doc(uid).update({
+      'favorites': FieldValue.arrayUnion([volunteering]),
+    });
+  }
+
+  @override
+  Future<void> removeFavorite(String uid, String volunteering) async {
+    firebaseFirestore.collection("users").doc(uid).update({
+      'favorites': FieldValue.arrayRemove([volunteering]),
+    });
   }
 }
