@@ -8,17 +8,21 @@ part 'generated/application_controllers.g.dart';
 
 @riverpod
 class ApplicationController extends _$ApplicationController {
-  User? profile;
+  // User? profile;
 
   @override
   FutureOr<Application?> build() async {
-    profile = ref.watch(profileControllerProvider).when(
-          data: (profile) => profile,
-          error: (e, _) => null,
-          loading: () => null,
-        );
+    final UID? uid = _getUserId();
 
-    return profile?.application;
+    if (uid == null) {
+      throw Exception("User not logged in.");
+    }
+
+    final service = ref.read(userServiceProvider);
+
+    User user = await service.getUser(uid);
+
+    return user.application;
   }
 
   Future<void> dropout() async {

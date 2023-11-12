@@ -76,7 +76,10 @@ class RouterBuilder {
                       if (param != "edit") {
                         context.go("/404");
                       }
-                      page = const EditProfileModal();
+                      final Map? map =
+                          state.extra != null ? state.extra as Map : null;
+                      page =
+                          EditProfileModal(volunteering: map?["volunteering"]);
                       break;
                     case "news":
                       loggingService?.logOpenNews(param);

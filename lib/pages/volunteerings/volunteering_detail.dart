@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/controllers/application_controllers.dart';
+import 'package:ser_manos/controllers/profile_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
@@ -47,7 +48,13 @@ class VolunteeringDetailPage extends ConsumerWidget {
           loading: () => null,
         );
 
-    if (data == null) {
+    final profile = ref.watch(profileControllerProvider).when(
+          data: (profile) => profile,
+          error: (e, _) => null,
+          loading: () => null,
+        );
+
+    if (data == null || profile == null) {
       return const CircularProgressIndicator();
     }
 
@@ -137,17 +144,31 @@ class VolunteeringDetailPage extends ConsumerWidget {
                     child: SerManosButton.cta(
                       "Postularme",
                       onPressed: () {
-                        showSerManosModal(
-                          context,
-                          title: "Te estas por postular a",
-                          subtitle: data.name,
-                          onConfirm: () {
-                            ref
-                                .read(applicationControllerProvider.notifier)
-                                .apply(id)
-                                .then((_) => context.pop());
-                          },
-                        );
+                        if (profile.completed) {
+                          showSerManosModal(
+                            context,
+                            title: "Te estas por postular a",
+                            subtitle: data.name,
+                            onConfirm: () {
+                              ref
+                                  .read(applicationControllerProvider.notifier)
+                                  .apply(id)
+                                  .then((_) => context.pop());
+                            },
+                          );
+                        } else {
+                          showSerManosModal(
+                            context,
+                            title:
+                                "Para postularte debes primero completar tus datos.",
+                            onConfirm: () {
+                              context.pop();
+                              context.push("/home/profile/edit",
+                                  extra: {"volunteering": volunteering});
+                            },
+                            confirmText: "Completar datos",
+                          );
+                        }
                       },
                       fill: true,
                       disabled: vacants <= 0 ||

@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
-import 'package:ser_manos/providers/router_provider.dart';
 import 'package:ser_manos/providers/servicies_providers.dart';
 import 'package:ser_manos/servicies/interfaces/user_service.dart';
 
@@ -24,7 +22,6 @@ class UpdateUserController extends _$UpdateUserController {
     String? email,
   ) async {
     final UserService userService = ref.read(userServiceProvider);
-    final GoRouter router = ref.read(routerProvider);
 
     state = const AsyncLoading();
 
@@ -32,9 +29,7 @@ class UpdateUserController extends _$UpdateUserController {
       await userService.updateUser(uid, image, birthday, gender, phone, email);
 
       // NOTE: force search of updated user
-      ref.invalidate(userServiceProvider);
-
-      router.go("/home/profile");
+      ref.invalidate(profileControllerProvider);
     });
   }
 }

@@ -11,6 +11,7 @@ class SerManosModal extends Dialog {
     required String cancelText,
     required String confirmText,
     String? subtitle,
+    void Function()? onCancel,
     required void Function() onConfirm,
   }) : super(
           shape: RoundedRectangleBorder(
@@ -31,7 +32,7 @@ class SerManosModal extends Dialog {
                   children: [
                     SerManosButton.ctaText(
                       cancelText,
-                      onPressed: () => {context.pop()},
+                      onPressed: onCancel ?? () => context.pop(),
                     ),
                     const SizedBox(width: 8),
                     SerManosButton.ctaText(
@@ -53,6 +54,7 @@ showSerManosModal(
   String? subtitle,
   String cancelText = "Cancelar",
   String confirmText = "Confirmar",
+  void Function()? onCancel,
 }) {
   showDialog(
     context: context,
@@ -63,6 +65,7 @@ showSerManosModal(
       subtitle: subtitle,
       cancelText: cancelText,
       confirmText: confirmText,
+      onCancel: onCancel,
     ),
   );
 }

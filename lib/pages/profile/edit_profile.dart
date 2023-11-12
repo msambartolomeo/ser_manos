@@ -1,19 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/profile_controllers.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
+import 'package:ser_manos/design_system/cells/modal.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/models/models.dart';
-import 'package:ser_manos/providers/current_user_provider.dart';
 
 class EditProfileModal extends ConsumerStatefulWidget {
-  const EditProfileModal({super.key, this.user});
+  const EditProfileModal({super.key, this.volunteering});
 
-  final User? user;
+  final Volunteering? volunteering;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -26,7 +28,6 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   String? imageUrl;
   ImageType imageType = ImageType.network;
 
-  late final User? user;
   late final TextEditingController birthdate;
   late final TextEditingController phone;
   late final TextEditingController email;
@@ -36,22 +37,21 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   @override
   void initState() {
     super.initState();
-    user = widget.user ??
-        ref.read(currentUserProvider).when(
-              data: (user) => user,
-              loading: () => null,
-              error: (e, _) => null, // TODO: Handle error
-            );
+    final user = ref.read(profileControllerProvider).when(
+          data: (user) => user,
+          loading: () => null,
+          error: (e, _) => null, // TODO: Handle error
+        );
 
     if (user == null) {
       birthdate = TextEditingController();
       phone = TextEditingController();
       email = TextEditingController();
     } else {
-      birthdate = TextEditingController(text: user?.birthday);
-      phone = TextEditingController(text: user?.phone);
-      email = TextEditingController(text: user?.email);
-      imageUrl = user?.image;
+      birthdate = TextEditingController(text: user.birthday);
+      phone = TextEditingController(text: user.phone);
+      email = TextEditingController(text: user.email);
+      imageUrl = user.image;
     }
     gender = user?.gender ?? Gender.male;
   }
@@ -76,14 +76,18 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   Widget build(BuildContext context) {
     bool isLoading = false;
 
-    ref.watch(updateUserControllerProvider).maybeWhen(
-          orElse: () => {},
-          loading: () => isLoading = true,
-          error: (e, _) => {}, // TODO: Handle error
+    final user = ref.watch(profileControllerProvider).when(
+          data: (user) => user,
+          loading: () => null,
+          error: (e, _) => null, // TODO: Handle error
         );
 
     final UpdateUserController updateUserController =
         ref.watch(updateUserControllerProvider.notifier);
+
+    if (user == null) {
+      return const CircularProgressIndicator();
+    }
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -124,14 +128,22 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
                     "Guardar datos",
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await updateUserController.updateUser(
-                          user!.uid,
+                        await updateUserController
+                            .updateUser(
+                          user.uid,
                           image,
                           birthdate.text,
                           gender,
                           phone.text,
                           email.text,
-                        );
+                        )
+                            .then((value) {
+                          if (widget.volunteering != null) {
+                            applyModal(widget.volunteering!, context, ref);
+                          } else {
+                            context.go("/home/profile");
+                          }
+                        });
                       }
                     },
                     fill: true,
@@ -144,4 +156,25 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
       ),
     );
   }
+}
+
+applyModal(Volunteering volunteering, BuildContext context, WidgetRef ref) {
+  showSerManosModal(
+    context,
+    title: "Te estas por postular a",
+    subtitle: volunteering.name,
+    onCancel: () {
+      context.pop();
+      context.pop();
+    },
+    onConfirm: () {
+      ref
+          .read(applicationControllerProvider.notifier)
+          .apply(volunteering.id)
+          .then((_) {
+        context.pop();
+        context.pop();
+      });
+    },
+  );
 }
