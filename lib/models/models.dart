@@ -31,6 +31,7 @@ class TimestampConverter implements JsonConverter<Timestamp, Timestamp> {
 @freezed
 class Volunteering with _$Volunteering {
   const factory Volunteering({
+    required String id,
     required String image,
     required String name,
     required String purpose,

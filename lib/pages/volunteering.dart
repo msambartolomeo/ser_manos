@@ -17,8 +17,18 @@ class VolunteeringTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<Map<String, Volunteering>> volunteering =
-        ref.watch(volunteeringGetAllControllerProvider);
+    final geolocation = ref.watch(determineGeolocationProvider).when(
+          data: (geolocation) => geolocation,
+          error: (e, _) => null,
+          loading: () => null,
+        );
+
+    final List<Volunteering>? volunteerings =
+        ref.watch(volunteeringGetAllControllerProvider(geolocation)).when(
+              data: (vs) => vs,
+              error: (_, __) => [],
+              loading: () => null,
+            );
 
     final application = ref.watch(applicationControllerProvider).when(
           data: (profile) => profile,
@@ -26,88 +36,59 @@ class VolunteeringTab extends ConsumerWidget {
           loading: () => null,
         );
 
-    final geolocation = ref.watch(determineGeolocationProvider).when(
-          data: (geolocation) => geolocation,
-          error: (e, _) => null,
-          loading: () => null,
-        );
+    if (volunteerings == null) {
+      return const CircularProgressIndicator();
+    }
 
-    final int Function(Volunteering, Volunteering) comparator =
-        geolocation == null
-            ? (Volunteering v1, Volunteering v2) {
-                return v2.compareCreationDate(v1);
-              }
-            : (Volunteering v1, Volunteering v2) {
-                int distance = v1
-                    .distanceTo(geolocation)
-                    .compareTo(v2.distanceTo(geolocation));
-                if (distance == 0) {
-                  return v2.compareCreationDate(v1);
-                }
-                return distance;
-              };
+    final Volunteering? activeVolunteering = volunteerings
+        .where((v) => v.id == application?.volunteering)
+        .firstOrNull;
 
-    return volunteering.when(
-      loading: () => const CircularProgressIndicator(),
-      error: (err, stack) => Text('Error: $err'),
-      data: (volunteering) {
-        final volunteeringList = volunteering.values.toList();
-        volunteeringList.sort(comparator);
-        return Container(
-          color: SerManosColor.secondary10,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 24),
-              SerManosGrid(child: SerManosSearchBar.map()),
-              const SizedBox(height: 24),
-              Visibility(
-                visible: application != null,
-                child: MyActivitySection(
-                  // TODO Chequear que el voluntariado existe en la lista?
-                  onPress: () => context.go(
-                      "/home/volunteerings/${application?.volunteering ?? ""}",
-                      extra: {
-                        "volunteering": volunteering[application?.volunteering]
-                      }),
-                  volunteeringName:
-                      volunteering[application?.volunteering]?.name,
-                  geolocation:
-                      volunteering[application?.volunteering]?.geolocation,
-                ),
+    return Container(
+      color: SerManosColor.secondary10,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 24),
+          SerManosGrid(child: SerManosSearchBar.map()),
+          const SizedBox(height: 24),
+          if (application != null && activeVolunteering != null)
+            MyActivitySection(
+              onPress: () => context.go(
+                "/home/volunteerings/${application.volunteering}",
+                extra: {"volunteering": activeVolunteering},
               ),
-              SerManosGrid(
-                  child: SerManosTypography.heading1(
-                "Voluntariados",
-                align: TextAlign.start,
-              )),
-              Expanded(
-                child: ListView.separated(
-                    padding: const EdgeInsets.only(top: 24, bottom: 24),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return SerManosGrid(
-                        child: VolunteerCard(
-                            image: volunteeringList[index].image,
-                            name: volunteeringList[index].name,
-                            vacant: volunteeringList[index].vacants,
-                            geolocation: volunteeringList[index].geolocation,
-                            volunteering: volunteering.keys.elementAt(index),
-                            onTapFunction: () => context.go(
-                                "/home/volunteerings/${volunteering.keys.elementAt(index)}",
-                                extra: {"volunteering": volunteeringList[index]})),
-                      );
-                    },
-                    separatorBuilder: ((context, index) => const SizedBox(
-                          height: 24,
-                        )),
-                    itemCount: volunteeringList.length),
-              )
-            ],
+              volunteering: activeVolunteering,
+            ),
+          SerManosGrid(
+            child: SerManosTypography.heading1(
+              "Voluntariados",
+              align: TextAlign.start,
+            ),
           ),
-        );
-      },
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.only(top: 24, bottom: 24),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return SerManosGrid(
+                  child: VolunteerCard(
+                    volunteering: volunteerings[index],
+                    onTapFunction: () => context.go(
+                      "/home/volunteerings/${volunteerings[index].id}",
+                      extra: {"volunteering": volunteerings[index]},
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: ((context, index) =>
+                  const SizedBox(height: 24)),
+              itemCount: volunteerings.length,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

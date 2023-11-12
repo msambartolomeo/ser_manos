@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -11,55 +10,69 @@ import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 
 class VolunteerCard extends InkWell {
-  VolunteerCard(
-      {super.key,
-      required String image,
-      required String name,
-      required int vacant,
-      required String volunteering,
-      required GeoPoint geolocation,
-      required void Function() onTapFunction})
-      : super(
-            onTap: onTapFunction,
-            child: Container(
-                decoration: BoxDecoration(
-                  color: SerManosColor.neutral0,
-                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
-                  boxShadow: SerManosShadows.shadow2,
+  VolunteerCard({
+    super.key,
+    required Volunteering volunteering,
+    required void Function() onTapFunction,
+  }) : super(
+          onTap: onTapFunction,
+          child: Container(
+            decoration: BoxDecoration(
+              color: SerManosColor.neutral0,
+              borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+              boxShadow: SerManosShadows.shadow2,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Image.network(
+                  volunteering.image,
+                  height: 138,
+                  fit: BoxFit.cover,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Image.network(image, height: 138, fit: BoxFit.cover),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SerManosTypography.overline("acción social",
-                                    color: SerManosColor.neutral75),
-                                SerManosTypography.subtitle1(name,
-                                    color: SerManosColor.neutral100),
-                                const SizedBox(height: 4),
-                                vacant ==
-                                        0 //habria que ver si se deshabilita con 0 o con otra condicion
-                                    ? SerManosVacantComponent.disabled(vacant)
-                                    : SerManosVacantComponent.enabled(vacant),
-                              ],
-                            )),
-                            Row(children: [
-                              FavoriteButton(volunteering: volunteering),
-                              const SizedBox(width: 16),
-                              LocationButton(geolocation: geolocation)
-                            ])
+                            SerManosTypography.overline(
+                              "acción social",
+                              color: SerManosColor.neutral75,
+                            ),
+                            SerManosTypography.subtitle1(
+                              volunteering.name,
+                              color: SerManosColor.neutral100,
+                            ),
+                            const SizedBox(height: 4),
+                            volunteering.vacants == 0
+                                // habria que ver si se deshabilita con 0 o con otra condicion
+                                ? SerManosVacantComponent.disabled(
+                                    volunteering.vacants,
+                                  )
+                                : SerManosVacantComponent.enabled(
+                                    volunteering.vacants,
+                                  ),
                           ],
-                        ))
-                  ],
-                )));
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          FavoriteButton(volunteering: volunteering.id),
+                          const SizedBox(width: 16),
+                          LocationButton(geolocation: volunteering.geolocation),
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
 }
 
 class NewsCard extends Container {

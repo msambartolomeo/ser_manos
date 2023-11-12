@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ser_manos/models/models.dart';
 
 abstract class VolunteeringService {
   VolunteeringService();
 
-  Future<Map<String, Volunteering>> getAll();
+  Future<List<Volunteering>> getAll(GeoPoint? geolocation);
 
   Future<Volunteering> get(String id);
 

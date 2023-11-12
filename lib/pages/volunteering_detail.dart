@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
-import 'package:ser_manos/design_system/atoms/icons.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/design_system/cells/modal.dart';
@@ -18,8 +17,12 @@ import 'package:ser_manos/models/models.dart';
 class VolunteeringDetailPage extends ConsumerWidget {
   final Volunteering? volunteering;
   final String id;
-  const VolunteeringDetailPage(
-      {super.key, required this.volunteering, required this.id});
+
+  const VolunteeringDetailPage({
+    super.key,
+    required this.volunteering,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +34,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
             );
 
     final application = ref.watch(applicationControllerProvider).when(
-          data: (profile) => profile,
+          data: (application) => application,
           error: (e, _) => null,
           loading: () => null,
         );
@@ -59,14 +62,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      appBar: SerManosHeader.opacity(
-          button: IconButton(
-        icon: const Icon(
-          SerManosIconData.back,
-          color: Colors.white,
-        ),
-        onPressed: () => context.pop(),
-      )),
+      appBar: SerManosHeader.opacity(),
       body: SingleChildScrollView(
         child: Column(children: [
           const Row(

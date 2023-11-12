@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ser_manos/data/interfaces/volunteering_data.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/servicies/interfaces/user_service.dart';
@@ -15,8 +16,14 @@ class VolunteeringServiceImplentation implements VolunteeringService {
       required this.userService});
 
   @override
-  Future<Map<String, Volunteering>> getAll() async {
-    return await volunteeringData.getAll();
+  Future<List<Volunteering>> getAll(GeoPoint? geolocation) async {
+    final volunteerings = await volunteeringData.getAll();
+
+    final comparator = getCompareFunction(geolocation);
+
+    volunteerings.sort(comparator);
+
+    return volunteerings;
   }
 
   @override
@@ -62,5 +69,22 @@ class VolunteeringServiceImplentation implements VolunteeringService {
     // TODO Handle volunteering collection changes
 
     return;
+  }
+}
+
+int Function(Volunteering, Volunteering) getCompareFunction(
+    GeoPoint? geolocation,
+    ) {
+  if (geolocation == null) {
+    return (v1, v2) => v2.compareCreationDate(v1);
+  } else {
+    return (v1, v2) {
+      int distance =
+      v1.distanceTo(geolocation).compareTo(v2.distanceTo(geolocation));
+      if (distance == 0) {
+        return v2.compareCreationDate(v1);
+      }
+      return distance;
+    };
   }
 }

@@ -8,16 +8,19 @@ class VolunteeringDataImplementation implements VolunteeringData {
   VolunteeringDataImplementation({required this.firebaseFirestore});
 
   @override
-  Future<Map<String, Volunteering>> getAll() async {
+  Future<List<Volunteering>> getAll() async {
     final collection = firebaseFirestore.collection("volunteering");
     final querySnapshot = await collection.get();
 
-    return querySnapshot.docs.fold<Map<String, Volunteering>>(
-      {},
-      (map, doc) {
-        map[doc.id] = Volunteering.fromJson(
-            doc.data()); // Usamos el ID del documento como clave
-        return map;
+    return querySnapshot.docs.fold<List<Volunteering>>(
+      [],
+      (List<Volunteering> list, doc) {
+        final data = doc.data();
+        data["id"] = doc.id;
+
+        list.add(Volunteering.fromJson(data));
+
+        return list;
       },
     );
   }
@@ -31,6 +34,9 @@ class VolunteeringDataImplementation implements VolunteeringData {
       throw Exception("Volunteering ID does not exists.");
     }
 
-    return Volunteering.fromJson(documentSnapshot.data()!);
+    final json = documentSnapshot.data();
+    json!["id"] = id;
+
+    return Volunteering.fromJson(json);
   }
 }
