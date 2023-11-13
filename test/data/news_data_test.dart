@@ -51,13 +51,13 @@ void main() {
     test("Retrieve news", () async {
       expect(await newsData.getById(news1.id), news1);
       expect(await newsData.getById(news2.id), news2);
-    });
+    }, tags: ["unit", "news"]);
 
     test("News not exists", () async {
       expect(() async {
         await newsData.getById("???");
       }, throwsException);
-    });
+    }, tags: ["unit", "news"]);
 
     test("Get all news", () async {
       List<News> list = await newsData.getAll();
@@ -65,7 +65,7 @@ void main() {
       expect(list.contains(news1), true);
       expect(list.contains(news2), true);
       expect(list.length, 2);
-    });
+    }, tags: ["unit", "news"]);
 
     test("Get all news empty", () async {
       await firestore.collection(collectionId).doc(news1.id).delete();
@@ -74,6 +74,6 @@ void main() {
       List<News> list = await newsData.getAll();
 
       expect(list.length, 0);
-    });
+    }, tags: ["unit", "news"]);
   });
 }

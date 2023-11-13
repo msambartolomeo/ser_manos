@@ -60,13 +60,13 @@ void main() {
     test("Recuperar voluntariados", () async {
       expect(await volunteeringData.get(volunteering1.id), volunteering1);
       expect(await volunteeringData.get(volunteering2.id), volunteering2);
-    });
+    }, tags: ["unit", "volunteering"]);
 
     test("Voluntariado no existe", () async {
       expect(() async {
         await volunteeringData.get("???");
       }, throwsException);
-    });
+    }, tags: ["unit", "volunteering"]);
 
     test("Obtener todos los voluntariados", () async {
       List<Volunteering> list = await volunteeringData.getAll(null);
@@ -74,7 +74,7 @@ void main() {
       expect(list.contains(volunteering1), true);
       expect(list.contains(volunteering2), true);
       expect(list.length, 2);
-    });
+    }, tags: ["unit", "volunteering"]);
 
     test("Obtener todos los voluntariados con búsqueda", () async {
       List<Volunteering> list = await volunteeringData.getAll("name1");
@@ -82,7 +82,7 @@ void main() {
       expect(list.contains(volunteering1), true);
       expect(list.contains(volunteering2), false);
       expect(list.length, 1);
-    });
+    }, tags: ["unit", "volunteering"]);
 
     test("Obtener todos los voluntariados vacío", () async {
       await firestore.collection(collectionId).doc(volunteering1.id).delete();
@@ -91,7 +91,7 @@ void main() {
       List<Volunteering> list = await volunteeringData.getAll(null);
 
       expect(list.length, 0);
-    });
+    }, tags: ["unit", "volunteering"]);
 
     test("Disminuir vacantes", () async {
       await volunteeringData.decreaseVacants("id1");
@@ -107,7 +107,7 @@ void main() {
               .doc("id2")
               .get())["vacants"],
           2);
-    });
+    }, tags: ["unit", "volunteering"]);
 
     test("Aumentar vacantes", () async {
       await volunteeringData.increaseVacants("id2");
@@ -123,6 +123,6 @@ void main() {
               .doc("id2")
               .get())["vacants"],
           3);
-    });
+    }, tags: ["unit", "volunteering"]);
   });
 }

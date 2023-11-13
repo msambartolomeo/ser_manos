@@ -43,7 +43,7 @@ void main() {
     test("Recuperar usuario", () async {
       expect(await userData.getUser(user1.uid), user1);
       expect(await userData.getUser(user2.uid), user2);
-    });
+    }, tags: ["unit", "user"]);
 
     test("Crear usuario", () async {
       await userData.createUser("newUid", "New", "User");
@@ -51,7 +51,7 @@ void main() {
       expect(newUser.uid, "newUid");
       expect(newUser.name, "New");
       expect(newUser.surname, "User");
-    });
+    }, tags: ["unit", "user"]);
 
     test("Actualizar usuario", () async {
       await userData.updateUser(
@@ -59,7 +59,7 @@ void main() {
       final updatedUser =
           await firestore.collection(collectionId).doc(user1.uid).get();
       expect(updatedUser.data()!["phone"], "phone");
-    });
+    }, tags: ["unit", "user"]);
 
     test("Agregar favoritos", () async {
       await userData.addFavorite(user1.uid, "volunteering1");
@@ -70,7 +70,7 @@ void main() {
       expect(user.favorites.contains("volunteering1"), true);
       expect(user.favorites.contains("volunteering1"), true);
       expect(user.favorites.length, 2);
-    });
+    }, tags: ["unit", "user"]);
 
     test("Obtener favoritos", () async {
       await firestore.collection(collectionId).doc(user1.uid).update({
@@ -79,7 +79,7 @@ void main() {
       final favorites = await userData.getFavorites(user1.uid);
       expect(favorites.contains("f1"), true);
       expect(favorites.length, 1);
-    });
+    }, tags: ["unit", "user"]);
 
     test("Eliminar favoritos", () async {
       await firestore.collection(collectionId).doc(user1.uid).update({
@@ -90,7 +90,7 @@ void main() {
           (await firestore.collection(collectionId).doc(user1.uid).get())
               .data()!);
       expect(user.favorites.length, 0);
-    });
+    }, tags: ["unit", "user"]);
 
     test("Eliminar favoritos", () async {
       await firestore.collection(collectionId).doc(user1.uid).update({
@@ -102,12 +102,12 @@ void main() {
               .data()!);
       expect(user.favorites.contains("f2"), true);
       expect(user.favorites.length, 1);
-    });
+    }, tags: ["unit", "user"]);
 
     test("Obtener favoritos", () async {
       final favorites = await userData.getFavorites(user1.uid);
       expect(favorites.length, 0);
-    });
+    }, tags: ["unit", "user"]);
 
     test("Set application", () async {
       // Initial conditions
@@ -126,7 +126,7 @@ void main() {
       expect(user.application != null, true);
       expect(user.application!.volunteering, "volunteering1");
       expect(user.application!.approved, false);
-    });
+    }, tags: ["unit", "user"]);
 
     test("Remove application", () async {
       await firestore.collection(collectionId).doc(user1.uid).update({
@@ -142,6 +142,6 @@ void main() {
           (await firestore.collection(collectionId).doc(user1.uid).get())
               .data()!);
       expect(user.application, null);
-    });
+    }, tags: ["unit", "user"]);
   });
 }

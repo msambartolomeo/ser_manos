@@ -8,6 +8,7 @@ tags:
   user:
   news:
   image:
+  auth:
 
 # Configuraciones del runner de pruebas
 test:

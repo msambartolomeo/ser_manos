@@ -22,6 +22,6 @@ void main() {
       final storageRef = storage.ref().child("users");
       final listResult = await storageRef.listAll();
       expect(listResult.items.length, 1);
-    });
+    }, tags: ["unit", "image"]);
   });
 }

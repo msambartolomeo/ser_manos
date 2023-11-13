@@ -5,7 +5,7 @@ import 'package:ser_manos/data/auth_data_impl.dart';
 import 'package:ser_manos/data/interfaces/auth_data.dart';
 
 void main() {
-  group("News Data Testing", () {
+  group("Auth Data Testing", () {
     late FirebaseAuth firebaseAuth;
     late AuthData authData;
 
@@ -20,7 +20,7 @@ void main() {
       expect(firebaseAuth.currentUser != null, true);
       expect(firebaseAuth.currentUser!.email, "register");
       await firebaseAuth.signOut();
-    });
+    }, tags: ["unit", "auth"]);
 
     test("Login", () async {
       firebaseAuth.createUserWithEmailAndPassword(
@@ -30,7 +30,7 @@ void main() {
 
       expect(firebaseAuth.currentUser != null, true);
       expect(firebaseAuth.currentUser!.email, "email");
-    });
+    }, tags: ["unit", "auth"]);
 
     test("Login", () async {
       firebaseAuth.createUserWithEmailAndPassword(
@@ -38,6 +38,6 @@ void main() {
       await authData.logOut();
 
       expect(firebaseAuth.currentUser, null);
-    });
+    }, tags: ["unit", "auth"]);
   });
 }
