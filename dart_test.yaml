@@ -1,0 +1,21 @@
+# dart_test.yaml
+
+tags:
+  golden:
+  profile:
+  unit:
+  volunteering:
+  user:
+  news:
+  image:
+
+# Configuraciones del runner de pruebas
+test:
+  # Usa la etiqueta golden para pruebas específicas
+
+  # Habilita la salida detallada durante las ejecuciones de las pruebas
+  verbosity: 1
+
+  # Especifica la ubicación de las pruebas
+  include:
+    - test/**
