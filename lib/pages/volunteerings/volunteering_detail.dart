@@ -77,11 +77,25 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(height: 8),
                   SerManosTypography.subtitle1("Requisitos"),
                   const SizedBox(height: 8),
-                  SerManosTypography.body1("• ${data.requirements}"),
+                  ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: data.requirements.length,
+                    itemBuilder: (context, index) {
+                      return SerManosTypography.body1("• ${data.requirements[index]}");
+                    },
+                  ),
                   const SizedBox(height: 8),
                   SerManosTypography.subtitle1("Disponibilidad"),
                   const SizedBox(height: 8),
-                  SerManosTypography.body1("• ${data.disponibility}"),
+                  ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: data.disponibility.length,
+                    itemBuilder: (context, index) {
+                      return SerManosTypography.body1("• ${data.disponibility[index]}");
+                    },
+                  ),
                   const SizedBox(height: 8),
                   SerManosVacantsComponent(volunteeringId: data.id),
                   const SizedBox(height: 24),
