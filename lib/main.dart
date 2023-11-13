@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,15 +7,19 @@ import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/providers/router_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ser_manos/providers/servicies_providers.dart';
 import 'firebase_options.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //TODO: habria que usar este valor para trackear o no eventos
-  final status = await AppTrackingTransparency.requestTrackingAuthorization();
+  bool eventTracking = true;
+
+  if (Platform.isIOS) {
+    eventTracking = await AppTrackingTransparency.requestTrackingAuthorization()
+        .then((value) => value == TrackingStatus.authorized);
+  }
 
   await Firebase.initializeApp(
     options: await DefaultFirebaseOptions.currentPlatform,
@@ -29,14 +34,21 @@ void main() async {
     return true;
   };
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp(eventTracking: eventTracking)));
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+  final bool eventTracking;
+
+  const MyApp({super.key, required this.eventTracking});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    if (!eventTracking) {
+      ref.read(loggingServiceProvider).disableEventTracking();
+    }
+
     final GoRouter router = ref.watch(routerProvider);
 
     return MaterialApp.router(

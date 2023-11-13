@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     );
   }
 
-  static FirebaseOptions iosFirebaseOptions(String apiKey) {
+  static FirebaseOptions androidFirebaseOptions(String apiKey) {
     return FirebaseOptions(
       apiKey: apiKey,
       appId: '1:58443286682:android:fda313c80d081bfa1bf723',
@@ -74,7 +74,7 @@ class DefaultFirebaseOptions {
     );
   }
 
-  static FirebaseOptions androidFirebaseOptions(String apiKey) {
+  static FirebaseOptions iosFirebaseOptions(String apiKey) {
     return FirebaseOptions(
       apiKey: apiKey,
       appId: '1:58443286682:ios:c155329cc27572ec1bf723',

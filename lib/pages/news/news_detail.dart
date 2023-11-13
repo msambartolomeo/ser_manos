@@ -91,7 +91,6 @@ class NewsDetailPage extends ConsumerWidget {
     );
   }
 
-
   void shareFunction(News anew) async {
     final response = await Dio().get(
       anew.image,
@@ -106,6 +105,7 @@ class NewsDetailPage extends ConsumerWidget {
     File(path).writeAsBytesSync(bytes);
 
     //Uint8List? image = await ref.watch(newsGetImageControllerProvider(anew.imagePath)).value;
-    await Share.shareXFiles([XFile(path)], subject: anew.subtitle, text: "https://sermanos.itba.edu.ar/home/news/$id");
+    await Share.shareXFiles([XFile(path)],
+        text: "${anew.subtitle} \n\nhttps://sermanos.itba.edu.ar/home/news/$id");
   }
 }
