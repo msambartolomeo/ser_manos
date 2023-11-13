@@ -78,7 +78,12 @@ class VolunteeringTab extends ConsumerWidget {
               align: TextAlign.start,
             ),
             volunteerings.isEmpty | vacants.isEmpty
-                ? NoVolunteeringsCard()
+                ? Column(
+                    children: [
+                      const SizedBox(height: 24),
+                      NoVolunteeringsCard(),
+                    ],
+                  )
                 : Expanded(
                     child: ListView.separated(
                       padding: const EdgeInsets.only(top: 24, bottom: 24),

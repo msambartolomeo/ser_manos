@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/data/interfaces/image_data.dart';
 import 'package:ser_manos/data/interfaces/user_data.dart';
 import 'package:ser_manos/models/models.dart';
@@ -32,7 +32,7 @@ class UserServiceImplementation implements UserService {
   @override
   Future<void> updateUser(
     UID uid,
-    File? image,
+    XFile? image,
     String? birthday,
     Gender? gender,
     String? phone,

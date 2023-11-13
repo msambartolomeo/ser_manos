@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,14 +48,9 @@ class VolunteerCard extends InkWell {
                               color: SerManosColor.neutral100,
                             ),
                             const SizedBox(height: 4),
-                            vacants == 0
-                                // habria que ver si se deshabilita con 0 o con otra condicion
-                                ? SerManosVacantComponent.disabled(
-                                    vacants,
-                                  )
-                                : SerManosVacantComponent.enabled(
-                                    vacants,
-                                  ),
+                            SerManosVacantsComponent(
+                              volunteeringId: volunteering.id,
+                            ),
                           ],
                         ),
                       ),
@@ -79,17 +73,16 @@ class VolunteerCard extends InkWell {
 class NoVolunteeringsCard extends Container {
   NoVolunteeringsCard({super.key})
       : super(
-          height: 72,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: SerManosColor.neutral0,
-            borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-            boxShadow: SerManosShadows.shadow2,
+            borderRadius: BorderRadius.all(Radius.circular(4.0)),
           ),
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(24),
               child: SerManosTypography.subtitle1(
                 "Actualmente no hay voluntariados vigentes. Pronto se irán ircorporando nuevos",
+                align: TextAlign.center,
               ),
             ),
           ),
@@ -187,7 +180,7 @@ class ProfilePicture extends StatelessWidget {
 
   final String? image;
   final ImageType? imageType;
-  final void Function(File? image) onImageChange;
+  final void Function(XFile? image) onImageChange;
   final bool enabled;
 
   @override
@@ -207,22 +200,21 @@ class ProfilePicture extends StatelessWidget {
   }
 }
 
-void pickImage(void Function(File? image) saveImage) async {
+void pickImage(void Function(XFile? image) saveImage) async {
   final XFile? image = await ImagePicker().pickImage(
     source: ImageSource.gallery,
     imageQuality: 85,
   );
 
   if (image != null) {
-    File file = File(image.path);
-    saveImage(file);
+    saveImage(image);
   }
 }
 
 class EmptyProfilePictureCard extends Container {
   EmptyProfilePictureCard({
     super.key,
-    required void Function(File? image) onImageChange,
+    required void Function(XFile? image) onImageChange,
     bool enabled = true,
   }) : super(
           decoration: const BoxDecoration(
@@ -255,7 +247,7 @@ class FullProfilePictureCard extends Container {
     super.key,
     required String image,
     required ImageType imageType,
-    required void Function(File? image) onImageChange,
+    required void Function(XFile? image) onImageChange,
     bool enabled = true,
   }) : super(
           decoration: const BoxDecoration(
