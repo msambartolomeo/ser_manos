@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -75,8 +78,8 @@ class NewsDetailPage extends ConsumerWidget {
                 const SizedBox(height: 16),
                 SerManosButton.cta(
                   "Compartir",
-                  onPressed: () {
-                    Share.share("https://sermanos.itba.edu.ar/home/news/$id");
+                  onPressed: () async {
+                    shareFunction(anew);
                   },
                   fill: true,
                 )
@@ -86,5 +89,23 @@ class NewsDetailPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+
+  void shareFunction(News anew) async {
+    final response = await Dio().get(
+      anew.image,
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
+    );
+    final List<int> bytes = response.data;
+    final temp = await getTemporaryDirectory();
+    final path = '${temp.path}/image.jpg';
+
+    File(path).writeAsBytesSync(bytes);
+
+    //Uint8List? image = await ref.watch(newsGetImageControllerProvider(anew.imagePath)).value;
+    await Share.shareXFiles([XFile(path)], subject: anew.subtitle, text: "https://sermanos.itba.edu.ar/home/news/$id");
   }
 }

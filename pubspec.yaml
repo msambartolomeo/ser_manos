@@ -53,6 +53,9 @@ dependencies:
   url_launcher: ^6.2.1
   firebase_crashlytics: ^3.4.4
   firebase_analytics: ^10.6.4
+  path_provider: ^2.1.1
+  dio: ^5.3.3
+  app_tracking_transparency: ^2.0.4
 
 dev_dependencies:
   flutter_test:

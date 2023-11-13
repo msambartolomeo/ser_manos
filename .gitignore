@@ -46,3 +46,6 @@ app.*.map.json
 # Riverpod Generated files
 *.g.dart
 *.freezed.dart
+
+# Sensible data
+assets/secrets.json

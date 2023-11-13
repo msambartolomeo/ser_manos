@@ -7,11 +7,17 @@ import 'package:ser_manos/design_system/tokens/colors.dart';
 import 'package:ser_manos/providers/router_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //TODO: habria que usar este valor para trackear o no eventos
+  final status = await AppTrackingTransparency.requestTrackingAuthorization();
+
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: await DefaultFirebaseOptions.currentPlatform,
   );
 
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
