@@ -49,14 +49,9 @@ class VolunteerCard extends InkWell {
                               color: SerManosColor.neutral100,
                             ),
                             const SizedBox(height: 4),
-                            vacants == 0
-                                // habria que ver si se deshabilita con 0 o con otra condicion
-                                ? SerManosVacantComponent.disabled(
-                                    vacants,
-                                  )
-                                : SerManosVacantComponent.enabled(
-                                    vacants,
-                                  ),
+                            SerManosVacantsComponent(
+                              volunteeringId: volunteering.id,
+                            ),
                           ],
                         ),
                       ),

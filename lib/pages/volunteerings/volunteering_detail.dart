@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ser_manos/controllers/application_controllers.dart';
-import 'package:ser_manos/controllers/profile_controllers.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
-import 'package:ser_manos/design_system/cells/modal.dart';
-import 'package:ser_manos/design_system/cells/volunteering_apply.dart';
-import 'package:ser_manos/design_system/molecules/buttons.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/molecules/loading.dart';
 import 'package:ser_manos/design_system/tokens/colors.dart';
@@ -37,51 +32,8 @@ class VolunteeringDetailPage extends ConsumerWidget {
               loading: () => null,
             );
 
-    // final vacants = ref.watch(specificVolunteeringStreamProvider(id)).when(
-    //       data: (data) => data[id] ?? 0,
-    //       error: (e, _) => null,
-    //       loading: () => 0,
-    //     );
-
-    final int? vacants = ref.watch(volunteeringStreamProvider).when(
-          data: (vacants) => vacants[id],
-          error: (e, _) {
-            context.go("/404");
-            return null;
-          },
-          loading: () => 0,
-        );
-
-    final Application? application =
-        ref.watch(applicationControllerProvider).maybeWhen(
-              data: (application) => application,
-              orElse: () => null,
-            );
-
-    final profile = ref.watch(profileControllerProvider).when(
-          data: (profile) => profile,
-          error: (e, _) => null,
-          loading: () => null,
-        );
-
-    if (data == null || profile == null) {
+    if (data == null) {
       return const SerManosLoading();
-    }
-
-    bool hasVoluntering = application != null;
-    bool appliedToCurrentVolunteering =
-        hasVoluntering && application.volunteering == id;
-
-    void leaveCurrentVolunteering() {
-      showSerManosModal(
-        context,
-        title: "¿Estás seguro que querés abandonar tu voluntariado?",
-        subtitle: data.name,
-        onConfirm: () => ref
-            .read(applicationControllerProvider.notifier)
-            .dropout()
-            .then((_) => context.pop()),
-      );
     }
 
     return Scaffold(
@@ -93,7 +45,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: Image.network(volunteering!.image, fit: BoxFit.cover),
+                child: Image.network(data.image, fit: BoxFit.cover),
               )
             ],
           ),
@@ -131,64 +83,9 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(height: 8),
                   SerManosTypography.body1("• ${data.disponibility}"),
                   const SizedBox(height: 8),
-                  vacants! ==
-                          0 //habria que ver si se deshabilita con 0 o con otra condicion
-                      ? SerManosVacantComponent.disabled(vacants)
-                      : SerManosVacantComponent.enabled(vacants),
+                  SerManosVacantsComponent(volunteeringId: data.id),
                   const SizedBox(height: 24),
-                  Visibility(
-                    visible: hasVoluntering,
-                    child: appliedToCurrentVolunteering
-                        ? application.approved
-                            ? VolunteeringApply.alreadyAppliedAndAproved(
-                                onPressed: leaveCurrentVolunteering,
-                              )
-                            : VolunteeringApply.alreadyApplied(
-                                onPressed: leaveCurrentVolunteering,
-                              )
-                        : VolunteeringApply.alreadyAppliedToOtherVolunteering(
-                            onPressed: () => context.go(
-                              "/home/volunteerings/${application!.volunteering}",
-                            ),
-                          ),
-                  ),
-                  Visibility(
-                    visible: (application == null) ||
-                        (hasVoluntering && application.volunteering != id),
-                    child: SerManosButton.cta(
-                      "Postularme",
-                      onPressed: () {
-                        if (profile.completed) {
-                          showSerManosModal(
-                            context,
-                            title: "Te estas por postular a",
-                            subtitle: data.name,
-                            onConfirm: () {
-                              ref
-                                  .read(applicationControllerProvider.notifier)
-                                  .apply(id)
-                                  .then((_) => context.pop());
-                            },
-                          );
-                        } else {
-                          showSerManosModal(
-                            context,
-                            title:
-                                "Para postularte debes primero completar tus datos.",
-                            onConfirm: () {
-                              context.pop();
-                              context.push("/home/profile/edit",
-                                  extra: {"volunteering": volunteering});
-                            },
-                            confirmText: "Completar datos",
-                          );
-                        }
-                      },
-                      fill: true,
-                      disabled: vacants <= 0 ||
-                          (hasVoluntering && application.volunteering != id),
-                    ),
-                  )
+                  SerManosApplyComponent(volunteering: data),
                 ],
               ),
             ),
