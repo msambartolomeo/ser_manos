@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:ser_manos/data/interfaces/user_data.dart';
 import 'package:ser_manos/data/user_data_impl.dart';
 import 'package:ser_manos/models/models.dart';
-import 'package:test/expect.dart';
-import 'package:test/scaffolding.dart';
 
 void main() {
   const String collectionId = "users";

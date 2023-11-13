@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:ser_manos/data/auth_data_impl.dart';
 import 'package:ser_manos/data/interfaces/auth_data.dart';
-import 'package:test/expect.dart';
-import 'package:test/scaffolding.dart';
 
 void main() {
   group("News Data Testing", () {
