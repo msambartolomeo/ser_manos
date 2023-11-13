@@ -117,7 +117,7 @@ class VolunteeringDataImplementation implements VolunteeringData {
         throw Exception("No more vacants left!");
       }
 
-      volunteeringRef.update({"vacants": vacants - 1});
+      volunteeringRef.update({"vacants": FieldValue.increment(-1)});
     }
   }
 
