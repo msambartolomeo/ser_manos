@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/design_system/cells/cards.dart';
 import 'package:ser_manos/design_system/molecules/components.dart';
 import 'package:ser_manos/design_system/molecules/text_inputs.dart';
@@ -87,7 +87,7 @@ class SerManosForm extends Column {
     required void Function(Gender?) onGenderChange,
     String? image,
     ImageType imageType = ImageType.network,
-    required void Function(File? image) onImageChange,
+    required void Function(XFile? image) onImageChange,
     bool enabled = true,
   }) : super(
           children: [

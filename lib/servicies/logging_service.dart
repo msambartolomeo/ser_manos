@@ -23,8 +23,14 @@ class LoggingService {
 
   LoggingService({required this.firebaseAnalytics});
 
+  bool _eventTrackingFlag = true;
+
+  void disableEventTracking() {
+    _eventTrackingFlag = false;
+  }
+
   Future<void> log(String name, params) async {
-    await firebaseAnalytics.logEvent(name: name, parameters: params);
+    return _eventTrackingFlag ? await firebaseAnalytics.logEvent(name: name, parameters: params) : null;
   }
 
   Future<void> logOpenVolunteering(String volunteeringId) async {

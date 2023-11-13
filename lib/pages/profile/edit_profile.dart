@@ -1,7 +1,8 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/profile_controllers.dart';
 import 'package:ser_manos/design_system/cells/forms.dart';
@@ -24,7 +25,7 @@ class EditProfileModal extends ConsumerStatefulWidget {
 
 class _EditProfileModalState extends ConsumerState<EditProfileModal> {
   Gender? gender;
-  File? image;
+  XFile? image;
   String? imageUrl;
   ImageType imageType = ImageType.network;
 
@@ -61,11 +62,11 @@ class _EditProfileModalState extends ConsumerState<EditProfileModal> {
     }
   }
 
-  void setImage(File? file) {
+  void setImage(XFile? file) {
     if (file != null) {
       setState(() {
         image = file;
-        imageType = ImageType.file;
+        imageType = kIsWeb ? ImageType.network : ImageType.file;
         imageUrl = file.path;
       });
     }

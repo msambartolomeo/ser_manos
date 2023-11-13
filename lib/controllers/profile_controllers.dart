@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/providers/current_user_provider.dart';
@@ -15,7 +14,7 @@ class UpdateUserController extends _$UpdateUserController {
 
   Future<void> updateUser(
     String uid,
-    File? image,
+    XFile? image,
     String? birthday,
     Gender? gender,
     String? phone,

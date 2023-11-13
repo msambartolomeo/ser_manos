@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/data/auth_data_impl.dart';
 import 'package:ser_manos/models/models.dart';
 
@@ -12,7 +11,7 @@ abstract class UserService {
 
   Future<void> updateUser(
     UID uid,
-    File? image,
+    XFile? image,
     String? birthday,
     Gender? gender,
     String? phone,
