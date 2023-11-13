@@ -1,5 +1,6 @@
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/data/interfaces/image_data.dart';
 
 class ImageDataImplementation implements ImageData {
@@ -8,21 +9,21 @@ class ImageDataImplementation implements ImageData {
   ImageDataImplementation({required this.firebaseStorage});
 
   @override
-  Future<String> uploadProfileImage(String uid, File image) async {
+  Future<String> uploadProfileImage(String uid, XFile image) async {
     final storageRef = firebaseStorage.ref();
 
     final imageRef = storageRef.child("users/$uid");
 
     try {
-      await imageRef.putFile(
-        image,
+      await imageRef.putData(
+        await image.readAsBytes(),
         SettableMetadata(
           contentType: "image/*",
         ),
       );
       return await imageRef.getDownloadURL();
     } on FirebaseException catch (_) {
-      // TODO: Handle error
+      debugPrint("boom");
       rethrow;
     }
   }
