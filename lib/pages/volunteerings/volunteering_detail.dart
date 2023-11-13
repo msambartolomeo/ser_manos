@@ -79,6 +79,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(height: 8),
                   ListView.builder(
                     padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: data.requirements.length,
                     itemBuilder: (context, index) {
@@ -90,6 +91,7 @@ class VolunteeringDetailPage extends ConsumerWidget {
                   const SizedBox(height: 8),
                   ListView.builder(
                     padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: data.disponibility.length,
                     itemBuilder: (context, index) {
