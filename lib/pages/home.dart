@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ser_manos/design_system/cells/header.dart';
 import 'package:ser_manos/pages/news/news.dart';
 import 'package:ser_manos/pages/profile/profile.dart';
 import 'package:ser_manos/pages/volunteerings/volunteering.dart';
+import 'package:ser_manos/providers/geolocation_provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key, required this.index});
 
   final int index;
 
   @override
-  State<StatefulWidget> createState() {
-    return HomePageState();
-  }
+  ConsumerState<ConsumerStatefulWidget> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class HomePageState extends ConsumerState<HomePage>
+    with TickerProviderStateMixin {
   late final TabController _controller;
 
   @override
@@ -43,6 +44,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(determineGeolocationProvider);
+
     tap(int index) {
       final subpath = switch (index) {
         0 => "volunteerings",
