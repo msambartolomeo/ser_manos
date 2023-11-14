@@ -1,4 +1,5 @@
 # Ser Manos
+
 Bienvenido a Ser Manos, una aplicación móvil desarrollada en Flutter que tiene como objetivo conectar a personas dispuestas a ofrecer su tiempo como voluntarios con organizaciones que requieren ayuda. La aplicación proporciona una plataforma intuitiva para encontrar oportunidades de voluntariado y facilita la colaboración entre voluntarios y organizaciones.
 
 ## Monitoreo de eventos
@@ -25,3 +26,29 @@ Adicionalmente, este evento se puede complementar con "select_content". Si tomam
 ## sign_up
 
 Por último, "sign_up" hace un seguimientod de el registro de nuevos usuarios. Este evento tiene un foco más hacia la popularidad de la app como un todo y no a cada voluntariado en particular.
+
+## Testing
+
+Para ejecutar las pruebas, utiliza el siguiente comando desde el directorio principal del proyecto:
+
+```bash
+flutter test -t <etiqueta>
+
+```
+
+Etiquetas de Pruebas
+Las pruebas están organizadas utilizando etiquetas (tags) para facilitar la ejecución selectiva de conjuntos específicos de pruebas. Puedes utilizar las siguientes etiquetas según tus necesidades:
+
+- golden
+- profile
+- unit
+- volunteering
+- user
+- news
+- image
+- auth
+
+```bash
+flutter test -t <etiqueta>
+
+```
