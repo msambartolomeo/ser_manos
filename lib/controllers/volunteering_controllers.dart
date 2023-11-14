@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ser_manos/models/models.dart';
+import 'package:ser_manos/providers/geolocation_provider.dart';
 import 'package:ser_manos/providers/servicies_providers.dart';
+import 'package:ser_manos/servicies/interfaces/volunteering_service.dart';
 
 part 'generated/volunteering_controllers.g.dart';
 
@@ -10,10 +11,17 @@ class VolunteeringController extends _$VolunteeringController {
   String? _search;
 
   @override
-  FutureOr<List<Volunteering>> build(GeoPoint? geolocation) async {
-    return await ref
-        .read(volunteeringServiceProvider)
-        .getAll(geolocation, _search);
+  FutureOr<List<Volunteering>?> build() async {
+    final VolunteeringService volunteeringService =
+        ref.read(volunteeringServiceProvider);
+
+    return await ref.watch(determineGeolocationProvider).when(
+          data: (geolocation) async =>
+              await volunteeringService.getAll(geolocation, _search),
+          error: (_, __) async =>
+              await volunteeringService.getAll(null, _search),
+          loading: () => null,
+        );
   }
 
   void setSearch(String? search) async {

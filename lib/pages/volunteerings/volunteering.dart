@@ -11,7 +11,6 @@ import 'package:ser_manos/design_system/tokens/grid.dart';
 import 'package:ser_manos/design_system/tokens/typography.dart';
 import 'package:ser_manos/models/models.dart';
 import 'package:ser_manos/design_system/cells/my_activity_section.dart';
-import 'package:ser_manos/providers/geolocation_provider.dart';
 
 class VolunteeringTab extends ConsumerWidget {
   const VolunteeringTab({super.key});
@@ -25,22 +24,15 @@ class VolunteeringTab extends ConsumerWidget {
               loading: () => null,
             );
 
-    final geolocation = ref.watch(determineGeolocationProvider).when(
-          data: (geolocation) => geolocation,
-          error: (e, _) => null,
-          loading: () => null,
-        );
-
     final List<Volunteering>? volunteerings =
-        ref.watch(volunteeringControllerProvider(geolocation)).when(
+        ref.watch(volunteeringControllerProvider).when(
               data: (vs) => vs,
               error: (_, __) => [],
               loading: () => null,
             );
 
-    final void Function(String?) onSearch = ref
-        .watch(volunteeringControllerProvider(geolocation).notifier)
-        .setSearch;
+    final void Function(String?) onSearch =
+        ref.watch(volunteeringControllerProvider.notifier).setSearch;
 
     final application = ref.watch(applicationControllerProvider).when(
           data: (profile) => profile,

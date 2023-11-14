@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part "generated/geolocation_provider.g.dart";
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<GeoPoint> determineGeolocation(DetermineGeolocationRef ref) async {
   bool serviceEnabled;
   LocationPermission permission;
