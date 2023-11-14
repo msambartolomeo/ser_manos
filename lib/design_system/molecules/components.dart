@@ -113,14 +113,13 @@ class SerManosApplyComponent extends ConsumerWidget {
     return Column(children: [
       Visibility(
         visible: hasVoluntering,
-        child: appliedToCurrentVolunteering
-            ? application.approved
-                ? _VolunteeringApply.alreadyAppliedAndAproved(
-                    onPressed: leaveCurrentVolunteering,
-                  )
-                : _VolunteeringApply.alreadyApplied(
-                    onPressed: leaveCurrentVolunteering,
-                  )
+        child: appliedToCurrentVolunteering ?
+        (application.approved ?
+        _VolunteeringApply.alreadyAppliedAndAproved(
+                    onPressed: leaveCurrentVolunteering):
+        _VolunteeringApply.alreadyApplied(
+                    onPressed: leaveCurrentVolunteering)
+        )
             : _VolunteeringApply.alreadyAppliedToOtherVolunteering(
                 onPressed: () => context.go(
                   "/home/volunteerings/${application!.volunteering}",
