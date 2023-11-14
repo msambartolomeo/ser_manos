@@ -32,9 +32,11 @@ Por último, "sign_up" hace un seguimientod de el registro de nuevos usuarios. E
 Para ejecutar las pruebas, utiliza el siguiente comando desde el directorio principal del proyecto:
 
 ```bash
-flutter test -t <etiqueta>
+flutter test
 
 ```
+
+Si no se cuenta con los archivos golden, se debe agregar "--update-golden".
 
 Etiquetas de Pruebas
 Las pruebas están organizadas utilizando etiquetas (tags) para facilitar la ejecución selectiva de conjuntos específicos de pruebas. Puedes utilizar las siguientes etiquetas según tus necesidades:

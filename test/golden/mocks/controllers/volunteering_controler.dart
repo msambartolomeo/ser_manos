@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ser_manos/controllers/application_controllers.dart';
 import 'package:ser_manos/controllers/favorites_controller.dart';
 import 'package:ser_manos/controllers/volunteering_controllers.dart';
@@ -10,7 +9,7 @@ import '../models/volunteering_mock.dart';
 
 class VolunteeringControllerMock extends VolunteeringController {
   @override
-  List<Volunteering> build(GeoPoint? geolocation) {
+  List<Volunteering>? build() {
     return List.filled(3, volunteeringMock);
   }
 }

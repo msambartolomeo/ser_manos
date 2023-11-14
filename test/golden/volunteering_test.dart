@@ -32,7 +32,6 @@ void main() {
         overrides: [
           // ignore: scoped_providers_should_specify_dependencies
           volunteeringControllerProvider
-              .getProviderOverride(volunteeringControllerProvider.call(null))
               .overrideWith(() => VolunteeringControllerMock()),
           // ignore: scoped_providers_should_specify_dependencies
           determineGeolocationProvider.overrideWith((ref) => Future.error("")),
@@ -72,7 +71,6 @@ void main() {
         overrides: [
           // ignore: scoped_providers_should_specify_dependencies
           volunteeringControllerProvider
-              .getProviderOverride(volunteeringControllerProvider.call(null))
               .overrideWith(() => VolunteeringControllerMock()),
           // ignore: scoped_providers_should_specify_dependencies
           determineGeolocationProvider.overrideWith((ref) => Future.error("")),
