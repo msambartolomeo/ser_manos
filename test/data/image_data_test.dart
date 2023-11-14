@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ser_manos/data/image_data_impl.dart';
 import 'package:ser_manos/data/interfaces/image_data.dart';
 
@@ -17,7 +17,8 @@ void main() {
     });
 
     test("Upload image", () async {
-      await imageData.uploadProfileImage("uid", File(""));
+      await imageData.uploadProfileImage(
+          "uid", XFile("assets/logo rectangular.png"));
 
       final storageRef = storage.ref().child("users");
       final listResult = await storageRef.listAll();
