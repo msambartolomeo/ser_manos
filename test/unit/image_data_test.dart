@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +18,10 @@ void main() {
     });
 
     test("Upload image", () async {
-      await imageData.uploadProfileImage("uid", XFile(""));
+      await imageData.uploadProfileImage(
+        "uid",
+        XFile.fromData(Uint8List.fromList([0])),
+      );
 
       final storageRef = storage.ref().child("users");
       final listResult = await storageRef.listAll();
