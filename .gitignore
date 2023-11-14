@@ -49,3 +49,6 @@ app.*.map.json
 
 # Sensible data
 assets/secrets.json
+
+# Golden files
+test/golden/goldens/*
